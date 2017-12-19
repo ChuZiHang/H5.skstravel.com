@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.MatcheMapper">
+<!--
+				//赛事id
+				private int matchId;
+				//赛事标题
+				private String matchTitle;
+				//赛事事件
+				private String matchTime;
+				//赛事地址
+				private String matchAddress;
+				//赛事价格
+				private double matchPrice;
+				//赛事介绍
+				private  String  matchTxt;
+		  -->
+
+
+  <resultMap id="BaseResultMap" type="com.skstravel.pojo.MatcheInfo">
+    <id column="id" jdbcType="INTEGER" property="matchId" />
+    <result column="batch_sn" jdbcType="VARCHAR" property="matchTitle" />
+    <result column="add_time" jdbcType="VARCHAR" property="matchTime" />
+    <result column="pitch_name" jdbcType="VARCHAR" property="matchAddress" />
+    <result column="shop_price" jdbcType="DOUBLE" property="matchPrice" />
+    <result column="pitch_img" jdbcType="VARCHAR" property="matchImg" />
+  </resultMap>
+  <select id="findAll"    resultMap="BaseResultMap">
+   			SELECT   b.id, b.batch_sn, b.add_time,p.pitch_name,g.shop_price
+   			 , p.pitch_img FROM sk_batch b ,sk_batch_info i,sk_goods g ,sk_pitch p
+		WHERE b.id=i.batch_id AND i.goods_id=g.goods_id AND g.pitch_id=p.id;	
+  </select>
+ 
+</mapper>

@@ -10,6 +10,7 @@
      http://www.springframework.org/schema/task http://www.springframework.org/schema/task/spring-task-4.3.xsd">
 
 	<import resource="classpath:jdbc-pool.xml" />
+	<context:component-scan base-package="com.skstravel.service"></context:component-scan>
 	<!--启动对@AspectJ注解的支持 , proxy-target-class设置为true表示通知spring使用cglib而不是jdk的来生成代理方法，这样AOP可以拦截到Controller -->
 	<!-- 扫描包 -->
 	<!-- <aop:aspectj-autoproxy /> -->
