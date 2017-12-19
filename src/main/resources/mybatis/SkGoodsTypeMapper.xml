@@ -1,0 +1,215 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkGoodsTypeMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkGoodsType">
+    <id column="cat_id" jdbcType="SMALLINT" property="catId" />
+    <result column="cat_name" jdbcType="VARCHAR" property="catName" />
+    <result column="enabled" jdbcType="BIT" property="enabled" />
+    <result column="attr_group" jdbcType="VARCHAR" property="attrGroup" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    cat_id, cat_name, enabled, attr_group
+  </sql>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkGoodsTypeExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_goods_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Short" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_goods_type
+    where cat_id = #{catId,jdbcType=SMALLINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Short">
+    delete from sk_goods_type
+    where cat_id = #{catId,jdbcType=SMALLINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkGoodsTypeExample">
+    delete from sk_goods_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkGoodsType">
+    insert into sk_goods_type (cat_id, cat_name, enabled, 
+      attr_group)
+    values (#{catId,jdbcType=SMALLINT}, #{catName,jdbcType=VARCHAR}, #{enabled,jdbcType=BIT}, 
+      #{attrGroup,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkGoodsType">
+    insert into sk_goods_type
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="catId != null">
+        cat_id,
+      </if>
+      <if test="catName != null">
+        cat_name,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+      <if test="attrGroup != null">
+        attr_group,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="catId != null">
+        #{catId,jdbcType=SMALLINT},
+      </if>
+      <if test="catName != null">
+        #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="attrGroup != null">
+        #{attrGroup,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkGoodsTypeExample" resultType="java.lang.Long">
+    select count(*) from sk_goods_type
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_goods_type
+    <set>
+      <if test="record.catId != null">
+        cat_id = #{record.catId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.catName != null">
+        cat_name = #{record.catName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.enabled != null">
+        enabled = #{record.enabled,jdbcType=BIT},
+      </if>
+      <if test="record.attrGroup != null">
+        attr_group = #{record.attrGroup,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_goods_type
+    set cat_id = #{record.catId,jdbcType=SMALLINT},
+      cat_name = #{record.catName,jdbcType=VARCHAR},
+      enabled = #{record.enabled,jdbcType=BIT},
+      attr_group = #{record.attrGroup,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkGoodsType">
+    update sk_goods_type
+    <set>
+      <if test="catName != null">
+        cat_name = #{catName,jdbcType=VARCHAR},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="attrGroup != null">
+        attr_group = #{attrGroup,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where cat_id = #{catId,jdbcType=SMALLINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkGoodsType">
+    update sk_goods_type
+    set cat_name = #{catName,jdbcType=VARCHAR},
+      enabled = #{enabled,jdbcType=BIT},
+      attr_group = #{attrGroup,jdbcType=VARCHAR}
+    where cat_id = #{catId,jdbcType=SMALLINT}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

@@ -1,0 +1,247 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkOrderComboInfoMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkOrderComboInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="combo_id" jdbcType="INTEGER" property="comboId" />
+    <result column="order_combo_number" jdbcType="INTEGER" property="orderComboNumber" />
+    <result column="order_combo_price" jdbcType="DECIMAL" property="orderComboPrice" />
+    <result column="order_combo_money" jdbcType="DECIMAL" property="orderComboMoney" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, order_id, combo_id, order_combo_number, order_combo_price, order_combo_money
+  </sql>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkOrderComboInfoExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_order_combo_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_order_combo_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_order_combo_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkOrderComboInfoExample">
+    delete from sk_order_combo_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkOrderComboInfo">
+    insert into sk_order_combo_info (id, order_id, combo_id, 
+      order_combo_number, order_combo_price, order_combo_money
+      )
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{comboId,jdbcType=INTEGER}, 
+      #{orderComboNumber,jdbcType=INTEGER}, #{orderComboPrice,jdbcType=DECIMAL}, #{orderComboMoney,jdbcType=DECIMAL}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkOrderComboInfo">
+    insert into sk_order_combo_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="comboId != null">
+        combo_id,
+      </if>
+      <if test="orderComboNumber != null">
+        order_combo_number,
+      </if>
+      <if test="orderComboPrice != null">
+        order_combo_price,
+      </if>
+      <if test="orderComboMoney != null">
+        order_combo_money,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="comboId != null">
+        #{comboId,jdbcType=INTEGER},
+      </if>
+      <if test="orderComboNumber != null">
+        #{orderComboNumber,jdbcType=INTEGER},
+      </if>
+      <if test="orderComboPrice != null">
+        #{orderComboPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderComboMoney != null">
+        #{orderComboMoney,jdbcType=DECIMAL},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkOrderComboInfoExample" resultType="java.lang.Long">
+    select count(*) from sk_order_combo_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_order_combo_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null">
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.comboId != null">
+        combo_id = #{record.comboId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderComboNumber != null">
+        order_combo_number = #{record.orderComboNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderComboPrice != null">
+        order_combo_price = #{record.orderComboPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.orderComboMoney != null">
+        order_combo_money = #{record.orderComboMoney,jdbcType=DECIMAL},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_order_combo_info
+    set id = #{record.id,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      combo_id = #{record.comboId,jdbcType=INTEGER},
+      order_combo_number = #{record.orderComboNumber,jdbcType=INTEGER},
+      order_combo_price = #{record.orderComboPrice,jdbcType=DECIMAL},
+      order_combo_money = #{record.orderComboMoney,jdbcType=DECIMAL}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkOrderComboInfo">
+    update sk_order_combo_info
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="comboId != null">
+        combo_id = #{comboId,jdbcType=INTEGER},
+      </if>
+      <if test="orderComboNumber != null">
+        order_combo_number = #{orderComboNumber,jdbcType=INTEGER},
+      </if>
+      <if test="orderComboPrice != null">
+        order_combo_price = #{orderComboPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="orderComboMoney != null">
+        order_combo_money = #{orderComboMoney,jdbcType=DECIMAL},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkOrderComboInfo">
+    update sk_order_combo_info
+    set order_id = #{orderId,jdbcType=INTEGER},
+      combo_id = #{comboId,jdbcType=INTEGER},
+      order_combo_number = #{orderComboNumber,jdbcType=INTEGER},
+      order_combo_price = #{orderComboPrice,jdbcType=DECIMAL},
+      order_combo_money = #{orderComboMoney,jdbcType=DECIMAL}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

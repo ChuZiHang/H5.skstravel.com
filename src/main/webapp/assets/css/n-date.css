@@ -1,0 +1,299 @@
+
+.page {
+    display: none;
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+}
+
+/*素材家园 - www.sucaijiayuan.com*/
+#datescroll div {
+    float: left;
+    margin-left: 10%;
+    margin-top: 25px;
+    padding-right: 22px;
+}
+
+#datescroll_datetime div {
+    float: left;
+    margin-left: 10%;
+    padding-right: 22px;
+}
+
+#yearwrapper {
+    position: absolute;
+    left: 0;
+    top: 45px;
+    bottom: 0;
+    width: 80%;
+}
+
+#monthwrapper {
+    position: absolute;
+    left: 26%;
+    top: 45px;
+    bottom: 0;
+    width: 80%;
+}
+
+#daywrapper {
+    position: absolute;
+    left: 50%;
+    top: 45px;
+    bottom: 0;
+    width: 80%;
+}
+
+#Hourwrapper {
+    position: absolute;
+    left: 0;
+    top: 210px;
+    bottom: 0;
+    width: 80%;
+}
+
+#Minutewrapper {
+    position: absolute;
+    left: 26%;
+    top: 210px;
+    bottom: 0;
+    width: 80%;
+}
+
+#Secondwrapper {
+    position: absolute;
+    left: 50%;
+    top: 210px;
+    bottom: 0;
+    width: 80%;
+}
+
+#diydatawrapper {
+    position: absolute;
+    left: 0;
+    top: 70px;
+    bottom: 0;
+    right: 0;
+}
+
+/*增加手指滑动触摸面积*/
+#Hourwrapper ul li {
+    color: #898989;
+    font-size: 16px;
+}
+
+#Minutewrapper ul li {
+    color: #898989;
+    font-size: 16px;
+}
+
+#Secondwrapper ul li {
+    color: #898989;
+    font-size: 16px;
+}
+
+#yearwrapper ul li {
+    color: #898989;
+    font-size: 16px;
+}
+
+#monthwrapper ul li {
+    color: #898989;
+    font-size: 16px;
+}
+
+#diydatawrapper ul li {
+    color: #898989;
+    font-size: 16px;
+}
+
+#daywrapper ul li {
+    color: #898989;
+    font-size: 16px;
+}
+
+#markyear {
+    position: relative;
+    margin-left: 76px;
+    top: -2px;
+}
+
+#markmonth {
+    position: relative;
+    margin-left: 40px;
+    top: -2px;
+}
+
+#markday {
+    position: relative;
+    margin-left: 42px;
+    top: -2px;
+}
+
+#markhour {
+    position: relative;
+    margin-left: 62px;
+    top: -2px;
+}
+
+#markminut {
+    position: relative;
+    margin-left: 58px;
+    top: -2px;
+}
+
+#marksecond {
+    position: relative;
+    margin-left: 68px;
+    top: -2px;
+}
+
+#dateheader {
+    width: 100%;
+    height: 50px;
+    background: #00307C;
+    text-align: center;
+    color: #fff;
+    line-height: 50px;
+    font-size: 20px;
+}
+
+#setcancle ul li {
+    float: left;
+    font-size: 16px;
+}
+
+#dateconfirm {
+    position: absolute;
+    right: 20px;
+    color: #047cff;
+}
+
+#datecancle {
+    position: absolute;
+    left: 20px;
+    color: #047cff;
+}
+
+#dateshadow {
+    display: none;
+    position: fixed;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    background: #000;
+    filter: alpha(Opacity=50);
+    -moz-opacity: 0.5;
+    opacity: 0.6;
+    z-index: 90;
+}
+
+#datePage {
+    font-size: 22px;
+    position: fixed;
+    margin-right: auto;
+    vertical-align: middle;
+    MARGIN-LEFT: auto;
+    height: 190px;
+    background: #d2d5dc;
+    z-index: 9999999;
+}
+
+#datetitle {
+    width: 100%;
+    height: 50px;
+    background: #fff;
+    text-align: center;
+    color: #00307C;
+    line-height: 50px;
+    font-size: 14px;
+    font-family: 'microsoft yahei';
+    display: none;
+}
+
+#datetitle h1 {
+    font-weight: normal;
+}
+
+#datemark, #datamark {
+    font-size: 18px;
+    left: 0;
+    right: 0;
+    height: 34px;
+    position: absolute;
+    top: 112px;
+    border: 1px solid #ccc;
+}
+
+#timemark {
+    font-size: 18px;
+    left: 0;
+    right: 0;
+    height: 34px;
+    position: absolute;
+    top: 252px;
+    background: #eee;
+    border: 1px solid #eee;
+}
+
+#datescroll {
+    background: #F8F8F8;
+    margin: 20px 0;
+    height: 120px;
+    text-align: center;
+    line-height: 40px;
+    margin-top: 70px;
+}
+
+#datescroll_datetime {
+    display: none;
+    background: #F8F8F8;
+    margin: 10px 0 0;
+    margin-top: 10px;
+    height: 120px;
+    text-align: center;
+    line-height: 40px;
+}
+
+#datescroll_data {
+    display: none;
+    background: #d2d5dc;
+    margin: 10px 0;
+    margin-top: 10px;
+    height: 120px;
+    text-align: center;
+    line-height: 40px;
+    margin-top: 70px;
+}
+
+#yearwrapper ul, #monthwrapper ul, #daywrapper ul {
+    width: 40%;
+}
+
+#diydatawrapper ul {
+    width: 100%;
+}
+
+#Hourwrapper ul, #Minutewrapper ul, #Secondwrapper ul {
+    width: 40%;
+}
+
+#dateFooter {
+    width: 100%;
+    background:#eff0f1;
+    height:50px;
+    line-height:50px;
+    top:0;
+    position: absolute;
+    text-align: center;
+    color: #fff;
+}
+#setcancle ul li:nth-child(2){
+    width:100%;
+}

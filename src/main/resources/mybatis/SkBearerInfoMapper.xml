@@ -1,0 +1,704 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkBearerInfoMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkBearerInfo">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="agent_id" jdbcType="INTEGER" property="agentId" />
+    <result column="gender_appellation" jdbcType="VARCHAR" property="genderAppellation" />
+    <result column="us_customer_name" jdbcType="VARCHAR" property="usCustomerName" />
+    <result column="cn_customer_name" jdbcType="VARCHAR" property="cnCustomerName" />
+    <result column="passport_number" jdbcType="VARCHAR" property="passportNumber" />
+    <result column="date_birth" jdbcType="VARCHAR" property="dateBirth" />
+    <result column="issue_date" jdbcType="VARCHAR" property="issueDate" />
+    <result column="expire_date" jdbcType="VARCHAR" property="expireDate" />
+    <result column="us_name_street" jdbcType="VARCHAR" property="usNameStreet" />
+    <result column="cn_name_street" jdbcType="VARCHAR" property="cnNameStreet" />
+    <result column="cn_nationality" jdbcType="VARCHAR" property="cnNationality" />
+    <result column="us_nationality" jdbcType="VARCHAR" property="usNationality" />
+    <result column="post_code" jdbcType="VARCHAR" property="postCode" />
+    <result column="us_city" jdbcType="VARCHAR" property="usCity" />
+    <result column="cn_city" jdbcType="VARCHAR" property="cnCity" />
+    <result column="us_state" jdbcType="VARCHAR" property="usState" />
+    <result column="cn_state" jdbcType="VARCHAR" property="cnState" />
+    <result column="us_country" jdbcType="VARCHAR" property="usCountry" />
+    <result column="cn_country" jdbcType="VARCHAR" property="cnCountry" />
+    <result column="telephone" jdbcType="VARCHAR" property="telephone" />
+    <result column="mobile" jdbcType="VARCHAR" property="mobile" />
+    <result column="mail" jdbcType="VARCHAR" property="mail" />
+    <result column="ticket_category" jdbcType="VARCHAR" property="ticketCategory" />
+    <result column="quantity_pakcges" jdbcType="INTEGER" property="quantityPakcges" />
+    <result column="contacts_tel" jdbcType="VARCHAR" property="contactsTel" />
+    <result column="emergency_contacts_tel" jdbcType="VARCHAR" property="emergencyContactsTel" />
+    <result column="us_remarks" jdbcType="VARCHAR" property="usRemarks" />
+    <result column="cn_remarks" jdbcType="VARCHAR" property="cnRemarks" />
+    <result column="audit_bearer" jdbcType="INTEGER" property="auditBearer" />
+    <result column="submit" jdbcType="INTEGER" property="submit" />
+    <result column="sub_time" jdbcType="INTEGER" property="subTime" />
+    <result column="user_id" jdbcType="INTEGER" property="userId" />
+    <result column="add_bearer_time" jdbcType="INTEGER" property="addBearerTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, order_id, agent_id, gender_appellation, us_customer_name, cn_customer_name, passport_number, 
+    date_birth, issue_date, expire_date, us_name_street, cn_name_street, cn_nationality, 
+    us_nationality, post_code, us_city, cn_city, us_state, cn_state, us_country, cn_country, 
+    telephone, mobile, mail, ticket_category, quantity_pakcges, contacts_tel, emergency_contacts_tel, 
+    us_remarks, cn_remarks, audit_bearer, submit, sub_time, user_id, add_bearer_time
+  </sql>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkBearerInfoExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_bearer_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_bearer_info
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_bearer_info
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkBearerInfoExample">
+    delete from sk_bearer_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkBearerInfo">
+    insert into sk_bearer_info (id, order_id, agent_id, 
+      gender_appellation, us_customer_name, cn_customer_name, 
+      passport_number, date_birth, issue_date, 
+      expire_date, us_name_street, cn_name_street, 
+      cn_nationality, us_nationality, post_code, 
+      us_city, cn_city, us_state, 
+      cn_state, us_country, cn_country, 
+      telephone, mobile, mail, 
+      ticket_category, quantity_pakcges, contacts_tel, 
+      emergency_contacts_tel, us_remarks, cn_remarks, 
+      audit_bearer, submit, sub_time, 
+      user_id, add_bearer_time)
+    values (#{id,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{agentId,jdbcType=INTEGER}, 
+      #{genderAppellation,jdbcType=VARCHAR}, #{usCustomerName,jdbcType=VARCHAR}, #{cnCustomerName,jdbcType=VARCHAR}, 
+      #{passportNumber,jdbcType=VARCHAR}, #{dateBirth,jdbcType=VARCHAR}, #{issueDate,jdbcType=VARCHAR}, 
+      #{expireDate,jdbcType=VARCHAR}, #{usNameStreet,jdbcType=VARCHAR}, #{cnNameStreet,jdbcType=VARCHAR}, 
+      #{cnNationality,jdbcType=VARCHAR}, #{usNationality,jdbcType=VARCHAR}, #{postCode,jdbcType=VARCHAR}, 
+      #{usCity,jdbcType=VARCHAR}, #{cnCity,jdbcType=VARCHAR}, #{usState,jdbcType=VARCHAR}, 
+      #{cnState,jdbcType=VARCHAR}, #{usCountry,jdbcType=VARCHAR}, #{cnCountry,jdbcType=VARCHAR}, 
+      #{telephone,jdbcType=VARCHAR}, #{mobile,jdbcType=VARCHAR}, #{mail,jdbcType=VARCHAR}, 
+      #{ticketCategory,jdbcType=VARCHAR}, #{quantityPakcges,jdbcType=INTEGER}, #{contactsTel,jdbcType=VARCHAR}, 
+      #{emergencyContactsTel,jdbcType=VARCHAR}, #{usRemarks,jdbcType=VARCHAR}, #{cnRemarks,jdbcType=VARCHAR}, 
+      #{auditBearer,jdbcType=INTEGER}, #{submit,jdbcType=INTEGER}, #{subTime,jdbcType=INTEGER}, 
+      #{userId,jdbcType=INTEGER}, #{addBearerTime,jdbcType=INTEGER})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkBearerInfo">
+    insert into sk_bearer_info
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="agentId != null">
+        agent_id,
+      </if>
+      <if test="genderAppellation != null">
+        gender_appellation,
+      </if>
+      <if test="usCustomerName != null">
+        us_customer_name,
+      </if>
+      <if test="cnCustomerName != null">
+        cn_customer_name,
+      </if>
+      <if test="passportNumber != null">
+        passport_number,
+      </if>
+      <if test="dateBirth != null">
+        date_birth,
+      </if>
+      <if test="issueDate != null">
+        issue_date,
+      </if>
+      <if test="expireDate != null">
+        expire_date,
+      </if>
+      <if test="usNameStreet != null">
+        us_name_street,
+      </if>
+      <if test="cnNameStreet != null">
+        cn_name_street,
+      </if>
+      <if test="cnNationality != null">
+        cn_nationality,
+      </if>
+      <if test="usNationality != null">
+        us_nationality,
+      </if>
+      <if test="postCode != null">
+        post_code,
+      </if>
+      <if test="usCity != null">
+        us_city,
+      </if>
+      <if test="cnCity != null">
+        cn_city,
+      </if>
+      <if test="usState != null">
+        us_state,
+      </if>
+      <if test="cnState != null">
+        cn_state,
+      </if>
+      <if test="usCountry != null">
+        us_country,
+      </if>
+      <if test="cnCountry != null">
+        cn_country,
+      </if>
+      <if test="telephone != null">
+        telephone,
+      </if>
+      <if test="mobile != null">
+        mobile,
+      </if>
+      <if test="mail != null">
+        mail,
+      </if>
+      <if test="ticketCategory != null">
+        ticket_category,
+      </if>
+      <if test="quantityPakcges != null">
+        quantity_pakcges,
+      </if>
+      <if test="contactsTel != null">
+        contacts_tel,
+      </if>
+      <if test="emergencyContactsTel != null">
+        emergency_contacts_tel,
+      </if>
+      <if test="usRemarks != null">
+        us_remarks,
+      </if>
+      <if test="cnRemarks != null">
+        cn_remarks,
+      </if>
+      <if test="auditBearer != null">
+        audit_bearer,
+      </if>
+      <if test="submit != null">
+        submit,
+      </if>
+      <if test="subTime != null">
+        sub_time,
+      </if>
+      <if test="userId != null">
+        user_id,
+      </if>
+      <if test="addBearerTime != null">
+        add_bearer_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="agentId != null">
+        #{agentId,jdbcType=INTEGER},
+      </if>
+      <if test="genderAppellation != null">
+        #{genderAppellation,jdbcType=VARCHAR},
+      </if>
+      <if test="usCustomerName != null">
+        #{usCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="cnCustomerName != null">
+        #{cnCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="passportNumber != null">
+        #{passportNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dateBirth != null">
+        #{dateBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="issueDate != null">
+        #{issueDate,jdbcType=VARCHAR},
+      </if>
+      <if test="expireDate != null">
+        #{expireDate,jdbcType=VARCHAR},
+      </if>
+      <if test="usNameStreet != null">
+        #{usNameStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="cnNameStreet != null">
+        #{cnNameStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="cnNationality != null">
+        #{cnNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="usNationality != null">
+        #{usNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null">
+        #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="usCity != null">
+        #{usCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cnCity != null">
+        #{cnCity,jdbcType=VARCHAR},
+      </if>
+      <if test="usState != null">
+        #{usState,jdbcType=VARCHAR},
+      </if>
+      <if test="cnState != null">
+        #{cnState,jdbcType=VARCHAR},
+      </if>
+      <if test="usCountry != null">
+        #{usCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="cnCountry != null">
+        #{cnCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketCategory != null">
+        #{ticketCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="quantityPakcges != null">
+        #{quantityPakcges,jdbcType=INTEGER},
+      </if>
+      <if test="contactsTel != null">
+        #{contactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactsTel != null">
+        #{emergencyContactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="usRemarks != null">
+        #{usRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="cnRemarks != null">
+        #{cnRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="auditBearer != null">
+        #{auditBearer,jdbcType=INTEGER},
+      </if>
+      <if test="submit != null">
+        #{submit,jdbcType=INTEGER},
+      </if>
+      <if test="subTime != null">
+        #{subTime,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="addBearerTime != null">
+        #{addBearerTime,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkBearerInfoExample" resultType="java.lang.Long">
+    select count(*) from sk_bearer_info
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_bearer_info
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null">
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.agentId != null">
+        agent_id = #{record.agentId,jdbcType=INTEGER},
+      </if>
+      <if test="record.genderAppellation != null">
+        gender_appellation = #{record.genderAppellation,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usCustomerName != null">
+        us_customer_name = #{record.usCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnCustomerName != null">
+        cn_customer_name = #{record.cnCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.passportNumber != null">
+        passport_number = #{record.passportNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="record.dateBirth != null">
+        date_birth = #{record.dateBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="record.issueDate != null">
+        issue_date = #{record.issueDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.expireDate != null">
+        expire_date = #{record.expireDate,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usNameStreet != null">
+        us_name_street = #{record.usNameStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnNameStreet != null">
+        cn_name_street = #{record.cnNameStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnNationality != null">
+        cn_nationality = #{record.cnNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usNationality != null">
+        us_nationality = #{record.usNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="record.postCode != null">
+        post_code = #{record.postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usCity != null">
+        us_city = #{record.usCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnCity != null">
+        cn_city = #{record.cnCity,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usState != null">
+        us_state = #{record.usState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnState != null">
+        cn_state = #{record.cnState,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usCountry != null">
+        us_country = #{record.usCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnCountry != null">
+        cn_country = #{record.cnCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="record.telephone != null">
+        telephone = #{record.telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobile != null">
+        mobile = #{record.mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mail != null">
+        mail = #{record.mail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketCategory != null">
+        ticket_category = #{record.ticketCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="record.quantityPakcges != null">
+        quantity_pakcges = #{record.quantityPakcges,jdbcType=INTEGER},
+      </if>
+      <if test="record.contactsTel != null">
+        contacts_tel = #{record.contactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.emergencyContactsTel != null">
+        emergency_contacts_tel = #{record.emergencyContactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="record.usRemarks != null">
+        us_remarks = #{record.usRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.cnRemarks != null">
+        cn_remarks = #{record.cnRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="record.auditBearer != null">
+        audit_bearer = #{record.auditBearer,jdbcType=INTEGER},
+      </if>
+      <if test="record.submit != null">
+        submit = #{record.submit,jdbcType=INTEGER},
+      </if>
+      <if test="record.subTime != null">
+        sub_time = #{record.subTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.userId != null">
+        user_id = #{record.userId,jdbcType=INTEGER},
+      </if>
+      <if test="record.addBearerTime != null">
+        add_bearer_time = #{record.addBearerTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_bearer_info
+    set id = #{record.id,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      agent_id = #{record.agentId,jdbcType=INTEGER},
+      gender_appellation = #{record.genderAppellation,jdbcType=VARCHAR},
+      us_customer_name = #{record.usCustomerName,jdbcType=VARCHAR},
+      cn_customer_name = #{record.cnCustomerName,jdbcType=VARCHAR},
+      passport_number = #{record.passportNumber,jdbcType=VARCHAR},
+      date_birth = #{record.dateBirth,jdbcType=VARCHAR},
+      issue_date = #{record.issueDate,jdbcType=VARCHAR},
+      expire_date = #{record.expireDate,jdbcType=VARCHAR},
+      us_name_street = #{record.usNameStreet,jdbcType=VARCHAR},
+      cn_name_street = #{record.cnNameStreet,jdbcType=VARCHAR},
+      cn_nationality = #{record.cnNationality,jdbcType=VARCHAR},
+      us_nationality = #{record.usNationality,jdbcType=VARCHAR},
+      post_code = #{record.postCode,jdbcType=VARCHAR},
+      us_city = #{record.usCity,jdbcType=VARCHAR},
+      cn_city = #{record.cnCity,jdbcType=VARCHAR},
+      us_state = #{record.usState,jdbcType=VARCHAR},
+      cn_state = #{record.cnState,jdbcType=VARCHAR},
+      us_country = #{record.usCountry,jdbcType=VARCHAR},
+      cn_country = #{record.cnCountry,jdbcType=VARCHAR},
+      telephone = #{record.telephone,jdbcType=VARCHAR},
+      mobile = #{record.mobile,jdbcType=VARCHAR},
+      mail = #{record.mail,jdbcType=VARCHAR},
+      ticket_category = #{record.ticketCategory,jdbcType=VARCHAR},
+      quantity_pakcges = #{record.quantityPakcges,jdbcType=INTEGER},
+      contacts_tel = #{record.contactsTel,jdbcType=VARCHAR},
+      emergency_contacts_tel = #{record.emergencyContactsTel,jdbcType=VARCHAR},
+      us_remarks = #{record.usRemarks,jdbcType=VARCHAR},
+      cn_remarks = #{record.cnRemarks,jdbcType=VARCHAR},
+      audit_bearer = #{record.auditBearer,jdbcType=INTEGER},
+      submit = #{record.submit,jdbcType=INTEGER},
+      sub_time = #{record.subTime,jdbcType=INTEGER},
+      user_id = #{record.userId,jdbcType=INTEGER},
+      add_bearer_time = #{record.addBearerTime,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkBearerInfo">
+    update sk_bearer_info
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="agentId != null">
+        agent_id = #{agentId,jdbcType=INTEGER},
+      </if>
+      <if test="genderAppellation != null">
+        gender_appellation = #{genderAppellation,jdbcType=VARCHAR},
+      </if>
+      <if test="usCustomerName != null">
+        us_customer_name = #{usCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="cnCustomerName != null">
+        cn_customer_name = #{cnCustomerName,jdbcType=VARCHAR},
+      </if>
+      <if test="passportNumber != null">
+        passport_number = #{passportNumber,jdbcType=VARCHAR},
+      </if>
+      <if test="dateBirth != null">
+        date_birth = #{dateBirth,jdbcType=VARCHAR},
+      </if>
+      <if test="issueDate != null">
+        issue_date = #{issueDate,jdbcType=VARCHAR},
+      </if>
+      <if test="expireDate != null">
+        expire_date = #{expireDate,jdbcType=VARCHAR},
+      </if>
+      <if test="usNameStreet != null">
+        us_name_street = #{usNameStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="cnNameStreet != null">
+        cn_name_street = #{cnNameStreet,jdbcType=VARCHAR},
+      </if>
+      <if test="cnNationality != null">
+        cn_nationality = #{cnNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="usNationality != null">
+        us_nationality = #{usNationality,jdbcType=VARCHAR},
+      </if>
+      <if test="postCode != null">
+        post_code = #{postCode,jdbcType=VARCHAR},
+      </if>
+      <if test="usCity != null">
+        us_city = #{usCity,jdbcType=VARCHAR},
+      </if>
+      <if test="cnCity != null">
+        cn_city = #{cnCity,jdbcType=VARCHAR},
+      </if>
+      <if test="usState != null">
+        us_state = #{usState,jdbcType=VARCHAR},
+      </if>
+      <if test="cnState != null">
+        cn_state = #{cnState,jdbcType=VARCHAR},
+      </if>
+      <if test="usCountry != null">
+        us_country = #{usCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="cnCountry != null">
+        cn_country = #{cnCountry,jdbcType=VARCHAR},
+      </if>
+      <if test="telephone != null">
+        telephone = #{telephone,jdbcType=VARCHAR},
+      </if>
+      <if test="mobile != null">
+        mobile = #{mobile,jdbcType=VARCHAR},
+      </if>
+      <if test="mail != null">
+        mail = #{mail,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketCategory != null">
+        ticket_category = #{ticketCategory,jdbcType=VARCHAR},
+      </if>
+      <if test="quantityPakcges != null">
+        quantity_pakcges = #{quantityPakcges,jdbcType=INTEGER},
+      </if>
+      <if test="contactsTel != null">
+        contacts_tel = #{contactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="emergencyContactsTel != null">
+        emergency_contacts_tel = #{emergencyContactsTel,jdbcType=VARCHAR},
+      </if>
+      <if test="usRemarks != null">
+        us_remarks = #{usRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="cnRemarks != null">
+        cn_remarks = #{cnRemarks,jdbcType=VARCHAR},
+      </if>
+      <if test="auditBearer != null">
+        audit_bearer = #{auditBearer,jdbcType=INTEGER},
+      </if>
+      <if test="submit != null">
+        submit = #{submit,jdbcType=INTEGER},
+      </if>
+      <if test="subTime != null">
+        sub_time = #{subTime,jdbcType=INTEGER},
+      </if>
+      <if test="userId != null">
+        user_id = #{userId,jdbcType=INTEGER},
+      </if>
+      <if test="addBearerTime != null">
+        add_bearer_time = #{addBearerTime,jdbcType=INTEGER},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkBearerInfo">
+    update sk_bearer_info
+    set order_id = #{orderId,jdbcType=INTEGER},
+      agent_id = #{agentId,jdbcType=INTEGER},
+      gender_appellation = #{genderAppellation,jdbcType=VARCHAR},
+      us_customer_name = #{usCustomerName,jdbcType=VARCHAR},
+      cn_customer_name = #{cnCustomerName,jdbcType=VARCHAR},
+      passport_number = #{passportNumber,jdbcType=VARCHAR},
+      date_birth = #{dateBirth,jdbcType=VARCHAR},
+      issue_date = #{issueDate,jdbcType=VARCHAR},
+      expire_date = #{expireDate,jdbcType=VARCHAR},
+      us_name_street = #{usNameStreet,jdbcType=VARCHAR},
+      cn_name_street = #{cnNameStreet,jdbcType=VARCHAR},
+      cn_nationality = #{cnNationality,jdbcType=VARCHAR},
+      us_nationality = #{usNationality,jdbcType=VARCHAR},
+      post_code = #{postCode,jdbcType=VARCHAR},
+      us_city = #{usCity,jdbcType=VARCHAR},
+      cn_city = #{cnCity,jdbcType=VARCHAR},
+      us_state = #{usState,jdbcType=VARCHAR},
+      cn_state = #{cnState,jdbcType=VARCHAR},
+      us_country = #{usCountry,jdbcType=VARCHAR},
+      cn_country = #{cnCountry,jdbcType=VARCHAR},
+      telephone = #{telephone,jdbcType=VARCHAR},
+      mobile = #{mobile,jdbcType=VARCHAR},
+      mail = #{mail,jdbcType=VARCHAR},
+      ticket_category = #{ticketCategory,jdbcType=VARCHAR},
+      quantity_pakcges = #{quantityPakcges,jdbcType=INTEGER},
+      contacts_tel = #{contactsTel,jdbcType=VARCHAR},
+      emergency_contacts_tel = #{emergencyContactsTel,jdbcType=VARCHAR},
+      us_remarks = #{usRemarks,jdbcType=VARCHAR},
+      cn_remarks = #{cnRemarks,jdbcType=VARCHAR},
+      audit_bearer = #{auditBearer,jdbcType=INTEGER},
+      submit = #{submit,jdbcType=INTEGER},
+      sub_time = #{subTime,jdbcType=INTEGER},
+      user_id = #{userId,jdbcType=INTEGER},
+      add_bearer_time = #{addBearerTime,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

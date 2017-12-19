@@ -1,0 +1,325 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkBannerMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkBanner">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="img_url" jdbcType="VARCHAR" property="imgUrl" />
+    <result column="place_id" jdbcType="INTEGER" property="placeId" />
+    <result column="status" jdbcType="BIT" property="status" />
+    <result column="max_title" jdbcType="VARCHAR" property="maxTitle" />
+    <result column="min_title" jdbcType="VARCHAR" property="minTitle" />
+    <result column="link" jdbcType="VARCHAR" property="link" />
+    <result column="sequence" jdbcType="INTEGER" property="sequence" />
+    <result column="video_link" jdbcType="VARCHAR" property="videoLink" />
+    <result column="mobile_link" jdbcType="VARCHAR" property="mobileLink" />
+    <result column="notes" jdbcType="VARCHAR" property="notes" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, img_url, place_id, status, max_title, min_title, link, sequence, video_link, 
+    mobile_link, notes
+  </sql>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkBannerExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_banner
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_banner
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_banner
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkBannerExample">
+    delete from sk_banner
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkBanner">
+    insert into sk_banner (id, img_url, place_id, 
+      status, max_title, min_title, 
+      link, sequence, video_link, 
+      mobile_link, notes)
+    values (#{id,jdbcType=INTEGER}, #{imgUrl,jdbcType=VARCHAR}, #{placeId,jdbcType=INTEGER}, 
+      #{status,jdbcType=BIT}, #{maxTitle,jdbcType=VARCHAR}, #{minTitle,jdbcType=VARCHAR}, 
+      #{link,jdbcType=VARCHAR}, #{sequence,jdbcType=INTEGER}, #{videoLink,jdbcType=VARCHAR}, 
+      #{mobileLink,jdbcType=VARCHAR}, #{notes,jdbcType=VARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkBanner">
+    insert into sk_banner
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="imgUrl != null">
+        img_url,
+      </if>
+      <if test="placeId != null">
+        place_id,
+      </if>
+      <if test="status != null">
+        status,
+      </if>
+      <if test="maxTitle != null">
+        max_title,
+      </if>
+      <if test="minTitle != null">
+        min_title,
+      </if>
+      <if test="link != null">
+        link,
+      </if>
+      <if test="sequence != null">
+        sequence,
+      </if>
+      <if test="videoLink != null">
+        video_link,
+      </if>
+      <if test="mobileLink != null">
+        mobile_link,
+      </if>
+      <if test="notes != null">
+        notes,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="imgUrl != null">
+        #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="placeId != null">
+        #{placeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        #{status,jdbcType=BIT},
+      </if>
+      <if test="maxTitle != null">
+        #{maxTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="minTitle != null">
+        #{minTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null">
+        #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null">
+        #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="videoLink != null">
+        #{videoLink,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileLink != null">
+        #{mobileLink,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        #{notes,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkBannerExample" resultType="java.lang.Long">
+    select count(*) from sk_banner
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_banner
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.imgUrl != null">
+        img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="record.placeId != null">
+        place_id = #{record.placeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.status != null">
+        status = #{record.status,jdbcType=BIT},
+      </if>
+      <if test="record.maxTitle != null">
+        max_title = #{record.maxTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minTitle != null">
+        min_title = #{record.minTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.link != null">
+        link = #{record.link,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sequence != null">
+        sequence = #{record.sequence,jdbcType=INTEGER},
+      </if>
+      <if test="record.videoLink != null">
+        video_link = #{record.videoLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.mobileLink != null">
+        mobile_link = #{record.mobileLink,jdbcType=VARCHAR},
+      </if>
+      <if test="record.notes != null">
+        notes = #{record.notes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_banner
+    set id = #{record.id,jdbcType=INTEGER},
+      img_url = #{record.imgUrl,jdbcType=VARCHAR},
+      place_id = #{record.placeId,jdbcType=INTEGER},
+      status = #{record.status,jdbcType=BIT},
+      max_title = #{record.maxTitle,jdbcType=VARCHAR},
+      min_title = #{record.minTitle,jdbcType=VARCHAR},
+      link = #{record.link,jdbcType=VARCHAR},
+      sequence = #{record.sequence,jdbcType=INTEGER},
+      video_link = #{record.videoLink,jdbcType=VARCHAR},
+      mobile_link = #{record.mobileLink,jdbcType=VARCHAR},
+      notes = #{record.notes,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkBanner">
+    update sk_banner
+    <set>
+      <if test="imgUrl != null">
+        img_url = #{imgUrl,jdbcType=VARCHAR},
+      </if>
+      <if test="placeId != null">
+        place_id = #{placeId,jdbcType=INTEGER},
+      </if>
+      <if test="status != null">
+        status = #{status,jdbcType=BIT},
+      </if>
+      <if test="maxTitle != null">
+        max_title = #{maxTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="minTitle != null">
+        min_title = #{minTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="link != null">
+        link = #{link,jdbcType=VARCHAR},
+      </if>
+      <if test="sequence != null">
+        sequence = #{sequence,jdbcType=INTEGER},
+      </if>
+      <if test="videoLink != null">
+        video_link = #{videoLink,jdbcType=VARCHAR},
+      </if>
+      <if test="mobileLink != null">
+        mobile_link = #{mobileLink,jdbcType=VARCHAR},
+      </if>
+      <if test="notes != null">
+        notes = #{notes,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkBanner">
+    update sk_banner
+    set img_url = #{imgUrl,jdbcType=VARCHAR},
+      place_id = #{placeId,jdbcType=INTEGER},
+      status = #{status,jdbcType=BIT},
+      max_title = #{maxTitle,jdbcType=VARCHAR},
+      min_title = #{minTitle,jdbcType=VARCHAR},
+      link = #{link,jdbcType=VARCHAR},
+      sequence = #{sequence,jdbcType=INTEGER},
+      video_link = #{videoLink,jdbcType=VARCHAR},
+      mobile_link = #{mobileLink,jdbcType=VARCHAR},
+      notes = #{notes,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

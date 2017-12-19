@@ -1,0 +1,262 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkUserRankMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkUserRank">
+    <id column="rank_id" jdbcType="TINYINT" property="rankId" />
+    <result column="rank_name" jdbcType="VARCHAR" property="rankName" />
+    <result column="min_points" jdbcType="INTEGER" property="minPoints" />
+    <result column="max_points" jdbcType="INTEGER" property="maxPoints" />
+    <result column="discount" jdbcType="TINYINT" property="discount" />
+    <result column="show_price" jdbcType="BIT" property="showPrice" />
+    <result column="special_rank" jdbcType="BIT" property="specialRank" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    rank_id, rank_name, min_points, max_points, discount, show_price, special_rank
+  </sql>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkUserRankExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_user_rank
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Byte" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_user_rank
+    where rank_id = #{rankId,jdbcType=TINYINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte">
+    delete from sk_user_rank
+    where rank_id = #{rankId,jdbcType=TINYINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkUserRankExample">
+    delete from sk_user_rank
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkUserRank">
+    insert into sk_user_rank (rank_id, rank_name, min_points, 
+      max_points, discount, show_price, 
+      special_rank)
+    values (#{rankId,jdbcType=TINYINT}, #{rankName,jdbcType=VARCHAR}, #{minPoints,jdbcType=INTEGER}, 
+      #{maxPoints,jdbcType=INTEGER}, #{discount,jdbcType=TINYINT}, #{showPrice,jdbcType=BIT}, 
+      #{specialRank,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkUserRank">
+    insert into sk_user_rank
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="rankId != null">
+        rank_id,
+      </if>
+      <if test="rankName != null">
+        rank_name,
+      </if>
+      <if test="minPoints != null">
+        min_points,
+      </if>
+      <if test="maxPoints != null">
+        max_points,
+      </if>
+      <if test="discount != null">
+        discount,
+      </if>
+      <if test="showPrice != null">
+        show_price,
+      </if>
+      <if test="specialRank != null">
+        special_rank,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="rankId != null">
+        #{rankId,jdbcType=TINYINT},
+      </if>
+      <if test="rankName != null">
+        #{rankName,jdbcType=VARCHAR},
+      </if>
+      <if test="minPoints != null">
+        #{minPoints,jdbcType=INTEGER},
+      </if>
+      <if test="maxPoints != null">
+        #{maxPoints,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null">
+        #{discount,jdbcType=TINYINT},
+      </if>
+      <if test="showPrice != null">
+        #{showPrice,jdbcType=BIT},
+      </if>
+      <if test="specialRank != null">
+        #{specialRank,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkUserRankExample" resultType="java.lang.Long">
+    select count(*) from sk_user_rank
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_user_rank
+    <set>
+      <if test="record.rankId != null">
+        rank_id = #{record.rankId,jdbcType=TINYINT},
+      </if>
+      <if test="record.rankName != null">
+        rank_name = #{record.rankName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.minPoints != null">
+        min_points = #{record.minPoints,jdbcType=INTEGER},
+      </if>
+      <if test="record.maxPoints != null">
+        max_points = #{record.maxPoints,jdbcType=INTEGER},
+      </if>
+      <if test="record.discount != null">
+        discount = #{record.discount,jdbcType=TINYINT},
+      </if>
+      <if test="record.showPrice != null">
+        show_price = #{record.showPrice,jdbcType=BIT},
+      </if>
+      <if test="record.specialRank != null">
+        special_rank = #{record.specialRank,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_user_rank
+    set rank_id = #{record.rankId,jdbcType=TINYINT},
+      rank_name = #{record.rankName,jdbcType=VARCHAR},
+      min_points = #{record.minPoints,jdbcType=INTEGER},
+      max_points = #{record.maxPoints,jdbcType=INTEGER},
+      discount = #{record.discount,jdbcType=TINYINT},
+      show_price = #{record.showPrice,jdbcType=BIT},
+      special_rank = #{record.specialRank,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkUserRank">
+    update sk_user_rank
+    <set>
+      <if test="rankName != null">
+        rank_name = #{rankName,jdbcType=VARCHAR},
+      </if>
+      <if test="minPoints != null">
+        min_points = #{minPoints,jdbcType=INTEGER},
+      </if>
+      <if test="maxPoints != null">
+        max_points = #{maxPoints,jdbcType=INTEGER},
+      </if>
+      <if test="discount != null">
+        discount = #{discount,jdbcType=TINYINT},
+      </if>
+      <if test="showPrice != null">
+        show_price = #{showPrice,jdbcType=BIT},
+      </if>
+      <if test="specialRank != null">
+        special_rank = #{specialRank,jdbcType=BIT},
+      </if>
+    </set>
+    where rank_id = #{rankId,jdbcType=TINYINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkUserRank">
+    update sk_user_rank
+    set rank_name = #{rankName,jdbcType=VARCHAR},
+      min_points = #{minPoints,jdbcType=INTEGER},
+      max_points = #{maxPoints,jdbcType=INTEGER},
+      discount = #{discount,jdbcType=TINYINT},
+      show_price = #{showPrice,jdbcType=BIT},
+      special_rank = #{specialRank,jdbcType=BIT}
+    where rank_id = #{rankId,jdbcType=TINYINT}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

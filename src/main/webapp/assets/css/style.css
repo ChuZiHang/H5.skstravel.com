@@ -1,0 +1,1022 @@
+.top-wrap{
+    height:140px;
+    background:url(../images/topBannerBg.png);
+    background-size:cover;
+    position:relative;
+    z-index:33;
+    padding:15px;
+}
+.top-wrap-img,.matchImg{
+    width:30%;
+    float:left;
+}
+.matchImg{
+    height:140px;
+    overflow:hidden;
+}
+.top-wrap-img img{
+    display:block;
+    height:100%;
+    border-radius:5px;
+}
+.matchImg img{
+    display:block;
+    height:100%;
+}
+.matchImgWrap{
+    width: 100px;
+    height: 126px;
+    overflow: hidden;
+    border-radius: 5px;
+}
+.introduce{
+    color:#fff;
+    width:70%;
+    float:left;
+}
+.introduce h2{
+    padding-left:15px;
+    height:60px;
+}
+.introduce-price{
+    padding:5px 15px;
+
+}
+.jag{
+    position:relative;
+    z-index:34;
+    margin-top:-14px;
+}
+.jag img{
+    display:block;
+    width:100%;
+}
+.buyBtn{
+    background: #f8475f;
+    width: 40px;
+    height: 37px;
+    border-radius: 100%;
+    color: #fff;
+    position: absolute;
+    text-align: center;
+    right: 15px;
+    top: 182px;
+    z-index: 45;
+    padding: 5px;
+    line-height: 1.2;
+    padding-top: 8px;
+    box-shadow: 0 0 15px #f8475f;
+}
+.buyBtn a{
+    color:#fff;
+}
+.venue,.venueTab{
+    padding:0 15px;
+}
+.venueTitle{
+    color:#cca152;
+    font-size:16px;
+    padding:15px 0 8px 42px;
+    position:relative;
+}
+.venueIco{
+    display: block;
+    position: absolute;
+    left: 0;
+    width:32px;
+    top:10px;
+}
+.venueIco img{
+    display:block;
+    width:100%;
+}
+.venueText{
+    color:#666;
+    line-height:1.6;
+    font-size:13px;
+    text-align:justify;
+    padding-bottom:5px;
+}
+.gap img{
+    display:block;
+    width:100%;
+}
+.bomBor{
+    border-bottom:1px solid #f2f2f2
+}
+.tabs span{
+    display:inline-block;
+    height:36px;
+    line-height:36px;
+    padding:0 15px;
+    padding-bottom:5px;
+}
+.tabs span.current{
+    border-bottom:1px solid #cca152;
+}
+.tabs span a{
+    display:block;
+
+}
+.tabs span.current a{
+    color:#cca152;
+}
+.pat0{
+    padding-top:0;
+}
+
+.marB10{
+    margin-bottom:10px;
+}
+.buy{
+    float:right;
+}
+.buy a{
+    display: block;
+    background: #f8475f;
+    color: #fff;
+    padding: 4px 13px;
+    border-radius: 15px;
+    margin-top:4px;
+}
+.venueDetail{
+    padding:15px;
+}
+.dayWarp{
+    border-left:1px dashed #cca152;
+    padding-left:15px;
+}
+.venueDetailImg img{
+    display:block;
+    width:100%;
+}
+.venueH3{
+    color:#cca152;
+    padding: 15px 0;
+}
+.venueH3 i{
+    width: 10px;
+    height: 10px;
+    display: inline-block;
+    background: #cca152;
+    margin-left:-20px;
+    margin-right:8px;
+}
+
+.venuetxt{
+    color:#666;
+    line-height:1.6;
+    font-size:13px;
+}
+.padB0{
+    padding-bottom:0;
+}
+.detailModule{
+    padding:15px;
+}
+.moduleTitle{
+    color:#cca152;
+    position:relative;
+    padding-left:14px;
+}
+.moduleTitle:before{
+    content:"";
+    display:block;
+    width:2px;
+    height:16px;
+    background:#cca152;
+    position:absolute;
+    left:0;
+    top:2px;
+}
+.moduleTxt{
+    font-size:13px;
+    color:#666;
+    line-height:1.6;
+    padding-top:15px;
+}
+
+/*------my center-----*/
+.center{
+    position:absolute;
+    right:15px;
+    top:3px;
+    width:24px;
+    height:24px;
+}
+.center img{
+    display:block;
+    width:100%;
+}
+.order-top{
+    background:#fff;
+    padding:10px 15px;
+    border-bottom:1px solid #e5e5e5;
+}
+.order-top-txt{
+    border-bottom:1px solid #f2f2f2;
+    padding-bottom:5px;
+}
+.order-tips{
+    padding-top:10px;
+    color:#999;
+    font-size:13px;
+}
+.order-name{
+    font-size:16px;
+    margin-bottom:5px;
+}
+.order-item{
+    font-size:13px;
+    margin-bottom:5px;
+    color:#999;
+}
+.orderPrice{
+    background:#fff;
+    border-bottom:1px solid #e5e5e5;
+    margin-top:8px;
+    padding:15px;
+    position:relative;
+}
+.orderPriceOpera{
+    position:absolute;
+    right:15px;
+    top:14px;
+}
+.orderPriceColor{
+    color:#ff5000;
+    margin-left:35px;
+}
+.orderPriceColor em{
+    font-weight:600;
+    margin-left:8px;
+    font-size:16px;
+}
+.indexBanner img{
+    width:100%;
+    display:block;
+}
+.navgation {
+    padding:15px;
+    height: 100%;
+    overflow: hidden;
+}
+.navgation ul{
+    border-bottom: 1px solid #f2f2f2;
+    overflow: hidden;
+    padding-bottom: 15px;
+}
+.navgation ul li {
+    float: left;
+    width: 33.33%;
+    text-align: center;
+}
+.navgation ul li img {
+    display: block;
+    margin: 0 auto;
+    width:50px;
+}
+.indexItem{
+    font-size:13px;
+    margin-top:5px;
+    color:#999;
+}
+.matchTit{
+    text-align:center;
+}
+.min-title{
+    font-size:13px;
+    color:#999;
+}
+.matchList ul li{
+    padding:15px;
+    border-bottom:1px solid #f2f2f2;
+    overflow:hidden;
+    background:#fff;
+    position:relative;
+}
+.matchText{
+    width:70%;
+    float:left;
+}
+.match-txt{
+    color:#999;
+    font-size:13px;
+    padding-top:8px;
+    padding-left:12px;
+}
+.matchTitle{
+    color:#333;
+    padding-left:12px;
+    padding-bottom: 5px;
+}
+.matchTime,.matchAddress{
+    padding-left:38px;
+    position:relative;
+    font-size:13px;
+    color:#666;
+    padding-top:4px;
+}
+.matchTime:before{
+    content:"";
+    display:block;
+    position:absolute;
+    width:16px;
+    height:16px;
+    background:url(../images/time.png);
+    background-size:cover;
+    left:12px;
+    top:5px;
+}
+.matchAddress:before{
+    content:"";
+    display:block;
+    position:absolute;
+    width:16px;
+    height:16px;
+    background:url(../images/address.png);
+    background-size:cover;
+    left:12px;
+    top:5px;
+}
+.matchPrice{
+    color:#cca152;
+    padding-top:5px;
+    padding-left:12px;
+}
+.matchPrice span{
+    font-size:12px;
+    border:1px solid #cca152;
+    border-radius:3px;
+    padding:3px;
+}
+.matchPrice em{
+    float:right;
+}
+.sumNum{
+    width:60px;
+    line-height:26px;
+}
+.orderProduct{
+    position:relative;
+    margin-top:8px;
+
+}
+.orderProductItem{
+    border-bottom:1px solid #e5e5e5;
+    margin-bottom:5px;
+    background:#fff;
+    padding:15px 15px 15px 42px;
+    position:relative;
+}
+.checkbox {
+  position: relative;
+  display: inline-block;
+  float: right;
+}
+.checkbox label {
+  width: 42px;
+  height:20px;
+  background: #e6e6e6;
+  position: relative;
+  display: inline-block;
+  border-radius:15px;
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.checkbox label:after {
+  content: '';
+  position: absolute;
+  width:18px;
+  height:18px;
+  border-radius: 100%;
+  left: 1px;
+  top:  1px;
+  z-index: 2;
+  background: #fff;
+  box-shadow: 0 0 0.05rem rgba(0, 0, 0, 0.2);
+  -webkit-transition: 0.4s;
+  transition: 0.4s;
+}
+
+.checkbox input {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  z-index: 5;
+  opacity: 0;
+  cursor: pointer;
+}
+
+.checkbox input:checked + label:after {
+  left:23px;
+}
+.checkbox input:checked + label {
+  background: #cca152;
+}
+.checkbox input:checked + label:after {
+  background: #fff;
+}
+.orderProductItem span{
+    display:block;
+    width:20px;
+    height:20px;
+    position:absolute;
+    left:15px;
+    top:14px;
+}
+.orderProductItem span img{
+    display:block;
+    width:100%;
+}
+.orderBtns{
+    height:50px;
+    width:100%;
+    position:fixed;
+    bottom:0;
+    left:0;
+    background:#fff;
+    line-height:50px;
+    padding:0 15px;
+}
+.orderBtns span{
+    displak:block;
+    width:50%;
+    float:left;
+    text-align:center;
+}
+.orderTatalPrice{
+    font-size:16px;
+    color:#ff5000;
+}
+.orderTatalBtns a{
+    display:block;
+    color:#fff;
+    background:#ff5000;
+}
+.orderAccessory{
+    background:#fff;
+    margin-top:-5px;
+    margin-bottom:5px;
+    border-bottom:1px solid #e5e5e5;
+    padding:15px;
+    overflow:hidden;
+}
+.souvenirLeft{
+    width:48px;
+    height:48px;
+    border:1px solid #65f23f;
+    float:left;
+}
+.souvenirLeft img{
+    display:block;
+    width:100%;
+}
+.souvenirRight{
+    padding-left:68px;
+}
+.soucenirName span{
+    border:1px solid #cca152;
+    border-radius:15px;
+    padding:2px 8px;
+    font-size:13px;
+    color:#cca152;
+}
+.soucenirTxt{
+    color:#cca152;
+    font-size:12px;
+    padding:15px;
+    position:relative;
+}
+.soucenirTxt span{
+    margin-right:35px;
+}
+.soucenirTxt span em{
+    margin-right:5px;
+}
+.soucenirNum{
+    position:absolute;
+    right:0;
+    top:15px;
+}
+.soucenirNum em{
+    display:block;
+    float:left;
+}
+.soucenirNum em.soBtns{
+    background:#cca152;
+    color:#fff;
+    width:16px;
+    height:16px;
+    line-height:16px;
+    text-align:center;
+}
+.soucenirNum em.soBtns i.fa{
+    font-size:12px;
+}
+.soucenirNum em.soNum{
+    border-top:1px solid #cca152;
+    border-bottom:1px solid #cca152;
+    height:14px;
+    width:26px;
+    line-height:14px;
+    text-align:center;
+}
+.airticket{
+    background:#f2f2f2;
+    padding:15px;
+}
+.air-ticket{
+    margin:0 auto;
+    background:#fff;
+    border-radius:5px;
+
+}
+.ticketTitle{
+    padding:10px 15px;
+    border-bottom:1px solid #e5e5e5;
+}
+.ticketList{
+    padding-bottom:15px;
+    position:relative;
+    text-align:right;
+    font-size:13px;
+    color:#999;
+}
+.ticketList ul li{
+    padding-left: 80px;
+    padding-top: 15px;
+    padding-right: 15px;
+    position:relative;
+    height:22px;
+}
+.ticketList span{
+    position:absolute;
+    left:15px;
+    text-align:left;
+}
+.ticketNum{
+    right:15px;
+}
+.noHotel img{
+    display:block;
+    width:20%;
+    margin:0 auto;
+}
+.soucenirTxt span.ariNum{
+    display:block;
+    text-align:right;
+    margin-right:0;
+}
+.airInfo{
+    font-size:13px;
+}
+.contactAddress{
+    margin-top:-15px;
+}
+.airInfo ul{
+    border-bottom:1px solid #f2f2f2;
+    padding-top:15px;
+}
+.airInfo ul li{
+    padding-bottom:12px;
+}
+.airInfo ul li span{
+    float:right;
+    text-align:right;
+}
+.colorGary{
+    color:#999;
+}
+.colorCca{
+    color:#cca152;
+    float:right;
+}
+.airPirce{
+    padding-top:15px;
+}
+.regular-radio {
+    display: none;
+}
+.regular-radio + label {
+    -webkit-appearance: none;
+    background:#fff;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05);
+    padding: 9px;
+    border-radius: 50px;
+    display: inline-block;
+    position: relative;
+    border: 1px solid #cca152;
+}
+.regular-radio:checked + label:after {
+    content: ' ';
+    width: 12px;
+    height: 12px;
+    border-radius: 50px;
+    position: absolute;
+    top: 3px;
+    background: #cca152;
+    box-shadow: inset 0px 0px 10px rgba(0,0,0,0.3);
+    text-shadow: 0px;
+    left: 3px;
+    font-size: 32px;
+}
+
+.regular-radio:checked + label {
+    color: #99a1a7;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px -15px 10px -12px rgba(0,0,0,0.05), inset 15px 10px -12px rgba(255,255,255,0.1), inset 0px 0px 10px rgba(0,0,0,0.1);
+}
+
+.regular-radio + label:active, .regular-radio:checked + label:active {
+    box-shadow: 0 1px 2px rgba(0,0,0,0.05), inset 0px 1px 3px rgba(0,0,0,0.1);
+}
+
+.big-radio + label {
+    padding:7px;
+    position: absolute;
+    left: 2px;
+    top: 1px;
+    cursor: pointer;
+}
+
+.big-radio:checked + label:after {
+    width: 8px;
+    height: 8px;
+    left: 3px;
+    top: 3px;
+}
+.radioPosition{
+    position:relative;
+    padding-left:28px;
+}
+.airInfo ul li span.addItem {
+     float: left;
+     text-align: right;
+     font-size:13px;
+ }
+.addContact a{
+    display:block;
+    border:1px solid #cca152;
+    border-radius:5px;
+    line-height:44px;
+    text-align:center;
+    color:#cca152;
+}
+.payTarget{
+    padding-top:8px;
+    padding-bottom:8px;
+}
+.payTarget .big-radio + label{
+    top:9px;
+}
+.invoiceInput{
+    border:1px solid #e5e5e5;
+    padding:2%;
+    display:block;
+    width:96%;
+    line-height:20px;
+    border-radius:5px;
+    margin-top:8px;
+}
+.agreement{
+    text-align:center;
+}
+.checkAgreement{
+    display:inline-block;
+}
+
+/*------添加联系人-----*/
+.fillBox{
+    margin:15px auto;
+    padding:15px;
+    background:#fff;
+}
+.fillBox ul li{
+    border-bottom:1px solid #f2f2f2;
+    padding:15px 0 15px 80px;
+    position:relative;
+}
+.fillBox ul li span{
+    position:absolute;
+    left:0;
+    top:17px;
+    color:#999;
+}
+.fillBox ul li span.bearSpan{
+    left:12px;
+}
+.linkInput{
+    display:block;
+    width:100%;
+    text-align:right;
+    color:#999;
+    border:1px solid #fff;
+}
+.mobileTips{
+    padding:0 15px;
+    text-align:left;
+    font-size:12px;
+    color:#aaa
+}
+.addLinkbtns a{
+    display:block;
+    background:#cca152;
+    color:#fff;
+    height:48px;
+    line-height:48px;
+    margin:25px 15px;
+    text-align:center;
+    border-radius:5px;
+    font-size:16px;
+}
+
+/*-----个人中心-----*/
+.user{
+    padding:15px 15px 15px 96px;
+    background:#fff;
+    border-bottom:1px solid #e5e5e5;
+    position:relative;
+    height:90px;
+    line-height:90px;
+    font-size:16px;
+}
+.userHeadImg{
+    position:absolute;
+    left:15px;
+    width:60px;
+    height:60px;
+    top:30px;
+}
+.userHeadImg img{
+    display:block;
+    width:60px;
+    height:60px;
+    border-radius:100%;
+    border:1px solid #e5e5e5;
+}
+.myWrap{
+    margin-top:8px;
+}
+.myWrap ul li{
+    background:#fff;
+    border-bottom:1px solid #f2f2f2;
+    position:relative;
+    padding:15px 15px 15px 42px;
+}
+.myWrap ul li a{
+    display:block;
+    width:100%;
+    color:#333;
+}
+.myWrap ul li a:after{
+    content:"";
+    display:block;
+    position:absolute;
+    width: 6px;
+    border: 1px solid #999;
+    right: 15px;
+    top: 30px;
+    margin-top: -8px;
+    height: 6px;
+    border-top: none;
+    border-right: none;
+    -webkit-transform: rotate(-135deg);
+    transform: rotate(-135deg);
+}
+.myWrap ul li span {
+    width: 20px;
+    height: 20px;
+    position: absolute;
+    left: 15px;
+    top: 14px;
+}
+.myWrap ul li span img{
+    display:block;
+    width:100%;
+}
+.aboutList ul li{
+    padding-left:15px;
+}
+.agreementTxt{
+    padding:15px;
+}
+.agreementTxt p{
+    padding-bottom:25px;
+}
+.myOrderWrap{
+    margin:15px;
+    background:#fff;
+    border-radius:5px;
+}
+.myOrderWrapList,.orderState{
+    padding:15px;
+    font-size:13px;
+    color:#999;
+}
+.myOrderWrapList ul li{
+    padding-bottom:8px;
+    padding-top:5px;
+}
+.myOrderWrapList ul li span{
+    margin-right:8px;
+}
+.orderCheck{
+    float:right;
+}
+.orderCheck a{
+    margin-left:25px;
+}
+.orderCheck a.checkOrderBtns,.colorRed{
+    color:#f00;
+}
+.orderCheckDetail{
+    padding:15px;
+    margin:15px 0;
+    background:#fff;
+    color:#999;
+    font-size:13px;
+}
+.orderCheckDetail ul li{
+    line-height:32px;
+}
+.addressAdd{
+    height:48px;
+    line-height:48px;
+    text-align:center;
+    background:#fff;
+    margin:25px auto;
+    color:#cca152;
+}
+.addList{
+    padding:15px;
+    background:#fff;
+    font-size:13px;
+    position:relative;
+    border-bottom:1px solid #e5e5e5;
+}
+.nickname span{
+    margin-right:15px;
+}
+.e-mail{
+    color:#999;
+    margin-top:8px;
+}
+.addList .opt{
+    position:absolute;
+    right:15px;
+    top:15px;
+    color:#cca152;
+}
+.addList .opt span{
+    border:1px solid #cca152;
+    border-radius:3px;
+    font-size:12px;
+    padding:4px 5px;
+}
+.voucherTit{
+    padding-bottom:0;
+    font-size:14px;
+    color:#333;
+}
+.addressAdd a{
+    display:block;
+    color:#cca152
+}
+.starRed{
+    color: #f00;
+    position: absolute;
+    left: 0px;
+    top: 19px;
+    font-size:14px;
+    font-weight:700;
+}
+.sbujectImg img{
+    display:block;
+    width:100%;
+}
+.subject-title{
+    padding:15px;
+    font-size:16px;
+    background:#fff;
+    margin-bottom:8px;
+    border-bottom:1px solid #e5e5e5;
+}
+.subSe{
+    font-size:13px;
+    color:#999;
+    border:1px solid #e5e5e5;
+    width:32%;
+    text-align:center;
+    line-height:32px;
+    background:#fff;
+    padding:8px 0;
+}
+.putIn{
+    position:absolute;
+    right:15px;
+    top:17px;
+}
+.putIn i.fa{
+    background:#7ed321;
+    color:#fff;
+    display:block;
+    width:16px;
+    height:16px;
+    text-align:center;
+    line-height:16px;
+    border-radius:100%;
+}
+.cupList{
+    padding-top:25px;
+}
+.copListImg{
+    margin:0 15px ;
+   text-align:center;
+   background:url(../images/cuplist.png);
+   background-size:cover;
+   color:#fff;
+   border-radius:5px;
+   padding:25px 0;
+}
+.cupList ul li{
+    margin-bottom:15px;
+}
+.copListImg span{
+    border:1px solid #fff;
+    border-radius:3px;
+    padding:2px 5px;
+}
+.copListTitle{
+    font-size:16px;
+    margin-bottom:8px;
+}
+.copListItem{
+    margin-bottom:8px;
+}
+.ord-from{
+    border:none;
+    text-align:right;
+}
+.hotelSelectd ul li{
+    position:relative;
+    padding:5px 0;
+}
+.hotelSelectd ul li span{
+    position:absolute;
+    left:0;
+}
+.hotelSelectd ul li input.hotelForm{
+    text-align: right;
+    width:100%;
+    border:none;
+}
+.room p{
+    position: relative;
+    font-size:12px;
+    color:#999;
+    padding:0 0 5px 25px;
+    margin-top:8px;
+}
+.hotelDate{
+    text-align: center;
+    padding:8px 0;
+}
+.hotelDate em{
+    display: inline-block;
+    position: relative;
+    width:38%;
+    margin:0 5px;
+}
+.hotelDateInput{
+    border:1px solid #e5e5e5;
+    border-radius:3px;
+    width:100%;
+    height:28px;
+    line-height:28px;
+    font-size:12px;
+    text-align: center;
+}
+.fill-plus,.fill-minus{
+    position:absolute;
+    color:#999;
+    font-size:12px;
+    display: inline-block;
+    text-align: center;
+    height:28px;
+    line-height:28px;
+    width:28px;
+}
+.fill-plus{
+    border-right:1px solid #e5e5e5;
+    left:0;
+    top:0;
+}
+.fill-minus{
+    border-left:1px solid #e5e5e5;
+    right:0;
+    top:0;
+}
+

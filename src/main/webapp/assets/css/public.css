@@ -1,0 +1,227 @@
+*{
+    padding: 0;
+    margin: 0;
+}
+html, body, h1, h2, h3, h4, h5, h6, p, ul, ol, dl, dd, form, fieldset, legend, input, select, textarea, button, caption, th, td, blockquote, pre {
+    margin: 0;
+    padding: 0
+}
+
+body {
+    color: #333;
+    font-size: 14px;
+    font-family:Hiragino Sans GB,Arial,Helvetica,\\5B8B\4F53,sans-serif;
+    background: #fff;
+    outline: none;
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    text-decoration: none;
+}
+a, button, fieldset, input, span, textarea, ul {
+    -webkit-tap-highlight-color: rgba(255, 255, 255, 0);
+    text-decoration: none;
+}
+
+input {
+    -webkit-user-modify: read-write-plaintext-only;
+    outline: 0;
+}
+input, select, textarea, button {
+    vertical-align: middle;
+    font-size: 100%;
+    outline: 0;
+}
+
+h1, h2, h3, h4, h5, h6, strong, th{
+    font-weight: 400
+}
+
+h1, h2, h3, h4, h5, h6 {
+    font-size: 14px;
+}
+
+li {
+    list-style: none
+}
+.venues_Tab span {
+    display: inline-block;
+}
+
+
+caption, th {
+    text-align: left
+}
+
+fieldset, img {
+    border: 0
+}
+
+address, cite, dfn, em, var, i {
+    font-style: normal
+}
+
+code, dfn, kbd, samp, tt, var, pre {
+    font-family: monospace
+}
+
+del, ins, s {
+    text-decoration: none
+}
+
+small {
+    font-size: 100%
+}
+
+
+a{
+    -webkit-tap-highlight-color: transparent;
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    text-decoration: none;
+    color: #666;
+    outline: 0
+}
+a:hover {
+    opacity: .6;
+    text-decoration: none;
+}
+.aligncenter{
+    text-align:center;
+}
+.clearfix:after {
+    content: '.';
+    display: block;
+    clear: both;
+    line-height: 0;
+    height: 0;
+    visibility: hidden
+}
+.floatLeft{
+    float:left;
+}
+.clear_float {
+    clear: both;
+    font-size: 1px;
+    height: 0;
+    width: 0;
+    line-height: 1;
+    overflow: hidden
+}
+
+.none,.onhide {
+    display: none
+}
+.wrapper{
+    max-width: 640px;
+    margin: 0 auto;
+    overflow: hidden;
+    position: relative;
+    background-size:cover;
+}
+header{
+    background: #000;
+    height:46px;
+    line-height: 46px;
+    padding: 0 10px;
+    z-index: 305;
+    width: 100%;
+    overflow: hidden;
+    text-align:center;
+}
+header img{
+    margin-top:8px;
+}
+.mobile-nav {
+    display: block;
+    background: #000;
+    padding: 4px 5px;
+    margin-top: 10px;
+    position: absolute;
+    left: 15px;
+    top: 0;
+    z-index: 212;
+}
+.mobile-nav span {
+    background: #fff;
+    display: block;
+    width: 22px;
+    height: 2px;
+    border-radius: 1px;
+    margin-top: 4px;
+}
+footer{
+    background:#000;
+    text-align:center;
+    color:#fff;
+    font-size:13px;
+}
+.footNav{
+    padding:15px 0;
+}
+.footNav a{
+    color:#fff;
+    margin:0 8px;
+    line-height:1.6;
+}
+.introduce-state{
+    border:1px solid #fff;
+    margin-left:15px;
+    padding:0 8px;
+    border-radius:15px;
+    width:42px;
+    font-size:13px;
+    text-align:center;
+}
+.gary-bg{
+    background:#f2f3f4;
+}
+.sum{
+    display:block;
+    width:24px;
+    height:24px;
+    border:1px solid #e5e5e5;
+    line-height:24px;
+    background:#ededed;
+    border-radius:3px;
+}
+.bot60{
+    padding-bottom:60px;
+}
+.mobileNavgation{
+    position:fixed;
+    width:100%;
+    background:#000;
+    left:0;
+    top:0;
+    height:0;
+    overflow:hidden;
+    z-index:9999;
+}
+.mobileNavgation ul{
+    padding-top:60px
+}
+.mobileNavgation ul li{
+    margin:0 45px;
+    line-height:48px;
+    border-bottom:1px solid #fff;
+}
+.mobileNavgation ul li.closeNav{
+    border-bottom:none;
+    padding-top:50px;
+}
+.mobileNavgation ul li.closeNav i.fa{
+    margin:0 auto;
+    display:block;
+    border:1px solid #e5e5e5;
+    width:20px;
+    height:20px;
+    text-align:center;
+    border-radius:100%;
+    line-height:20px;
+    color:#e5e5e5;
+
+}
+.mobileNavgation ul li a{
+    color:#fff;
+}

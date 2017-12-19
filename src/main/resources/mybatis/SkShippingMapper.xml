@@ -1,0 +1,396 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkShippingMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkShipping">
+    <id column="shipping_id" jdbcType="TINYINT" property="shippingId" />
+    <result column="shipping_code" jdbcType="VARCHAR" property="shippingCode" />
+    <result column="shipping_name" jdbcType="VARCHAR" property="shippingName" />
+    <result column="shipping_desc" jdbcType="VARCHAR" property="shippingDesc" />
+    <result column="insure" jdbcType="VARCHAR" property="insure" />
+    <result column="support_cod" jdbcType="BIT" property="supportCod" />
+    <result column="enabled" jdbcType="BIT" property="enabled" />
+    <result column="print_bg" jdbcType="VARCHAR" property="printBg" />
+    <result column="print_model" jdbcType="BIT" property="printModel" />
+    <result column="shipping_order" jdbcType="TINYINT" property="shippingOrder" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.skstravel.common.model.sksports2.SkShippingWithBLOBs">
+    <result column="shipping_print" jdbcType="LONGVARCHAR" property="shippingPrint" />
+    <result column="config_lable" jdbcType="LONGVARCHAR" property="configLable" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    shipping_id, shipping_code, shipping_name, shipping_desc, insure, support_cod, enabled, 
+    print_bg, print_model, shipping_order
+  </sql>
+  <sql id="Blob_Column_List">
+    shipping_print, config_lable
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkShippingExample" resultMap="ResultMapWithBLOBs">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_shipping
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkShippingExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_shipping
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Byte" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_shipping
+    where shipping_id = #{shippingId,jdbcType=TINYINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte">
+    delete from sk_shipping
+    where shipping_id = #{shippingId,jdbcType=TINYINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkShippingExample">
+    delete from sk_shipping
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkShippingWithBLOBs">
+    insert into sk_shipping (shipping_id, shipping_code, shipping_name, 
+      shipping_desc, insure, support_cod, 
+      enabled, print_bg, print_model, 
+      shipping_order, shipping_print, config_lable
+      )
+    values (#{shippingId,jdbcType=TINYINT}, #{shippingCode,jdbcType=VARCHAR}, #{shippingName,jdbcType=VARCHAR}, 
+      #{shippingDesc,jdbcType=VARCHAR}, #{insure,jdbcType=VARCHAR}, #{supportCod,jdbcType=BIT}, 
+      #{enabled,jdbcType=BIT}, #{printBg,jdbcType=VARCHAR}, #{printModel,jdbcType=BIT}, 
+      #{shippingOrder,jdbcType=TINYINT}, #{shippingPrint,jdbcType=LONGVARCHAR}, #{configLable,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkShippingWithBLOBs">
+    insert into sk_shipping
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="shippingId != null">
+        shipping_id,
+      </if>
+      <if test="shippingCode != null">
+        shipping_code,
+      </if>
+      <if test="shippingName != null">
+        shipping_name,
+      </if>
+      <if test="shippingDesc != null">
+        shipping_desc,
+      </if>
+      <if test="insure != null">
+        insure,
+      </if>
+      <if test="supportCod != null">
+        support_cod,
+      </if>
+      <if test="enabled != null">
+        enabled,
+      </if>
+      <if test="printBg != null">
+        print_bg,
+      </if>
+      <if test="printModel != null">
+        print_model,
+      </if>
+      <if test="shippingOrder != null">
+        shipping_order,
+      </if>
+      <if test="shippingPrint != null">
+        shipping_print,
+      </if>
+      <if test="configLable != null">
+        config_lable,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="shippingId != null">
+        #{shippingId,jdbcType=TINYINT},
+      </if>
+      <if test="shippingCode != null">
+        #{shippingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingName != null">
+        #{shippingName,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingDesc != null">
+        #{shippingDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="insure != null">
+        #{insure,jdbcType=VARCHAR},
+      </if>
+      <if test="supportCod != null">
+        #{supportCod,jdbcType=BIT},
+      </if>
+      <if test="enabled != null">
+        #{enabled,jdbcType=BIT},
+      </if>
+      <if test="printBg != null">
+        #{printBg,jdbcType=VARCHAR},
+      </if>
+      <if test="printModel != null">
+        #{printModel,jdbcType=BIT},
+      </if>
+      <if test="shippingOrder != null">
+        #{shippingOrder,jdbcType=TINYINT},
+      </if>
+      <if test="shippingPrint != null">
+        #{shippingPrint,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="configLable != null">
+        #{configLable,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkShippingExample" resultType="java.lang.Long">
+    select count(*) from sk_shipping
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_shipping
+    <set>
+      <if test="record.shippingId != null">
+        shipping_id = #{record.shippingId,jdbcType=TINYINT},
+      </if>
+      <if test="record.shippingCode != null">
+        shipping_code = #{record.shippingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shippingName != null">
+        shipping_name = #{record.shippingName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.shippingDesc != null">
+        shipping_desc = #{record.shippingDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="record.insure != null">
+        insure = #{record.insure,jdbcType=VARCHAR},
+      </if>
+      <if test="record.supportCod != null">
+        support_cod = #{record.supportCod,jdbcType=BIT},
+      </if>
+      <if test="record.enabled != null">
+        enabled = #{record.enabled,jdbcType=BIT},
+      </if>
+      <if test="record.printBg != null">
+        print_bg = #{record.printBg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.printModel != null">
+        print_model = #{record.printModel,jdbcType=BIT},
+      </if>
+      <if test="record.shippingOrder != null">
+        shipping_order = #{record.shippingOrder,jdbcType=TINYINT},
+      </if>
+      <if test="record.shippingPrint != null">
+        shipping_print = #{record.shippingPrint,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.configLable != null">
+        config_lable = #{record.configLable,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sk_shipping
+    set shipping_id = #{record.shippingId,jdbcType=TINYINT},
+      shipping_code = #{record.shippingCode,jdbcType=VARCHAR},
+      shipping_name = #{record.shippingName,jdbcType=VARCHAR},
+      shipping_desc = #{record.shippingDesc,jdbcType=VARCHAR},
+      insure = #{record.insure,jdbcType=VARCHAR},
+      support_cod = #{record.supportCod,jdbcType=BIT},
+      enabled = #{record.enabled,jdbcType=BIT},
+      print_bg = #{record.printBg,jdbcType=VARCHAR},
+      print_model = #{record.printModel,jdbcType=BIT},
+      shipping_order = #{record.shippingOrder,jdbcType=TINYINT},
+      shipping_print = #{record.shippingPrint,jdbcType=LONGVARCHAR},
+      config_lable = #{record.configLable,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_shipping
+    set shipping_id = #{record.shippingId,jdbcType=TINYINT},
+      shipping_code = #{record.shippingCode,jdbcType=VARCHAR},
+      shipping_name = #{record.shippingName,jdbcType=VARCHAR},
+      shipping_desc = #{record.shippingDesc,jdbcType=VARCHAR},
+      insure = #{record.insure,jdbcType=VARCHAR},
+      support_cod = #{record.supportCod,jdbcType=BIT},
+      enabled = #{record.enabled,jdbcType=BIT},
+      print_bg = #{record.printBg,jdbcType=VARCHAR},
+      print_model = #{record.printModel,jdbcType=BIT},
+      shipping_order = #{record.shippingOrder,jdbcType=TINYINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkShippingWithBLOBs">
+    update sk_shipping
+    <set>
+      <if test="shippingCode != null">
+        shipping_code = #{shippingCode,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingName != null">
+        shipping_name = #{shippingName,jdbcType=VARCHAR},
+      </if>
+      <if test="shippingDesc != null">
+        shipping_desc = #{shippingDesc,jdbcType=VARCHAR},
+      </if>
+      <if test="insure != null">
+        insure = #{insure,jdbcType=VARCHAR},
+      </if>
+      <if test="supportCod != null">
+        support_cod = #{supportCod,jdbcType=BIT},
+      </if>
+      <if test="enabled != null">
+        enabled = #{enabled,jdbcType=BIT},
+      </if>
+      <if test="printBg != null">
+        print_bg = #{printBg,jdbcType=VARCHAR},
+      </if>
+      <if test="printModel != null">
+        print_model = #{printModel,jdbcType=BIT},
+      </if>
+      <if test="shippingOrder != null">
+        shipping_order = #{shippingOrder,jdbcType=TINYINT},
+      </if>
+      <if test="shippingPrint != null">
+        shipping_print = #{shippingPrint,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="configLable != null">
+        config_lable = #{configLable,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where shipping_id = #{shippingId,jdbcType=TINYINT}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkShippingWithBLOBs">
+    update sk_shipping
+    set shipping_code = #{shippingCode,jdbcType=VARCHAR},
+      shipping_name = #{shippingName,jdbcType=VARCHAR},
+      shipping_desc = #{shippingDesc,jdbcType=VARCHAR},
+      insure = #{insure,jdbcType=VARCHAR},
+      support_cod = #{supportCod,jdbcType=BIT},
+      enabled = #{enabled,jdbcType=BIT},
+      print_bg = #{printBg,jdbcType=VARCHAR},
+      print_model = #{printModel,jdbcType=BIT},
+      shipping_order = #{shippingOrder,jdbcType=TINYINT},
+      shipping_print = #{shippingPrint,jdbcType=LONGVARCHAR},
+      config_lable = #{configLable,jdbcType=LONGVARCHAR}
+    where shipping_id = #{shippingId,jdbcType=TINYINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkShipping">
+    update sk_shipping
+    set shipping_code = #{shippingCode,jdbcType=VARCHAR},
+      shipping_name = #{shippingName,jdbcType=VARCHAR},
+      shipping_desc = #{shippingDesc,jdbcType=VARCHAR},
+      insure = #{insure,jdbcType=VARCHAR},
+      support_cod = #{supportCod,jdbcType=BIT},
+      enabled = #{enabled,jdbcType=BIT},
+      print_bg = #{printBg,jdbcType=VARCHAR},
+      print_model = #{printModel,jdbcType=BIT},
+      shipping_order = #{shippingOrder,jdbcType=TINYINT}
+    where shipping_id = #{shippingId,jdbcType=TINYINT}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

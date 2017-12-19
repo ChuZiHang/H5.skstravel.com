@@ -1,0 +1,389 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkOrderTicketMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkOrderTicket">
+    <id column="rec_id" jdbcType="INTEGER" property="recId" />
+    <result column="order_id" jdbcType="INTEGER" property="orderId" />
+    <result column="code" jdbcType="VARCHAR" property="code" />
+    <result column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_price" jdbcType="DECIMAL" property="goodsPrice" />
+    <result column="goods_number" jdbcType="INTEGER" property="goodsNumber" />
+    <result column="game_id" jdbcType="INTEGER" property="gameId" />
+    <result column="sche_id" jdbcType="INTEGER" property="scheId" />
+    <result column="number_id" jdbcType="INTEGER" property="numberId" />
+    <result column="pitch_id" jdbcType="INTEGER" property="pitchId" />
+    <result column="bearer_id" jdbcType="INTEGER" property="bearerId" />
+    <result column="is_pay_bx" jdbcType="INTEGER" property="isPayBx" />
+    <result column="type" jdbcType="VARCHAR" property="type" />
+    <result column="ticket_code" jdbcType="VARCHAR" property="ticketCode" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    rec_id, order_id, code, goods_id, goods_name, goods_price, goods_number, game_id, 
+    sche_id, number_id, pitch_id, bearer_id, is_pay_bx, type, ticket_code
+  </sql>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkOrderTicketExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_order_ticket
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_order_ticket
+    where rec_id = #{recId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_order_ticket
+    where rec_id = #{recId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkOrderTicketExample">
+    delete from sk_order_ticket
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkOrderTicket">
+    insert into sk_order_ticket (rec_id, order_id, code, 
+      goods_id, goods_name, goods_price, 
+      goods_number, game_id, sche_id, 
+      number_id, pitch_id, bearer_id, 
+      is_pay_bx, type, ticket_code
+      )
+    values (#{recId,jdbcType=INTEGER}, #{orderId,jdbcType=INTEGER}, #{code,jdbcType=VARCHAR}, 
+      #{goodsId,jdbcType=INTEGER}, #{goodsName,jdbcType=VARCHAR}, #{goodsPrice,jdbcType=DECIMAL}, 
+      #{goodsNumber,jdbcType=INTEGER}, #{gameId,jdbcType=INTEGER}, #{scheId,jdbcType=INTEGER}, 
+      #{numberId,jdbcType=INTEGER}, #{pitchId,jdbcType=INTEGER}, #{bearerId,jdbcType=INTEGER}, 
+      #{isPayBx,jdbcType=INTEGER}, #{type,jdbcType=VARCHAR}, #{ticketCode,jdbcType=VARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkOrderTicket">
+    insert into sk_order_ticket
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="recId != null">
+        rec_id,
+      </if>
+      <if test="orderId != null">
+        order_id,
+      </if>
+      <if test="code != null">
+        code,
+      </if>
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsPrice != null">
+        goods_price,
+      </if>
+      <if test="goodsNumber != null">
+        goods_number,
+      </if>
+      <if test="gameId != null">
+        game_id,
+      </if>
+      <if test="scheId != null">
+        sche_id,
+      </if>
+      <if test="numberId != null">
+        number_id,
+      </if>
+      <if test="pitchId != null">
+        pitch_id,
+      </if>
+      <if test="bearerId != null">
+        bearer_id,
+      </if>
+      <if test="isPayBx != null">
+        is_pay_bx,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="ticketCode != null">
+        ticket_code,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="recId != null">
+        #{recId,jdbcType=INTEGER},
+      </if>
+      <if test="orderId != null">
+        #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsNumber != null">
+        #{goodsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="gameId != null">
+        #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="scheId != null">
+        #{scheId,jdbcType=INTEGER},
+      </if>
+      <if test="numberId != null">
+        #{numberId,jdbcType=INTEGER},
+      </if>
+      <if test="pitchId != null">
+        #{pitchId,jdbcType=INTEGER},
+      </if>
+      <if test="bearerId != null">
+        #{bearerId,jdbcType=INTEGER},
+      </if>
+      <if test="isPayBx != null">
+        #{isPayBx,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketCode != null">
+        #{ticketCode,jdbcType=VARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkOrderTicketExample" resultType="java.lang.Long">
+    select count(*) from sk_order_ticket
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_order_ticket
+    <set>
+      <if test="record.recId != null">
+        rec_id = #{record.recId,jdbcType=INTEGER},
+      </if>
+      <if test="record.orderId != null">
+        order_id = #{record.orderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.code != null">
+        code = #{record.code,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsName != null">
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsPrice != null">
+        goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.goodsNumber != null">
+        goods_number = #{record.goodsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.gameId != null">
+        game_id = #{record.gameId,jdbcType=INTEGER},
+      </if>
+      <if test="record.scheId != null">
+        sche_id = #{record.scheId,jdbcType=INTEGER},
+      </if>
+      <if test="record.numberId != null">
+        number_id = #{record.numberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pitchId != null">
+        pitch_id = #{record.pitchId,jdbcType=INTEGER},
+      </if>
+      <if test="record.bearerId != null">
+        bearer_id = #{record.bearerId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isPayBx != null">
+        is_pay_bx = #{record.isPayBx,jdbcType=INTEGER},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketCode != null">
+        ticket_code = #{record.ticketCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_order_ticket
+    set rec_id = #{record.recId,jdbcType=INTEGER},
+      order_id = #{record.orderId,jdbcType=INTEGER},
+      code = #{record.code,jdbcType=VARCHAR},
+      goods_id = #{record.goodsId,jdbcType=INTEGER},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_price = #{record.goodsPrice,jdbcType=DECIMAL},
+      goods_number = #{record.goodsNumber,jdbcType=INTEGER},
+      game_id = #{record.gameId,jdbcType=INTEGER},
+      sche_id = #{record.scheId,jdbcType=INTEGER},
+      number_id = #{record.numberId,jdbcType=INTEGER},
+      pitch_id = #{record.pitchId,jdbcType=INTEGER},
+      bearer_id = #{record.bearerId,jdbcType=INTEGER},
+      is_pay_bx = #{record.isPayBx,jdbcType=INTEGER},
+      type = #{record.type,jdbcType=VARCHAR},
+      ticket_code = #{record.ticketCode,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkOrderTicket">
+    update sk_order_ticket
+    <set>
+      <if test="orderId != null">
+        order_id = #{orderId,jdbcType=INTEGER},
+      </if>
+      <if test="code != null">
+        code = #{code,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsId != null">
+        goods_id = #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsPrice != null">
+        goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="goodsNumber != null">
+        goods_number = #{goodsNumber,jdbcType=INTEGER},
+      </if>
+      <if test="gameId != null">
+        game_id = #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="scheId != null">
+        sche_id = #{scheId,jdbcType=INTEGER},
+      </if>
+      <if test="numberId != null">
+        number_id = #{numberId,jdbcType=INTEGER},
+      </if>
+      <if test="pitchId != null">
+        pitch_id = #{pitchId,jdbcType=INTEGER},
+      </if>
+      <if test="bearerId != null">
+        bearer_id = #{bearerId,jdbcType=INTEGER},
+      </if>
+      <if test="isPayBx != null">
+        is_pay_bx = #{isPayBx,jdbcType=INTEGER},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketCode != null">
+        ticket_code = #{ticketCode,jdbcType=VARCHAR},
+      </if>
+    </set>
+    where rec_id = #{recId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkOrderTicket">
+    update sk_order_ticket
+    set order_id = #{orderId,jdbcType=INTEGER},
+      code = #{code,jdbcType=VARCHAR},
+      goods_id = #{goodsId,jdbcType=INTEGER},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_price = #{goodsPrice,jdbcType=DECIMAL},
+      goods_number = #{goodsNumber,jdbcType=INTEGER},
+      game_id = #{gameId,jdbcType=INTEGER},
+      sche_id = #{scheId,jdbcType=INTEGER},
+      number_id = #{numberId,jdbcType=INTEGER},
+      pitch_id = #{pitchId,jdbcType=INTEGER},
+      bearer_id = #{bearerId,jdbcType=INTEGER},
+      is_pay_bx = #{isPayBx,jdbcType=INTEGER},
+      type = #{type,jdbcType=VARCHAR},
+      ticket_code = #{ticketCode,jdbcType=VARCHAR}
+    where rec_id = #{recId,jdbcType=INTEGER}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

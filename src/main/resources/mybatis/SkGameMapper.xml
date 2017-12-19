@@ -1,0 +1,415 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkGameMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkGame">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="game_name" jdbcType="VARCHAR" property="gameName" />
+    <result column="start_time" jdbcType="INTEGER" property="startTime" />
+    <result column="end_time" jdbcType="INTEGER" property="endTime" />
+    <result column="game_img" jdbcType="VARCHAR" property="gameImg" />
+    <result column="game_logo" jdbcType="VARCHAR" property="gameLogo" />
+    <result column="game_sealogo" jdbcType="VARCHAR" property="gameSealogo" />
+    <result column="template" jdbcType="VARCHAR" property="template" />
+    <result column="game_intro" jdbcType="VARCHAR" property="gameIntro" />
+    <result column="is_type" jdbcType="INTEGER" property="isType" />
+    <result column="is_insurance" jdbcType="TINYINT" property="isInsurance" />
+    <result column="scat_id" jdbcType="INTEGER" property="scatId" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.skstravel.common.model.sksports2.SkGame">
+    <result column="game_text" jdbcType="LONGVARCHAR" property="gameText" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, game_name, start_time, end_time, game_img, game_logo, game_sealogo, template, 
+    game_intro, is_type, is_insurance, scat_id
+  </sql>
+  <sql id="Blob_Column_List">
+    game_text
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkGameExample" resultMap="ResultMapWithBLOBs">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_game
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkGameExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_game
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_game
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_game
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkGameExample">
+    delete from sk_game
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkGame">
+    insert into sk_game (id, game_name, start_time, 
+      end_time, game_img, game_logo, 
+      game_sealogo, template, game_intro, 
+      is_type, is_insurance, scat_id, 
+      game_text)
+    values (#{id,jdbcType=INTEGER}, #{gameName,jdbcType=VARCHAR}, #{startTime,jdbcType=INTEGER}, 
+      #{endTime,jdbcType=INTEGER}, #{gameImg,jdbcType=VARCHAR}, #{gameLogo,jdbcType=VARCHAR}, 
+      #{gameSealogo,jdbcType=VARCHAR}, #{template,jdbcType=VARCHAR}, #{gameIntro,jdbcType=VARCHAR}, 
+      #{isType,jdbcType=INTEGER}, #{isInsurance,jdbcType=TINYINT}, #{scatId,jdbcType=INTEGER}, 
+      #{gameText,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkGame">
+    insert into sk_game
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="gameName != null">
+        game_name,
+      </if>
+      <if test="startTime != null">
+        start_time,
+      </if>
+      <if test="endTime != null">
+        end_time,
+      </if>
+      <if test="gameImg != null">
+        game_img,
+      </if>
+      <if test="gameLogo != null">
+        game_logo,
+      </if>
+      <if test="gameSealogo != null">
+        game_sealogo,
+      </if>
+      <if test="template != null">
+        template,
+      </if>
+      <if test="gameIntro != null">
+        game_intro,
+      </if>
+      <if test="isType != null">
+        is_type,
+      </if>
+      <if test="isInsurance != null">
+        is_insurance,
+      </if>
+      <if test="scatId != null">
+        scat_id,
+      </if>
+      <if test="gameText != null">
+        game_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="gameName != null">
+        #{gameName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        #{startTime,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null">
+        #{endTime,jdbcType=INTEGER},
+      </if>
+      <if test="gameImg != null">
+        #{gameImg,jdbcType=VARCHAR},
+      </if>
+      <if test="gameLogo != null">
+        #{gameLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="gameSealogo != null">
+        #{gameSealogo,jdbcType=VARCHAR},
+      </if>
+      <if test="template != null">
+        #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="gameIntro != null">
+        #{gameIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="isType != null">
+        #{isType,jdbcType=INTEGER},
+      </if>
+      <if test="isInsurance != null">
+        #{isInsurance,jdbcType=TINYINT},
+      </if>
+      <if test="scatId != null">
+        #{scatId,jdbcType=INTEGER},
+      </if>
+      <if test="gameText != null">
+        #{gameText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkGameExample" resultType="java.lang.Long">
+    select count(*) from sk_game
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_game
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.gameName != null">
+        game_name = #{record.gameName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.startTime != null">
+        start_time = #{record.startTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.endTime != null">
+        end_time = #{record.endTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.gameImg != null">
+        game_img = #{record.gameImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gameLogo != null">
+        game_logo = #{record.gameLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gameSealogo != null">
+        game_sealogo = #{record.gameSealogo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.template != null">
+        template = #{record.template,jdbcType=VARCHAR},
+      </if>
+      <if test="record.gameIntro != null">
+        game_intro = #{record.gameIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isType != null">
+        is_type = #{record.isType,jdbcType=INTEGER},
+      </if>
+      <if test="record.isInsurance != null">
+        is_insurance = #{record.isInsurance,jdbcType=TINYINT},
+      </if>
+      <if test="record.scatId != null">
+        scat_id = #{record.scatId,jdbcType=INTEGER},
+      </if>
+      <if test="record.gameText != null">
+        game_text = #{record.gameText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sk_game
+    set id = #{record.id,jdbcType=INTEGER},
+      game_name = #{record.gameName,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=INTEGER},
+      end_time = #{record.endTime,jdbcType=INTEGER},
+      game_img = #{record.gameImg,jdbcType=VARCHAR},
+      game_logo = #{record.gameLogo,jdbcType=VARCHAR},
+      game_sealogo = #{record.gameSealogo,jdbcType=VARCHAR},
+      template = #{record.template,jdbcType=VARCHAR},
+      game_intro = #{record.gameIntro,jdbcType=VARCHAR},
+      is_type = #{record.isType,jdbcType=INTEGER},
+      is_insurance = #{record.isInsurance,jdbcType=TINYINT},
+      scat_id = #{record.scatId,jdbcType=INTEGER},
+      game_text = #{record.gameText,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_game
+    set id = #{record.id,jdbcType=INTEGER},
+      game_name = #{record.gameName,jdbcType=VARCHAR},
+      start_time = #{record.startTime,jdbcType=INTEGER},
+      end_time = #{record.endTime,jdbcType=INTEGER},
+      game_img = #{record.gameImg,jdbcType=VARCHAR},
+      game_logo = #{record.gameLogo,jdbcType=VARCHAR},
+      game_sealogo = #{record.gameSealogo,jdbcType=VARCHAR},
+      template = #{record.template,jdbcType=VARCHAR},
+      game_intro = #{record.gameIntro,jdbcType=VARCHAR},
+      is_type = #{record.isType,jdbcType=INTEGER},
+      is_insurance = #{record.isInsurance,jdbcType=TINYINT},
+      scat_id = #{record.scatId,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkGame">
+    update sk_game
+    <set>
+      <if test="gameName != null">
+        game_name = #{gameName,jdbcType=VARCHAR},
+      </if>
+      <if test="startTime != null">
+        start_time = #{startTime,jdbcType=INTEGER},
+      </if>
+      <if test="endTime != null">
+        end_time = #{endTime,jdbcType=INTEGER},
+      </if>
+      <if test="gameImg != null">
+        game_img = #{gameImg,jdbcType=VARCHAR},
+      </if>
+      <if test="gameLogo != null">
+        game_logo = #{gameLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="gameSealogo != null">
+        game_sealogo = #{gameSealogo,jdbcType=VARCHAR},
+      </if>
+      <if test="template != null">
+        template = #{template,jdbcType=VARCHAR},
+      </if>
+      <if test="gameIntro != null">
+        game_intro = #{gameIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="isType != null">
+        is_type = #{isType,jdbcType=INTEGER},
+      </if>
+      <if test="isInsurance != null">
+        is_insurance = #{isInsurance,jdbcType=TINYINT},
+      </if>
+      <if test="scatId != null">
+        scat_id = #{scatId,jdbcType=INTEGER},
+      </if>
+      <if test="gameText != null">
+        game_text = #{gameText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkGame">
+    update sk_game
+    set game_name = #{gameName,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=INTEGER},
+      game_img = #{gameImg,jdbcType=VARCHAR},
+      game_logo = #{gameLogo,jdbcType=VARCHAR},
+      game_sealogo = #{gameSealogo,jdbcType=VARCHAR},
+      template = #{template,jdbcType=VARCHAR},
+      game_intro = #{gameIntro,jdbcType=VARCHAR},
+      is_type = #{isType,jdbcType=INTEGER},
+      is_insurance = #{isInsurance,jdbcType=TINYINT},
+      scat_id = #{scatId,jdbcType=INTEGER},
+      game_text = #{gameText,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkGame">
+    update sk_game
+    set game_name = #{gameName,jdbcType=VARCHAR},
+      start_time = #{startTime,jdbcType=INTEGER},
+      end_time = #{endTime,jdbcType=INTEGER},
+      game_img = #{gameImg,jdbcType=VARCHAR},
+      game_logo = #{gameLogo,jdbcType=VARCHAR},
+      game_sealogo = #{gameSealogo,jdbcType=VARCHAR},
+      template = #{template,jdbcType=VARCHAR},
+      game_intro = #{gameIntro,jdbcType=VARCHAR},
+      is_type = #{isType,jdbcType=INTEGER},
+      is_insurance = #{isInsurance,jdbcType=TINYINT},
+      scat_id = #{scatId,jdbcType=INTEGER}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

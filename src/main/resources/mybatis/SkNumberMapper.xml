@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkNumberMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkNumber">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="num_name" jdbcType="VARCHAR" property="numName" />
+    <result column="num_img" jdbcType="VARCHAR" property="numImg" />
+    <result column="sche_id" jdbcType="INTEGER" property="scheId" />
+    <result column="pitch_id" jdbcType="INTEGER" property="pitchId" />
+    <result column="num_start" jdbcType="TIMESTAMP" property="numStart" />
+    <result column="num_end" jdbcType="TIMESTAMP" property="numEnd" />
+    <result column="color_id" jdbcType="VARCHAR" property="colorId" />
+    <result column="numbers" jdbcType="VARCHAR" property="numbers" />
+    <result column="is_hot" jdbcType="BIT" property="isHot" />
+    <result column="num_title" jdbcType="VARCHAR" property="numTitle" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.skstravel.common.model.sksports2.SkNumber">
+    <result column="num_text" jdbcType="LONGVARCHAR" property="numText" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, num_name, num_img, sche_id, pitch_id, num_start, num_end, color_id, numbers, 
+    is_hot, num_title
+  </sql>
+  <sql id="Blob_Column_List">
+    num_text
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkNumberExample" resultMap="ResultMapWithBLOBs">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_number
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkNumberExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_number
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_number
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_number
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkNumberExample">
+    delete from sk_number
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkNumber">
+    insert into sk_number (id, num_name, num_img, 
+      sche_id, pitch_id, num_start, 
+      num_end, color_id, numbers, 
+      is_hot, num_title, num_text
+      )
+    values (#{id,jdbcType=INTEGER}, #{numName,jdbcType=VARCHAR}, #{numImg,jdbcType=VARCHAR}, 
+      #{scheId,jdbcType=INTEGER}, #{pitchId,jdbcType=INTEGER}, #{numStart,jdbcType=TIMESTAMP}, 
+      #{numEnd,jdbcType=TIMESTAMP}, #{colorId,jdbcType=VARCHAR}, #{numbers,jdbcType=VARCHAR}, 
+      #{isHot,jdbcType=BIT}, #{numTitle,jdbcType=VARCHAR}, #{numText,jdbcType=LONGVARCHAR}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkNumber">
+    insert into sk_number
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="numName != null">
+        num_name,
+      </if>
+      <if test="numImg != null">
+        num_img,
+      </if>
+      <if test="scheId != null">
+        sche_id,
+      </if>
+      <if test="pitchId != null">
+        pitch_id,
+      </if>
+      <if test="numStart != null">
+        num_start,
+      </if>
+      <if test="numEnd != null">
+        num_end,
+      </if>
+      <if test="colorId != null">
+        color_id,
+      </if>
+      <if test="numbers != null">
+        numbers,
+      </if>
+      <if test="isHot != null">
+        is_hot,
+      </if>
+      <if test="numTitle != null">
+        num_title,
+      </if>
+      <if test="numText != null">
+        num_text,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="numName != null">
+        #{numName,jdbcType=VARCHAR},
+      </if>
+      <if test="numImg != null">
+        #{numImg,jdbcType=VARCHAR},
+      </if>
+      <if test="scheId != null">
+        #{scheId,jdbcType=INTEGER},
+      </if>
+      <if test="pitchId != null">
+        #{pitchId,jdbcType=INTEGER},
+      </if>
+      <if test="numStart != null">
+        #{numStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="numEnd != null">
+        #{numEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="colorId != null">
+        #{colorId,jdbcType=VARCHAR},
+      </if>
+      <if test="numbers != null">
+        #{numbers,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null">
+        #{isHot,jdbcType=BIT},
+      </if>
+      <if test="numTitle != null">
+        #{numTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="numText != null">
+        #{numText,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkNumberExample" resultType="java.lang.Long">
+    select count(*) from sk_number
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_number
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.numName != null">
+        num_name = #{record.numName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.numImg != null">
+        num_img = #{record.numImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.scheId != null">
+        sche_id = #{record.scheId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pitchId != null">
+        pitch_id = #{record.pitchId,jdbcType=INTEGER},
+      </if>
+      <if test="record.numStart != null">
+        num_start = #{record.numStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.numEnd != null">
+        num_end = #{record.numEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.colorId != null">
+        color_id = #{record.colorId,jdbcType=VARCHAR},
+      </if>
+      <if test="record.numbers != null">
+        numbers = #{record.numbers,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isHot != null">
+        is_hot = #{record.isHot,jdbcType=BIT},
+      </if>
+      <if test="record.numTitle != null">
+        num_title = #{record.numTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.numText != null">
+        num_text = #{record.numText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sk_number
+    set id = #{record.id,jdbcType=INTEGER},
+      num_name = #{record.numName,jdbcType=VARCHAR},
+      num_img = #{record.numImg,jdbcType=VARCHAR},
+      sche_id = #{record.scheId,jdbcType=INTEGER},
+      pitch_id = #{record.pitchId,jdbcType=INTEGER},
+      num_start = #{record.numStart,jdbcType=TIMESTAMP},
+      num_end = #{record.numEnd,jdbcType=TIMESTAMP},
+      color_id = #{record.colorId,jdbcType=VARCHAR},
+      numbers = #{record.numbers,jdbcType=VARCHAR},
+      is_hot = #{record.isHot,jdbcType=BIT},
+      num_title = #{record.numTitle,jdbcType=VARCHAR},
+      num_text = #{record.numText,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_number
+    set id = #{record.id,jdbcType=INTEGER},
+      num_name = #{record.numName,jdbcType=VARCHAR},
+      num_img = #{record.numImg,jdbcType=VARCHAR},
+      sche_id = #{record.scheId,jdbcType=INTEGER},
+      pitch_id = #{record.pitchId,jdbcType=INTEGER},
+      num_start = #{record.numStart,jdbcType=TIMESTAMP},
+      num_end = #{record.numEnd,jdbcType=TIMESTAMP},
+      color_id = #{record.colorId,jdbcType=VARCHAR},
+      numbers = #{record.numbers,jdbcType=VARCHAR},
+      is_hot = #{record.isHot,jdbcType=BIT},
+      num_title = #{record.numTitle,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkNumber">
+    update sk_number
+    <set>
+      <if test="numName != null">
+        num_name = #{numName,jdbcType=VARCHAR},
+      </if>
+      <if test="numImg != null">
+        num_img = #{numImg,jdbcType=VARCHAR},
+      </if>
+      <if test="scheId != null">
+        sche_id = #{scheId,jdbcType=INTEGER},
+      </if>
+      <if test="pitchId != null">
+        pitch_id = #{pitchId,jdbcType=INTEGER},
+      </if>
+      <if test="numStart != null">
+        num_start = #{numStart,jdbcType=TIMESTAMP},
+      </if>
+      <if test="numEnd != null">
+        num_end = #{numEnd,jdbcType=TIMESTAMP},
+      </if>
+      <if test="colorId != null">
+        color_id = #{colorId,jdbcType=VARCHAR},
+      </if>
+      <if test="numbers != null">
+        numbers = #{numbers,jdbcType=VARCHAR},
+      </if>
+      <if test="isHot != null">
+        is_hot = #{isHot,jdbcType=BIT},
+      </if>
+      <if test="numTitle != null">
+        num_title = #{numTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="numText != null">
+        num_text = #{numText,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkNumber">
+    update sk_number
+    set num_name = #{numName,jdbcType=VARCHAR},
+      num_img = #{numImg,jdbcType=VARCHAR},
+      sche_id = #{scheId,jdbcType=INTEGER},
+      pitch_id = #{pitchId,jdbcType=INTEGER},
+      num_start = #{numStart,jdbcType=TIMESTAMP},
+      num_end = #{numEnd,jdbcType=TIMESTAMP},
+      color_id = #{colorId,jdbcType=VARCHAR},
+      numbers = #{numbers,jdbcType=VARCHAR},
+      is_hot = #{isHot,jdbcType=BIT},
+      num_title = #{numTitle,jdbcType=VARCHAR},
+      num_text = #{numText,jdbcType=LONGVARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkNumber">
+    update sk_number
+    set num_name = #{numName,jdbcType=VARCHAR},
+      num_img = #{numImg,jdbcType=VARCHAR},
+      sche_id = #{scheId,jdbcType=INTEGER},
+      pitch_id = #{pitchId,jdbcType=INTEGER},
+      num_start = #{numStart,jdbcType=TIMESTAMP},
+      num_end = #{numEnd,jdbcType=TIMESTAMP},
+      color_id = #{colorId,jdbcType=VARCHAR},
+      numbers = #{numbers,jdbcType=VARCHAR},
+      is_hot = #{isHot,jdbcType=BIT},
+      num_title = #{numTitle,jdbcType=VARCHAR}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

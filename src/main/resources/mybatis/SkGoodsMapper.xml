@@ -1,0 +1,1304 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkGoodsMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkGoods">
+    <id column="goods_id" jdbcType="INTEGER" property="goodsId" />
+    <result column="cat_id" jdbcType="SMALLINT" property="catId" />
+    <result column="goods_sn" jdbcType="VARCHAR" property="goodsSn" />
+    <result column="goods_name" jdbcType="VARCHAR" property="goodsName" />
+    <result column="goods_name_style" jdbcType="VARCHAR" property="goodsNameStyle" />
+    <result column="click_count" jdbcType="INTEGER" property="clickCount" />
+    <result column="brand_id" jdbcType="SMALLINT" property="brandId" />
+    <result column="provider_name" jdbcType="VARCHAR" property="providerName" />
+    <result column="goods_number" jdbcType="SMALLINT" property="goodsNumber" />
+    <result column="goods_weight" jdbcType="DECIMAL" property="goodsWeight" />
+    <result column="market_price" jdbcType="DECIMAL" property="marketPrice" />
+    <result column="shop_price" jdbcType="DECIMAL" property="shopPrice" />
+    <result column="promote_price" jdbcType="DECIMAL" property="promotePrice" />
+    <result column="promote_start_date" jdbcType="INTEGER" property="promoteStartDate" />
+    <result column="promote_end_date" jdbcType="INTEGER" property="promoteEndDate" />
+    <result column="warn_number" jdbcType="TINYINT" property="warnNumber" />
+    <result column="keywords" jdbcType="VARCHAR" property="keywords" />
+    <result column="goods_brief" jdbcType="VARCHAR" property="goodsBrief" />
+    <result column="goods_thumb" jdbcType="VARCHAR" property="goodsThumb" />
+    <result column="goods_img" jdbcType="VARCHAR" property="goodsImg" />
+    <result column="original_img" jdbcType="VARCHAR" property="originalImg" />
+    <result column="is_real" jdbcType="TINYINT" property="isReal" />
+    <result column="extension_code" jdbcType="VARCHAR" property="extensionCode" />
+    <result column="is_on_sale" jdbcType="BIT" property="isOnSale" />
+    <result column="is_alone_sale" jdbcType="BIT" property="isAloneSale" />
+    <result column="is_shipping" jdbcType="BIT" property="isShipping" />
+    <result column="integral" jdbcType="INTEGER" property="integral" />
+    <result column="add_time" jdbcType="INTEGER" property="addTime" />
+    <result column="sort_order" jdbcType="SMALLINT" property="sortOrder" />
+    <result column="is_delete" jdbcType="BIT" property="isDelete" />
+    <result column="is_best" jdbcType="BIT" property="isBest" />
+    <result column="is_new" jdbcType="BIT" property="isNew" />
+    <result column="is_hot" jdbcType="BIT" property="isHot" />
+    <result column="is_promote" jdbcType="BIT" property="isPromote" />
+    <result column="bonus_type_id" jdbcType="TINYINT" property="bonusTypeId" />
+    <result column="last_update" jdbcType="INTEGER" property="lastUpdate" />
+    <result column="goods_type" jdbcType="SMALLINT" property="goodsType" />
+    <result column="seller_note" jdbcType="VARCHAR" property="sellerNote" />
+    <result column="give_integral" jdbcType="INTEGER" property="giveIntegral" />
+    <result column="rank_integral" jdbcType="INTEGER" property="rankIntegral" />
+    <result column="suppliers_id" jdbcType="SMALLINT" property="suppliersId" />
+    <result column="is_check" jdbcType="BIT" property="isCheck" />
+    <result column="seat_id" jdbcType="INTEGER" property="seatId" />
+    <result column="game_id" jdbcType="INTEGER" property="gameId" />
+    <result column="sche_id" jdbcType="INTEGER" property="scheId" />
+    <result column="number_id" jdbcType="INTEGER" property="numberId" />
+    <result column="pitch_id" jdbcType="INTEGER" property="pitchId" />
+    <result column="ic" jdbcType="INTEGER" property="ic" />
+    <result column="heat" jdbcType="INTEGER" property="heat" />
+    <result column="is_ticket" jdbcType="BIT" property="isTicket" />
+    <result column="is_goods" jdbcType="BIT" property="isGoods" />
+    <result column="is_hotel" jdbcType="BIT" property="isHotel" />
+    <result column="is_plane" jdbcType="BIT" property="isPlane" />
+    <result column="award_credits_num" jdbcType="INTEGER" property="awardCreditsNum" />
+    <result column="seat_logo" jdbcType="VARCHAR" property="seatLogo" />
+    <result column="seat_picture" jdbcType="VARCHAR" property="seatPicture" />
+    <result column="seat_color" jdbcType="VARCHAR" property="seatColor" />
+    <result column="ticket_business" jdbcType="VARCHAR" property="ticketBusiness" />
+    <result column="seat_text" jdbcType="VARCHAR" property="seatText" />
+    <result column="sum_number" jdbcType="INTEGER" property="sumNumber" />
+    <result column="banquet_logo" jdbcType="VARCHAR" property="banquetLogo" />
+    <result column="rank" jdbcType="VARCHAR" property="rank" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.skstravel.common.model.sksports2.SkGoods">
+    <result column="goods_desc" jdbcType="LONGVARCHAR" property="goodsDesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    goods_id, cat_id, goods_sn, goods_name, goods_name_style, click_count, brand_id, 
+    provider_name, goods_number, goods_weight, market_price, shop_price, promote_price, 
+    promote_start_date, promote_end_date, warn_number, keywords, goods_brief, goods_thumb, 
+    goods_img, original_img, is_real, extension_code, is_on_sale, is_alone_sale, is_shipping, 
+    integral, add_time, sort_order, is_delete, is_best, is_new, is_hot, is_promote, bonus_type_id, 
+    last_update, goods_type, seller_note, give_integral, rank_integral, suppliers_id, 
+    is_check, seat_id, game_id, sche_id, number_id, pitch_id, ic, heat, is_ticket, is_goods, 
+    is_hotel, is_plane, award_credits_num, seat_logo, seat_picture, seat_color, ticket_business, 
+    seat_text, sum_number, banquet_logo, rank
+  </sql>
+  <sql id="Blob_Column_List">
+    goods_desc
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkGoodsExample" resultMap="ResultMapWithBLOBs">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkGoodsExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_goods
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkGoodsExample">
+    delete from sk_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkGoods">
+    insert into sk_goods (goods_id, cat_id, goods_sn, 
+      goods_name, goods_name_style, click_count, 
+      brand_id, provider_name, goods_number, 
+      goods_weight, market_price, shop_price, 
+      promote_price, promote_start_date, promote_end_date, 
+      warn_number, keywords, goods_brief, 
+      goods_thumb, goods_img, original_img, 
+      is_real, extension_code, is_on_sale, 
+      is_alone_sale, is_shipping, integral, 
+      add_time, sort_order, is_delete, 
+      is_best, is_new, is_hot, is_promote, 
+      bonus_type_id, last_update, goods_type, 
+      seller_note, give_integral, rank_integral, 
+      suppliers_id, is_check, seat_id, 
+      game_id, sche_id, number_id, 
+      pitch_id, ic, heat, 
+      is_ticket, is_goods, is_hotel, is_plane, 
+      award_credits_num, seat_logo, seat_picture, 
+      seat_color, ticket_business, seat_text, 
+      sum_number, banquet_logo, rank, 
+      goods_desc)
+    values (#{goodsId,jdbcType=INTEGER}, #{catId,jdbcType=SMALLINT}, #{goodsSn,jdbcType=VARCHAR}, 
+      #{goodsName,jdbcType=VARCHAR}, #{goodsNameStyle,jdbcType=VARCHAR}, #{clickCount,jdbcType=INTEGER}, 
+      #{brandId,jdbcType=SMALLINT}, #{providerName,jdbcType=VARCHAR}, #{goodsNumber,jdbcType=SMALLINT}, 
+      #{goodsWeight,jdbcType=DECIMAL}, #{marketPrice,jdbcType=DECIMAL}, #{shopPrice,jdbcType=DECIMAL}, 
+      #{promotePrice,jdbcType=DECIMAL}, #{promoteStartDate,jdbcType=INTEGER}, #{promoteEndDate,jdbcType=INTEGER}, 
+      #{warnNumber,jdbcType=TINYINT}, #{keywords,jdbcType=VARCHAR}, #{goodsBrief,jdbcType=VARCHAR}, 
+      #{goodsThumb,jdbcType=VARCHAR}, #{goodsImg,jdbcType=VARCHAR}, #{originalImg,jdbcType=VARCHAR}, 
+      #{isReal,jdbcType=TINYINT}, #{extensionCode,jdbcType=VARCHAR}, #{isOnSale,jdbcType=BIT}, 
+      #{isAloneSale,jdbcType=BIT}, #{isShipping,jdbcType=BIT}, #{integral,jdbcType=INTEGER}, 
+      #{addTime,jdbcType=INTEGER}, #{sortOrder,jdbcType=SMALLINT}, #{isDelete,jdbcType=BIT}, 
+      #{isBest,jdbcType=BIT}, #{isNew,jdbcType=BIT}, #{isHot,jdbcType=BIT}, #{isPromote,jdbcType=BIT}, 
+      #{bonusTypeId,jdbcType=TINYINT}, #{lastUpdate,jdbcType=INTEGER}, #{goodsType,jdbcType=SMALLINT}, 
+      #{sellerNote,jdbcType=VARCHAR}, #{giveIntegral,jdbcType=INTEGER}, #{rankIntegral,jdbcType=INTEGER}, 
+      #{suppliersId,jdbcType=SMALLINT}, #{isCheck,jdbcType=BIT}, #{seatId,jdbcType=INTEGER}, 
+      #{gameId,jdbcType=INTEGER}, #{scheId,jdbcType=INTEGER}, #{numberId,jdbcType=INTEGER}, 
+      #{pitchId,jdbcType=INTEGER}, #{ic,jdbcType=INTEGER}, #{heat,jdbcType=INTEGER}, 
+      #{isTicket,jdbcType=BIT}, #{isGoods,jdbcType=BIT}, #{isHotel,jdbcType=BIT}, #{isPlane,jdbcType=BIT}, 
+      #{awardCreditsNum,jdbcType=INTEGER}, #{seatLogo,jdbcType=VARCHAR}, #{seatPicture,jdbcType=VARCHAR}, 
+      #{seatColor,jdbcType=VARCHAR}, #{ticketBusiness,jdbcType=VARCHAR}, #{seatText,jdbcType=VARCHAR}, 
+      #{sumNumber,jdbcType=INTEGER}, #{banquetLogo,jdbcType=VARCHAR}, #{rank,jdbcType=VARCHAR}, 
+      #{goodsDesc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkGoods">
+    insert into sk_goods
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        goods_id,
+      </if>
+      <if test="catId != null">
+        cat_id,
+      </if>
+      <if test="goodsSn != null">
+        goods_sn,
+      </if>
+      <if test="goodsName != null">
+        goods_name,
+      </if>
+      <if test="goodsNameStyle != null">
+        goods_name_style,
+      </if>
+      <if test="clickCount != null">
+        click_count,
+      </if>
+      <if test="brandId != null">
+        brand_id,
+      </if>
+      <if test="providerName != null">
+        provider_name,
+      </if>
+      <if test="goodsNumber != null">
+        goods_number,
+      </if>
+      <if test="goodsWeight != null">
+        goods_weight,
+      </if>
+      <if test="marketPrice != null">
+        market_price,
+      </if>
+      <if test="shopPrice != null">
+        shop_price,
+      </if>
+      <if test="promotePrice != null">
+        promote_price,
+      </if>
+      <if test="promoteStartDate != null">
+        promote_start_date,
+      </if>
+      <if test="promoteEndDate != null">
+        promote_end_date,
+      </if>
+      <if test="warnNumber != null">
+        warn_number,
+      </if>
+      <if test="keywords != null">
+        keywords,
+      </if>
+      <if test="goodsBrief != null">
+        goods_brief,
+      </if>
+      <if test="goodsThumb != null">
+        goods_thumb,
+      </if>
+      <if test="goodsImg != null">
+        goods_img,
+      </if>
+      <if test="originalImg != null">
+        original_img,
+      </if>
+      <if test="isReal != null">
+        is_real,
+      </if>
+      <if test="extensionCode != null">
+        extension_code,
+      </if>
+      <if test="isOnSale != null">
+        is_on_sale,
+      </if>
+      <if test="isAloneSale != null">
+        is_alone_sale,
+      </if>
+      <if test="isShipping != null">
+        is_shipping,
+      </if>
+      <if test="integral != null">
+        integral,
+      </if>
+      <if test="addTime != null">
+        add_time,
+      </if>
+      <if test="sortOrder != null">
+        sort_order,
+      </if>
+      <if test="isDelete != null">
+        is_delete,
+      </if>
+      <if test="isBest != null">
+        is_best,
+      </if>
+      <if test="isNew != null">
+        is_new,
+      </if>
+      <if test="isHot != null">
+        is_hot,
+      </if>
+      <if test="isPromote != null">
+        is_promote,
+      </if>
+      <if test="bonusTypeId != null">
+        bonus_type_id,
+      </if>
+      <if test="lastUpdate != null">
+        last_update,
+      </if>
+      <if test="goodsType != null">
+        goods_type,
+      </if>
+      <if test="sellerNote != null">
+        seller_note,
+      </if>
+      <if test="giveIntegral != null">
+        give_integral,
+      </if>
+      <if test="rankIntegral != null">
+        rank_integral,
+      </if>
+      <if test="suppliersId != null">
+        suppliers_id,
+      </if>
+      <if test="isCheck != null">
+        is_check,
+      </if>
+      <if test="seatId != null">
+        seat_id,
+      </if>
+      <if test="gameId != null">
+        game_id,
+      </if>
+      <if test="scheId != null">
+        sche_id,
+      </if>
+      <if test="numberId != null">
+        number_id,
+      </if>
+      <if test="pitchId != null">
+        pitch_id,
+      </if>
+      <if test="ic != null">
+        ic,
+      </if>
+      <if test="heat != null">
+        heat,
+      </if>
+      <if test="isTicket != null">
+        is_ticket,
+      </if>
+      <if test="isGoods != null">
+        is_goods,
+      </if>
+      <if test="isHotel != null">
+        is_hotel,
+      </if>
+      <if test="isPlane != null">
+        is_plane,
+      </if>
+      <if test="awardCreditsNum != null">
+        award_credits_num,
+      </if>
+      <if test="seatLogo != null">
+        seat_logo,
+      </if>
+      <if test="seatPicture != null">
+        seat_picture,
+      </if>
+      <if test="seatColor != null">
+        seat_color,
+      </if>
+      <if test="ticketBusiness != null">
+        ticket_business,
+      </if>
+      <if test="seatText != null">
+        seat_text,
+      </if>
+      <if test="sumNumber != null">
+        sum_number,
+      </if>
+      <if test="banquetLogo != null">
+        banquet_logo,
+      </if>
+      <if test="rank != null">
+        rank,
+      </if>
+      <if test="goodsDesc != null">
+        goods_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="goodsId != null">
+        #{goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="catId != null">
+        #{catId,jdbcType=SMALLINT},
+      </if>
+      <if test="goodsSn != null">
+        #{goodsSn,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNameStyle != null">
+        #{goodsNameStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="clickCount != null">
+        #{clickCount,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null">
+        #{brandId,jdbcType=SMALLINT},
+      </if>
+      <if test="providerName != null">
+        #{providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNumber != null">
+        #{goodsNumber,jdbcType=SMALLINT},
+      </if>
+      <if test="goodsWeight != null">
+        #{goodsWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null">
+        #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="shopPrice != null">
+        #{shopPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="promotePrice != null">
+        #{promotePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="promoteStartDate != null">
+        #{promoteStartDate,jdbcType=INTEGER},
+      </if>
+      <if test="promoteEndDate != null">
+        #{promoteEndDate,jdbcType=INTEGER},
+      </if>
+      <if test="warnNumber != null">
+        #{warnNumber,jdbcType=TINYINT},
+      </if>
+      <if test="keywords != null">
+        #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBrief != null">
+        #{goodsBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsThumb != null">
+        #{goodsThumb,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsImg != null">
+        #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="originalImg != null">
+        #{originalImg,jdbcType=VARCHAR},
+      </if>
+      <if test="isReal != null">
+        #{isReal,jdbcType=TINYINT},
+      </if>
+      <if test="extensionCode != null">
+        #{extensionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isOnSale != null">
+        #{isOnSale,jdbcType=BIT},
+      </if>
+      <if test="isAloneSale != null">
+        #{isAloneSale,jdbcType=BIT},
+      </if>
+      <if test="isShipping != null">
+        #{isShipping,jdbcType=BIT},
+      </if>
+      <if test="integral != null">
+        #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        #{addTime,jdbcType=INTEGER},
+      </if>
+      <if test="sortOrder != null">
+        #{sortOrder,jdbcType=SMALLINT},
+      </if>
+      <if test="isDelete != null">
+        #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="isBest != null">
+        #{isBest,jdbcType=BIT},
+      </if>
+      <if test="isNew != null">
+        #{isNew,jdbcType=BIT},
+      </if>
+      <if test="isHot != null">
+        #{isHot,jdbcType=BIT},
+      </if>
+      <if test="isPromote != null">
+        #{isPromote,jdbcType=BIT},
+      </if>
+      <if test="bonusTypeId != null">
+        #{bonusTypeId,jdbcType=TINYINT},
+      </if>
+      <if test="lastUpdate != null">
+        #{lastUpdate,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null">
+        #{goodsType,jdbcType=SMALLINT},
+      </if>
+      <if test="sellerNote != null">
+        #{sellerNote,jdbcType=VARCHAR},
+      </if>
+      <if test="giveIntegral != null">
+        #{giveIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="rankIntegral != null">
+        #{rankIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="suppliersId != null">
+        #{suppliersId,jdbcType=SMALLINT},
+      </if>
+      <if test="isCheck != null">
+        #{isCheck,jdbcType=BIT},
+      </if>
+      <if test="seatId != null">
+        #{seatId,jdbcType=INTEGER},
+      </if>
+      <if test="gameId != null">
+        #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="scheId != null">
+        #{scheId,jdbcType=INTEGER},
+      </if>
+      <if test="numberId != null">
+        #{numberId,jdbcType=INTEGER},
+      </if>
+      <if test="pitchId != null">
+        #{pitchId,jdbcType=INTEGER},
+      </if>
+      <if test="ic != null">
+        #{ic,jdbcType=INTEGER},
+      </if>
+      <if test="heat != null">
+        #{heat,jdbcType=INTEGER},
+      </if>
+      <if test="isTicket != null">
+        #{isTicket,jdbcType=BIT},
+      </if>
+      <if test="isGoods != null">
+        #{isGoods,jdbcType=BIT},
+      </if>
+      <if test="isHotel != null">
+        #{isHotel,jdbcType=BIT},
+      </if>
+      <if test="isPlane != null">
+        #{isPlane,jdbcType=BIT},
+      </if>
+      <if test="awardCreditsNum != null">
+        #{awardCreditsNum,jdbcType=INTEGER},
+      </if>
+      <if test="seatLogo != null">
+        #{seatLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="seatPicture != null">
+        #{seatPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="seatColor != null">
+        #{seatColor,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketBusiness != null">
+        #{ticketBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="seatText != null">
+        #{seatText,jdbcType=VARCHAR},
+      </if>
+      <if test="sumNumber != null">
+        #{sumNumber,jdbcType=INTEGER},
+      </if>
+      <if test="banquetLogo != null">
+        #{banquetLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        #{rank,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDesc != null">
+        #{goodsDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkGoodsExample" resultType="java.lang.Long">
+    select count(*) from sk_goods
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_goods
+    <set>
+      <if test="record.goodsId != null">
+        goods_id = #{record.goodsId,jdbcType=INTEGER},
+      </if>
+      <if test="record.catId != null">
+        cat_id = #{record.catId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.goodsSn != null">
+        goods_sn = #{record.goodsSn,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsName != null">
+        goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsNameStyle != null">
+        goods_name_style = #{record.goodsNameStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.clickCount != null">
+        click_count = #{record.clickCount,jdbcType=INTEGER},
+      </if>
+      <if test="record.brandId != null">
+        brand_id = #{record.brandId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.providerName != null">
+        provider_name = #{record.providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsNumber != null">
+        goods_number = #{record.goodsNumber,jdbcType=SMALLINT},
+      </if>
+      <if test="record.goodsWeight != null">
+        goods_weight = #{record.goodsWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="record.marketPrice != null">
+        market_price = #{record.marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.shopPrice != null">
+        shop_price = #{record.shopPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.promotePrice != null">
+        promote_price = #{record.promotePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.promoteStartDate != null">
+        promote_start_date = #{record.promoteStartDate,jdbcType=INTEGER},
+      </if>
+      <if test="record.promoteEndDate != null">
+        promote_end_date = #{record.promoteEndDate,jdbcType=INTEGER},
+      </if>
+      <if test="record.warnNumber != null">
+        warn_number = #{record.warnNumber,jdbcType=TINYINT},
+      </if>
+      <if test="record.keywords != null">
+        keywords = #{record.keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsBrief != null">
+        goods_brief = #{record.goodsBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsThumb != null">
+        goods_thumb = #{record.goodsThumb,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsImg != null">
+        goods_img = #{record.goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.originalImg != null">
+        original_img = #{record.originalImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isReal != null">
+        is_real = #{record.isReal,jdbcType=TINYINT},
+      </if>
+      <if test="record.extensionCode != null">
+        extension_code = #{record.extensionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isOnSale != null">
+        is_on_sale = #{record.isOnSale,jdbcType=BIT},
+      </if>
+      <if test="record.isAloneSale != null">
+        is_alone_sale = #{record.isAloneSale,jdbcType=BIT},
+      </if>
+      <if test="record.isShipping != null">
+        is_shipping = #{record.isShipping,jdbcType=BIT},
+      </if>
+      <if test="record.integral != null">
+        integral = #{record.integral,jdbcType=INTEGER},
+      </if>
+      <if test="record.addTime != null">
+        add_time = #{record.addTime,jdbcType=INTEGER},
+      </if>
+      <if test="record.sortOrder != null">
+        sort_order = #{record.sortOrder,jdbcType=SMALLINT},
+      </if>
+      <if test="record.isDelete != null">
+        is_delete = #{record.isDelete,jdbcType=BIT},
+      </if>
+      <if test="record.isBest != null">
+        is_best = #{record.isBest,jdbcType=BIT},
+      </if>
+      <if test="record.isNew != null">
+        is_new = #{record.isNew,jdbcType=BIT},
+      </if>
+      <if test="record.isHot != null">
+        is_hot = #{record.isHot,jdbcType=BIT},
+      </if>
+      <if test="record.isPromote != null">
+        is_promote = #{record.isPromote,jdbcType=BIT},
+      </if>
+      <if test="record.bonusTypeId != null">
+        bonus_type_id = #{record.bonusTypeId,jdbcType=TINYINT},
+      </if>
+      <if test="record.lastUpdate != null">
+        last_update = #{record.lastUpdate,jdbcType=INTEGER},
+      </if>
+      <if test="record.goodsType != null">
+        goods_type = #{record.goodsType,jdbcType=SMALLINT},
+      </if>
+      <if test="record.sellerNote != null">
+        seller_note = #{record.sellerNote,jdbcType=VARCHAR},
+      </if>
+      <if test="record.giveIntegral != null">
+        give_integral = #{record.giveIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="record.rankIntegral != null">
+        rank_integral = #{record.rankIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="record.suppliersId != null">
+        suppliers_id = #{record.suppliersId,jdbcType=SMALLINT},
+      </if>
+      <if test="record.isCheck != null">
+        is_check = #{record.isCheck,jdbcType=BIT},
+      </if>
+      <if test="record.seatId != null">
+        seat_id = #{record.seatId,jdbcType=INTEGER},
+      </if>
+      <if test="record.gameId != null">
+        game_id = #{record.gameId,jdbcType=INTEGER},
+      </if>
+      <if test="record.scheId != null">
+        sche_id = #{record.scheId,jdbcType=INTEGER},
+      </if>
+      <if test="record.numberId != null">
+        number_id = #{record.numberId,jdbcType=INTEGER},
+      </if>
+      <if test="record.pitchId != null">
+        pitch_id = #{record.pitchId,jdbcType=INTEGER},
+      </if>
+      <if test="record.ic != null">
+        ic = #{record.ic,jdbcType=INTEGER},
+      </if>
+      <if test="record.heat != null">
+        heat = #{record.heat,jdbcType=INTEGER},
+      </if>
+      <if test="record.isTicket != null">
+        is_ticket = #{record.isTicket,jdbcType=BIT},
+      </if>
+      <if test="record.isGoods != null">
+        is_goods = #{record.isGoods,jdbcType=BIT},
+      </if>
+      <if test="record.isHotel != null">
+        is_hotel = #{record.isHotel,jdbcType=BIT},
+      </if>
+      <if test="record.isPlane != null">
+        is_plane = #{record.isPlane,jdbcType=BIT},
+      </if>
+      <if test="record.awardCreditsNum != null">
+        award_credits_num = #{record.awardCreditsNum,jdbcType=INTEGER},
+      </if>
+      <if test="record.seatLogo != null">
+        seat_logo = #{record.seatLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seatPicture != null">
+        seat_picture = #{record.seatPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seatColor != null">
+        seat_color = #{record.seatColor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.ticketBusiness != null">
+        ticket_business = #{record.ticketBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="record.seatText != null">
+        seat_text = #{record.seatText,jdbcType=VARCHAR},
+      </if>
+      <if test="record.sumNumber != null">
+        sum_number = #{record.sumNumber,jdbcType=INTEGER},
+      </if>
+      <if test="record.banquetLogo != null">
+        banquet_logo = #{record.banquetLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.rank != null">
+        rank = #{record.rank,jdbcType=VARCHAR},
+      </if>
+      <if test="record.goodsDesc != null">
+        goods_desc = #{record.goodsDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sk_goods
+    set goods_id = #{record.goodsId,jdbcType=INTEGER},
+      cat_id = #{record.catId,jdbcType=SMALLINT},
+      goods_sn = #{record.goodsSn,jdbcType=VARCHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_name_style = #{record.goodsNameStyle,jdbcType=VARCHAR},
+      click_count = #{record.clickCount,jdbcType=INTEGER},
+      brand_id = #{record.brandId,jdbcType=SMALLINT},
+      provider_name = #{record.providerName,jdbcType=VARCHAR},
+      goods_number = #{record.goodsNumber,jdbcType=SMALLINT},
+      goods_weight = #{record.goodsWeight,jdbcType=DECIMAL},
+      market_price = #{record.marketPrice,jdbcType=DECIMAL},
+      shop_price = #{record.shopPrice,jdbcType=DECIMAL},
+      promote_price = #{record.promotePrice,jdbcType=DECIMAL},
+      promote_start_date = #{record.promoteStartDate,jdbcType=INTEGER},
+      promote_end_date = #{record.promoteEndDate,jdbcType=INTEGER},
+      warn_number = #{record.warnNumber,jdbcType=TINYINT},
+      keywords = #{record.keywords,jdbcType=VARCHAR},
+      goods_brief = #{record.goodsBrief,jdbcType=VARCHAR},
+      goods_thumb = #{record.goodsThumb,jdbcType=VARCHAR},
+      goods_img = #{record.goodsImg,jdbcType=VARCHAR},
+      original_img = #{record.originalImg,jdbcType=VARCHAR},
+      is_real = #{record.isReal,jdbcType=TINYINT},
+      extension_code = #{record.extensionCode,jdbcType=VARCHAR},
+      is_on_sale = #{record.isOnSale,jdbcType=BIT},
+      is_alone_sale = #{record.isAloneSale,jdbcType=BIT},
+      is_shipping = #{record.isShipping,jdbcType=BIT},
+      integral = #{record.integral,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=INTEGER},
+      sort_order = #{record.sortOrder,jdbcType=SMALLINT},
+      is_delete = #{record.isDelete,jdbcType=BIT},
+      is_best = #{record.isBest,jdbcType=BIT},
+      is_new = #{record.isNew,jdbcType=BIT},
+      is_hot = #{record.isHot,jdbcType=BIT},
+      is_promote = #{record.isPromote,jdbcType=BIT},
+      bonus_type_id = #{record.bonusTypeId,jdbcType=TINYINT},
+      last_update = #{record.lastUpdate,jdbcType=INTEGER},
+      goods_type = #{record.goodsType,jdbcType=SMALLINT},
+      seller_note = #{record.sellerNote,jdbcType=VARCHAR},
+      give_integral = #{record.giveIntegral,jdbcType=INTEGER},
+      rank_integral = #{record.rankIntegral,jdbcType=INTEGER},
+      suppliers_id = #{record.suppliersId,jdbcType=SMALLINT},
+      is_check = #{record.isCheck,jdbcType=BIT},
+      seat_id = #{record.seatId,jdbcType=INTEGER},
+      game_id = #{record.gameId,jdbcType=INTEGER},
+      sche_id = #{record.scheId,jdbcType=INTEGER},
+      number_id = #{record.numberId,jdbcType=INTEGER},
+      pitch_id = #{record.pitchId,jdbcType=INTEGER},
+      ic = #{record.ic,jdbcType=INTEGER},
+      heat = #{record.heat,jdbcType=INTEGER},
+      is_ticket = #{record.isTicket,jdbcType=BIT},
+      is_goods = #{record.isGoods,jdbcType=BIT},
+      is_hotel = #{record.isHotel,jdbcType=BIT},
+      is_plane = #{record.isPlane,jdbcType=BIT},
+      award_credits_num = #{record.awardCreditsNum,jdbcType=INTEGER},
+      seat_logo = #{record.seatLogo,jdbcType=VARCHAR},
+      seat_picture = #{record.seatPicture,jdbcType=VARCHAR},
+      seat_color = #{record.seatColor,jdbcType=VARCHAR},
+      ticket_business = #{record.ticketBusiness,jdbcType=VARCHAR},
+      seat_text = #{record.seatText,jdbcType=VARCHAR},
+      sum_number = #{record.sumNumber,jdbcType=INTEGER},
+      banquet_logo = #{record.banquetLogo,jdbcType=VARCHAR},
+      rank = #{record.rank,jdbcType=VARCHAR},
+      goods_desc = #{record.goodsDesc,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_goods
+    set goods_id = #{record.goodsId,jdbcType=INTEGER},
+      cat_id = #{record.catId,jdbcType=SMALLINT},
+      goods_sn = #{record.goodsSn,jdbcType=VARCHAR},
+      goods_name = #{record.goodsName,jdbcType=VARCHAR},
+      goods_name_style = #{record.goodsNameStyle,jdbcType=VARCHAR},
+      click_count = #{record.clickCount,jdbcType=INTEGER},
+      brand_id = #{record.brandId,jdbcType=SMALLINT},
+      provider_name = #{record.providerName,jdbcType=VARCHAR},
+      goods_number = #{record.goodsNumber,jdbcType=SMALLINT},
+      goods_weight = #{record.goodsWeight,jdbcType=DECIMAL},
+      market_price = #{record.marketPrice,jdbcType=DECIMAL},
+      shop_price = #{record.shopPrice,jdbcType=DECIMAL},
+      promote_price = #{record.promotePrice,jdbcType=DECIMAL},
+      promote_start_date = #{record.promoteStartDate,jdbcType=INTEGER},
+      promote_end_date = #{record.promoteEndDate,jdbcType=INTEGER},
+      warn_number = #{record.warnNumber,jdbcType=TINYINT},
+      keywords = #{record.keywords,jdbcType=VARCHAR},
+      goods_brief = #{record.goodsBrief,jdbcType=VARCHAR},
+      goods_thumb = #{record.goodsThumb,jdbcType=VARCHAR},
+      goods_img = #{record.goodsImg,jdbcType=VARCHAR},
+      original_img = #{record.originalImg,jdbcType=VARCHAR},
+      is_real = #{record.isReal,jdbcType=TINYINT},
+      extension_code = #{record.extensionCode,jdbcType=VARCHAR},
+      is_on_sale = #{record.isOnSale,jdbcType=BIT},
+      is_alone_sale = #{record.isAloneSale,jdbcType=BIT},
+      is_shipping = #{record.isShipping,jdbcType=BIT},
+      integral = #{record.integral,jdbcType=INTEGER},
+      add_time = #{record.addTime,jdbcType=INTEGER},
+      sort_order = #{record.sortOrder,jdbcType=SMALLINT},
+      is_delete = #{record.isDelete,jdbcType=BIT},
+      is_best = #{record.isBest,jdbcType=BIT},
+      is_new = #{record.isNew,jdbcType=BIT},
+      is_hot = #{record.isHot,jdbcType=BIT},
+      is_promote = #{record.isPromote,jdbcType=BIT},
+      bonus_type_id = #{record.bonusTypeId,jdbcType=TINYINT},
+      last_update = #{record.lastUpdate,jdbcType=INTEGER},
+      goods_type = #{record.goodsType,jdbcType=SMALLINT},
+      seller_note = #{record.sellerNote,jdbcType=VARCHAR},
+      give_integral = #{record.giveIntegral,jdbcType=INTEGER},
+      rank_integral = #{record.rankIntegral,jdbcType=INTEGER},
+      suppliers_id = #{record.suppliersId,jdbcType=SMALLINT},
+      is_check = #{record.isCheck,jdbcType=BIT},
+      seat_id = #{record.seatId,jdbcType=INTEGER},
+      game_id = #{record.gameId,jdbcType=INTEGER},
+      sche_id = #{record.scheId,jdbcType=INTEGER},
+      number_id = #{record.numberId,jdbcType=INTEGER},
+      pitch_id = #{record.pitchId,jdbcType=INTEGER},
+      ic = #{record.ic,jdbcType=INTEGER},
+      heat = #{record.heat,jdbcType=INTEGER},
+      is_ticket = #{record.isTicket,jdbcType=BIT},
+      is_goods = #{record.isGoods,jdbcType=BIT},
+      is_hotel = #{record.isHotel,jdbcType=BIT},
+      is_plane = #{record.isPlane,jdbcType=BIT},
+      award_credits_num = #{record.awardCreditsNum,jdbcType=INTEGER},
+      seat_logo = #{record.seatLogo,jdbcType=VARCHAR},
+      seat_picture = #{record.seatPicture,jdbcType=VARCHAR},
+      seat_color = #{record.seatColor,jdbcType=VARCHAR},
+      ticket_business = #{record.ticketBusiness,jdbcType=VARCHAR},
+      seat_text = #{record.seatText,jdbcType=VARCHAR},
+      sum_number = #{record.sumNumber,jdbcType=INTEGER},
+      banquet_logo = #{record.banquetLogo,jdbcType=VARCHAR},
+      rank = #{record.rank,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkGoods">
+    update sk_goods
+    <set>
+      <if test="catId != null">
+        cat_id = #{catId,jdbcType=SMALLINT},
+      </if>
+      <if test="goodsSn != null">
+        goods_sn = #{goodsSn,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsName != null">
+        goods_name = #{goodsName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNameStyle != null">
+        goods_name_style = #{goodsNameStyle,jdbcType=VARCHAR},
+      </if>
+      <if test="clickCount != null">
+        click_count = #{clickCount,jdbcType=INTEGER},
+      </if>
+      <if test="brandId != null">
+        brand_id = #{brandId,jdbcType=SMALLINT},
+      </if>
+      <if test="providerName != null">
+        provider_name = #{providerName,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsNumber != null">
+        goods_number = #{goodsNumber,jdbcType=SMALLINT},
+      </if>
+      <if test="goodsWeight != null">
+        goods_weight = #{goodsWeight,jdbcType=DECIMAL},
+      </if>
+      <if test="marketPrice != null">
+        market_price = #{marketPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="shopPrice != null">
+        shop_price = #{shopPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="promotePrice != null">
+        promote_price = #{promotePrice,jdbcType=DECIMAL},
+      </if>
+      <if test="promoteStartDate != null">
+        promote_start_date = #{promoteStartDate,jdbcType=INTEGER},
+      </if>
+      <if test="promoteEndDate != null">
+        promote_end_date = #{promoteEndDate,jdbcType=INTEGER},
+      </if>
+      <if test="warnNumber != null">
+        warn_number = #{warnNumber,jdbcType=TINYINT},
+      </if>
+      <if test="keywords != null">
+        keywords = #{keywords,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsBrief != null">
+        goods_brief = #{goodsBrief,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsThumb != null">
+        goods_thumb = #{goodsThumb,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsImg != null">
+        goods_img = #{goodsImg,jdbcType=VARCHAR},
+      </if>
+      <if test="originalImg != null">
+        original_img = #{originalImg,jdbcType=VARCHAR},
+      </if>
+      <if test="isReal != null">
+        is_real = #{isReal,jdbcType=TINYINT},
+      </if>
+      <if test="extensionCode != null">
+        extension_code = #{extensionCode,jdbcType=VARCHAR},
+      </if>
+      <if test="isOnSale != null">
+        is_on_sale = #{isOnSale,jdbcType=BIT},
+      </if>
+      <if test="isAloneSale != null">
+        is_alone_sale = #{isAloneSale,jdbcType=BIT},
+      </if>
+      <if test="isShipping != null">
+        is_shipping = #{isShipping,jdbcType=BIT},
+      </if>
+      <if test="integral != null">
+        integral = #{integral,jdbcType=INTEGER},
+      </if>
+      <if test="addTime != null">
+        add_time = #{addTime,jdbcType=INTEGER},
+      </if>
+      <if test="sortOrder != null">
+        sort_order = #{sortOrder,jdbcType=SMALLINT},
+      </if>
+      <if test="isDelete != null">
+        is_delete = #{isDelete,jdbcType=BIT},
+      </if>
+      <if test="isBest != null">
+        is_best = #{isBest,jdbcType=BIT},
+      </if>
+      <if test="isNew != null">
+        is_new = #{isNew,jdbcType=BIT},
+      </if>
+      <if test="isHot != null">
+        is_hot = #{isHot,jdbcType=BIT},
+      </if>
+      <if test="isPromote != null">
+        is_promote = #{isPromote,jdbcType=BIT},
+      </if>
+      <if test="bonusTypeId != null">
+        bonus_type_id = #{bonusTypeId,jdbcType=TINYINT},
+      </if>
+      <if test="lastUpdate != null">
+        last_update = #{lastUpdate,jdbcType=INTEGER},
+      </if>
+      <if test="goodsType != null">
+        goods_type = #{goodsType,jdbcType=SMALLINT},
+      </if>
+      <if test="sellerNote != null">
+        seller_note = #{sellerNote,jdbcType=VARCHAR},
+      </if>
+      <if test="giveIntegral != null">
+        give_integral = #{giveIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="rankIntegral != null">
+        rank_integral = #{rankIntegral,jdbcType=INTEGER},
+      </if>
+      <if test="suppliersId != null">
+        suppliers_id = #{suppliersId,jdbcType=SMALLINT},
+      </if>
+      <if test="isCheck != null">
+        is_check = #{isCheck,jdbcType=BIT},
+      </if>
+      <if test="seatId != null">
+        seat_id = #{seatId,jdbcType=INTEGER},
+      </if>
+      <if test="gameId != null">
+        game_id = #{gameId,jdbcType=INTEGER},
+      </if>
+      <if test="scheId != null">
+        sche_id = #{scheId,jdbcType=INTEGER},
+      </if>
+      <if test="numberId != null">
+        number_id = #{numberId,jdbcType=INTEGER},
+      </if>
+      <if test="pitchId != null">
+        pitch_id = #{pitchId,jdbcType=INTEGER},
+      </if>
+      <if test="ic != null">
+        ic = #{ic,jdbcType=INTEGER},
+      </if>
+      <if test="heat != null">
+        heat = #{heat,jdbcType=INTEGER},
+      </if>
+      <if test="isTicket != null">
+        is_ticket = #{isTicket,jdbcType=BIT},
+      </if>
+      <if test="isGoods != null">
+        is_goods = #{isGoods,jdbcType=BIT},
+      </if>
+      <if test="isHotel != null">
+        is_hotel = #{isHotel,jdbcType=BIT},
+      </if>
+      <if test="isPlane != null">
+        is_plane = #{isPlane,jdbcType=BIT},
+      </if>
+      <if test="awardCreditsNum != null">
+        award_credits_num = #{awardCreditsNum,jdbcType=INTEGER},
+      </if>
+      <if test="seatLogo != null">
+        seat_logo = #{seatLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="seatPicture != null">
+        seat_picture = #{seatPicture,jdbcType=VARCHAR},
+      </if>
+      <if test="seatColor != null">
+        seat_color = #{seatColor,jdbcType=VARCHAR},
+      </if>
+      <if test="ticketBusiness != null">
+        ticket_business = #{ticketBusiness,jdbcType=VARCHAR},
+      </if>
+      <if test="seatText != null">
+        seat_text = #{seatText,jdbcType=VARCHAR},
+      </if>
+      <if test="sumNumber != null">
+        sum_number = #{sumNumber,jdbcType=INTEGER},
+      </if>
+      <if test="banquetLogo != null">
+        banquet_logo = #{banquetLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="rank != null">
+        rank = #{rank,jdbcType=VARCHAR},
+      </if>
+      <if test="goodsDesc != null">
+        goods_desc = #{goodsDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkGoods">
+    update sk_goods
+    set cat_id = #{catId,jdbcType=SMALLINT},
+      goods_sn = #{goodsSn,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_name_style = #{goodsNameStyle,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      brand_id = #{brandId,jdbcType=SMALLINT},
+      provider_name = #{providerName,jdbcType=VARCHAR},
+      goods_number = #{goodsNumber,jdbcType=SMALLINT},
+      goods_weight = #{goodsWeight,jdbcType=DECIMAL},
+      market_price = #{marketPrice,jdbcType=DECIMAL},
+      shop_price = #{shopPrice,jdbcType=DECIMAL},
+      promote_price = #{promotePrice,jdbcType=DECIMAL},
+      promote_start_date = #{promoteStartDate,jdbcType=INTEGER},
+      promote_end_date = #{promoteEndDate,jdbcType=INTEGER},
+      warn_number = #{warnNumber,jdbcType=TINYINT},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      goods_brief = #{goodsBrief,jdbcType=VARCHAR},
+      goods_thumb = #{goodsThumb,jdbcType=VARCHAR},
+      goods_img = #{goodsImg,jdbcType=VARCHAR},
+      original_img = #{originalImg,jdbcType=VARCHAR},
+      is_real = #{isReal,jdbcType=TINYINT},
+      extension_code = #{extensionCode,jdbcType=VARCHAR},
+      is_on_sale = #{isOnSale,jdbcType=BIT},
+      is_alone_sale = #{isAloneSale,jdbcType=BIT},
+      is_shipping = #{isShipping,jdbcType=BIT},
+      integral = #{integral,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=INTEGER},
+      sort_order = #{sortOrder,jdbcType=SMALLINT},
+      is_delete = #{isDelete,jdbcType=BIT},
+      is_best = #{isBest,jdbcType=BIT},
+      is_new = #{isNew,jdbcType=BIT},
+      is_hot = #{isHot,jdbcType=BIT},
+      is_promote = #{isPromote,jdbcType=BIT},
+      bonus_type_id = #{bonusTypeId,jdbcType=TINYINT},
+      last_update = #{lastUpdate,jdbcType=INTEGER},
+      goods_type = #{goodsType,jdbcType=SMALLINT},
+      seller_note = #{sellerNote,jdbcType=VARCHAR},
+      give_integral = #{giveIntegral,jdbcType=INTEGER},
+      rank_integral = #{rankIntegral,jdbcType=INTEGER},
+      suppliers_id = #{suppliersId,jdbcType=SMALLINT},
+      is_check = #{isCheck,jdbcType=BIT},
+      seat_id = #{seatId,jdbcType=INTEGER},
+      game_id = #{gameId,jdbcType=INTEGER},
+      sche_id = #{scheId,jdbcType=INTEGER},
+      number_id = #{numberId,jdbcType=INTEGER},
+      pitch_id = #{pitchId,jdbcType=INTEGER},
+      ic = #{ic,jdbcType=INTEGER},
+      heat = #{heat,jdbcType=INTEGER},
+      is_ticket = #{isTicket,jdbcType=BIT},
+      is_goods = #{isGoods,jdbcType=BIT},
+      is_hotel = #{isHotel,jdbcType=BIT},
+      is_plane = #{isPlane,jdbcType=BIT},
+      award_credits_num = #{awardCreditsNum,jdbcType=INTEGER},
+      seat_logo = #{seatLogo,jdbcType=VARCHAR},
+      seat_picture = #{seatPicture,jdbcType=VARCHAR},
+      seat_color = #{seatColor,jdbcType=VARCHAR},
+      ticket_business = #{ticketBusiness,jdbcType=VARCHAR},
+      seat_text = #{seatText,jdbcType=VARCHAR},
+      sum_number = #{sumNumber,jdbcType=INTEGER},
+      banquet_logo = #{banquetLogo,jdbcType=VARCHAR},
+      rank = #{rank,jdbcType=VARCHAR},
+      goods_desc = #{goodsDesc,jdbcType=LONGVARCHAR}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkGoods">
+    update sk_goods
+    set cat_id = #{catId,jdbcType=SMALLINT},
+      goods_sn = #{goodsSn,jdbcType=VARCHAR},
+      goods_name = #{goodsName,jdbcType=VARCHAR},
+      goods_name_style = #{goodsNameStyle,jdbcType=VARCHAR},
+      click_count = #{clickCount,jdbcType=INTEGER},
+      brand_id = #{brandId,jdbcType=SMALLINT},
+      provider_name = #{providerName,jdbcType=VARCHAR},
+      goods_number = #{goodsNumber,jdbcType=SMALLINT},
+      goods_weight = #{goodsWeight,jdbcType=DECIMAL},
+      market_price = #{marketPrice,jdbcType=DECIMAL},
+      shop_price = #{shopPrice,jdbcType=DECIMAL},
+      promote_price = #{promotePrice,jdbcType=DECIMAL},
+      promote_start_date = #{promoteStartDate,jdbcType=INTEGER},
+      promote_end_date = #{promoteEndDate,jdbcType=INTEGER},
+      warn_number = #{warnNumber,jdbcType=TINYINT},
+      keywords = #{keywords,jdbcType=VARCHAR},
+      goods_brief = #{goodsBrief,jdbcType=VARCHAR},
+      goods_thumb = #{goodsThumb,jdbcType=VARCHAR},
+      goods_img = #{goodsImg,jdbcType=VARCHAR},
+      original_img = #{originalImg,jdbcType=VARCHAR},
+      is_real = #{isReal,jdbcType=TINYINT},
+      extension_code = #{extensionCode,jdbcType=VARCHAR},
+      is_on_sale = #{isOnSale,jdbcType=BIT},
+      is_alone_sale = #{isAloneSale,jdbcType=BIT},
+      is_shipping = #{isShipping,jdbcType=BIT},
+      integral = #{integral,jdbcType=INTEGER},
+      add_time = #{addTime,jdbcType=INTEGER},
+      sort_order = #{sortOrder,jdbcType=SMALLINT},
+      is_delete = #{isDelete,jdbcType=BIT},
+      is_best = #{isBest,jdbcType=BIT},
+      is_new = #{isNew,jdbcType=BIT},
+      is_hot = #{isHot,jdbcType=BIT},
+      is_promote = #{isPromote,jdbcType=BIT},
+      bonus_type_id = #{bonusTypeId,jdbcType=TINYINT},
+      last_update = #{lastUpdate,jdbcType=INTEGER},
+      goods_type = #{goodsType,jdbcType=SMALLINT},
+      seller_note = #{sellerNote,jdbcType=VARCHAR},
+      give_integral = #{giveIntegral,jdbcType=INTEGER},
+      rank_integral = #{rankIntegral,jdbcType=INTEGER},
+      suppliers_id = #{suppliersId,jdbcType=SMALLINT},
+      is_check = #{isCheck,jdbcType=BIT},
+      seat_id = #{seatId,jdbcType=INTEGER},
+      game_id = #{gameId,jdbcType=INTEGER},
+      sche_id = #{scheId,jdbcType=INTEGER},
+      number_id = #{numberId,jdbcType=INTEGER},
+      pitch_id = #{pitchId,jdbcType=INTEGER},
+      ic = #{ic,jdbcType=INTEGER},
+      heat = #{heat,jdbcType=INTEGER},
+      is_ticket = #{isTicket,jdbcType=BIT},
+      is_goods = #{isGoods,jdbcType=BIT},
+      is_hotel = #{isHotel,jdbcType=BIT},
+      is_plane = #{isPlane,jdbcType=BIT},
+      award_credits_num = #{awardCreditsNum,jdbcType=INTEGER},
+      seat_logo = #{seatLogo,jdbcType=VARCHAR},
+      seat_picture = #{seatPicture,jdbcType=VARCHAR},
+      seat_color = #{seatColor,jdbcType=VARCHAR},
+      ticket_business = #{ticketBusiness,jdbcType=VARCHAR},
+      seat_text = #{seatText,jdbcType=VARCHAR},
+      sum_number = #{sumNumber,jdbcType=INTEGER},
+      banquet_logo = #{banquetLogo,jdbcType=VARCHAR},
+      rank = #{rank,jdbcType=VARCHAR}
+    where goods_id = #{goodsId,jdbcType=INTEGER}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

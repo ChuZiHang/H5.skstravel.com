@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkSetMealOrderMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkSetMealOrder">
+    <id column="set_meal_order_id" jdbcType="INTEGER" property="setMealOrderId" />
+    <result column="set_meal_order_name" jdbcType="VARCHAR" property="setMealOrderName" />
+    <result column="set_meal_order_mobile" jdbcType="VARCHAR" property="setMealOrderMobile" />
+    <result column="set_meal_order_email" jdbcType="VARCHAR" property="setMealOrderEmail" />
+    <result column="set_meal_order_card" jdbcType="VARCHAR" property="setMealOrderCard" />
+    <result column="set_meal_id" jdbcType="INTEGER" property="setMealId" />
+    <result column="is_manage" jdbcType="INTEGER" property="isManage" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    set_meal_order_id, set_meal_order_name, set_meal_order_mobile, set_meal_order_email, 
+    set_meal_order_card, set_meal_id, is_manage
+  </sql>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkSetMealOrderExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_set_meal_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_set_meal_order
+    where set_meal_order_id = #{setMealOrderId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_set_meal_order
+    where set_meal_order_id = #{setMealOrderId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkSetMealOrderExample">
+    delete from sk_set_meal_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkSetMealOrder">
+    insert into sk_set_meal_order (set_meal_order_id, set_meal_order_name, 
+      set_meal_order_mobile, set_meal_order_email, 
+      set_meal_order_card, set_meal_id, is_manage
+      )
+    values (#{setMealOrderId,jdbcType=INTEGER}, #{setMealOrderName,jdbcType=VARCHAR}, 
+      #{setMealOrderMobile,jdbcType=VARCHAR}, #{setMealOrderEmail,jdbcType=VARCHAR}, 
+      #{setMealOrderCard,jdbcType=VARCHAR}, #{setMealId,jdbcType=INTEGER}, #{isManage,jdbcType=INTEGER}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkSetMealOrder">
+    insert into sk_set_meal_order
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="setMealOrderId != null">
+        set_meal_order_id,
+      </if>
+      <if test="setMealOrderName != null">
+        set_meal_order_name,
+      </if>
+      <if test="setMealOrderMobile != null">
+        set_meal_order_mobile,
+      </if>
+      <if test="setMealOrderEmail != null">
+        set_meal_order_email,
+      </if>
+      <if test="setMealOrderCard != null">
+        set_meal_order_card,
+      </if>
+      <if test="setMealId != null">
+        set_meal_id,
+      </if>
+      <if test="isManage != null">
+        is_manage,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="setMealOrderId != null">
+        #{setMealOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="setMealOrderName != null">
+        #{setMealOrderName,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealOrderMobile != null">
+        #{setMealOrderMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealOrderEmail != null">
+        #{setMealOrderEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealOrderCard != null">
+        #{setMealOrderCard,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealId != null">
+        #{setMealId,jdbcType=INTEGER},
+      </if>
+      <if test="isManage != null">
+        #{isManage,jdbcType=INTEGER},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkSetMealOrderExample" resultType="java.lang.Long">
+    select count(*) from sk_set_meal_order
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_set_meal_order
+    <set>
+      <if test="record.setMealOrderId != null">
+        set_meal_order_id = #{record.setMealOrderId,jdbcType=INTEGER},
+      </if>
+      <if test="record.setMealOrderName != null">
+        set_meal_order_name = #{record.setMealOrderName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.setMealOrderMobile != null">
+        set_meal_order_mobile = #{record.setMealOrderMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="record.setMealOrderEmail != null">
+        set_meal_order_email = #{record.setMealOrderEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="record.setMealOrderCard != null">
+        set_meal_order_card = #{record.setMealOrderCard,jdbcType=VARCHAR},
+      </if>
+      <if test="record.setMealId != null">
+        set_meal_id = #{record.setMealId,jdbcType=INTEGER},
+      </if>
+      <if test="record.isManage != null">
+        is_manage = #{record.isManage,jdbcType=INTEGER},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_set_meal_order
+    set set_meal_order_id = #{record.setMealOrderId,jdbcType=INTEGER},
+      set_meal_order_name = #{record.setMealOrderName,jdbcType=VARCHAR},
+      set_meal_order_mobile = #{record.setMealOrderMobile,jdbcType=VARCHAR},
+      set_meal_order_email = #{record.setMealOrderEmail,jdbcType=VARCHAR},
+      set_meal_order_card = #{record.setMealOrderCard,jdbcType=VARCHAR},
+      set_meal_id = #{record.setMealId,jdbcType=INTEGER},
+      is_manage = #{record.isManage,jdbcType=INTEGER}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkSetMealOrder">
+    update sk_set_meal_order
+    <set>
+      <if test="setMealOrderName != null">
+        set_meal_order_name = #{setMealOrderName,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealOrderMobile != null">
+        set_meal_order_mobile = #{setMealOrderMobile,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealOrderEmail != null">
+        set_meal_order_email = #{setMealOrderEmail,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealOrderCard != null">
+        set_meal_order_card = #{setMealOrderCard,jdbcType=VARCHAR},
+      </if>
+      <if test="setMealId != null">
+        set_meal_id = #{setMealId,jdbcType=INTEGER},
+      </if>
+      <if test="isManage != null">
+        is_manage = #{isManage,jdbcType=INTEGER},
+      </if>
+    </set>
+    where set_meal_order_id = #{setMealOrderId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkSetMealOrder">
+    update sk_set_meal_order
+    set set_meal_order_name = #{setMealOrderName,jdbcType=VARCHAR},
+      set_meal_order_mobile = #{setMealOrderMobile,jdbcType=VARCHAR},
+      set_meal_order_email = #{setMealOrderEmail,jdbcType=VARCHAR},
+      set_meal_order_card = #{setMealOrderCard,jdbcType=VARCHAR},
+      set_meal_id = #{setMealId,jdbcType=INTEGER},
+      is_manage = #{isManage,jdbcType=INTEGER}
+    where set_meal_order_id = #{setMealOrderId,jdbcType=INTEGER}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

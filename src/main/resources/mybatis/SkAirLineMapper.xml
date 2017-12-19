@@ -1,0 +1,342 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkAirLineMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkAirLine">
+    <id column="id" jdbcType="INTEGER" property="id" />
+    <result column="title" jdbcType="VARCHAR" property="title" />
+    <result column="from_city" jdbcType="INTEGER" property="fromCity" />
+    <result column="to_city" jdbcType="INTEGER" property="toCity" />
+    <result column="has_transfer" jdbcType="TINYINT" property="hasTransfer" />
+    <result column="type" jdbcType="TINYINT" property="type" />
+    <result column="fly_time" jdbcType="VARCHAR" property="flyTime" />
+    <result column="return_fly_time" jdbcType="VARCHAR" property="returnFlyTime" />
+    <result column="price" jdbcType="INTEGER" property="price" />
+    <result column="description" jdbcType="VARCHAR" property="description" />
+    <result column="create_time" jdbcType="TIMESTAMP" property="createTime" />
+    <result column="update_time" jdbcType="TIMESTAMP" property="updateTime" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, title, from_city, to_city, has_transfer, type, fly_time, return_fly_time, price, 
+    description, create_time, update_time
+  </sql>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkAirLineExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_air_line
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_air_line
+    where id = #{id,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_air_line
+    where id = #{id,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkAirLineExample">
+    delete from sk_air_line
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkAirLine">
+    insert into sk_air_line (id, title, from_city, 
+      to_city, has_transfer, type, 
+      fly_time, return_fly_time, price, 
+      description, create_time, update_time
+      )
+    values (#{id,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, #{fromCity,jdbcType=INTEGER}, 
+      #{toCity,jdbcType=INTEGER}, #{hasTransfer,jdbcType=TINYINT}, #{type,jdbcType=TINYINT}, 
+      #{flyTime,jdbcType=VARCHAR}, #{returnFlyTime,jdbcType=VARCHAR}, #{price,jdbcType=INTEGER}, 
+      #{description,jdbcType=VARCHAR}, #{createTime,jdbcType=TIMESTAMP}, #{updateTime,jdbcType=TIMESTAMP}
+      )
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkAirLine">
+    insert into sk_air_line
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="title != null">
+        title,
+      </if>
+      <if test="fromCity != null">
+        from_city,
+      </if>
+      <if test="toCity != null">
+        to_city,
+      </if>
+      <if test="hasTransfer != null">
+        has_transfer,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="flyTime != null">
+        fly_time,
+      </if>
+      <if test="returnFlyTime != null">
+        return_fly_time,
+      </if>
+      <if test="price != null">
+        price,
+      </if>
+      <if test="description != null">
+        description,
+      </if>
+      <if test="createTime != null">
+        create_time,
+      </if>
+      <if test="updateTime != null">
+        update_time,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=INTEGER},
+      </if>
+      <if test="title != null">
+        #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="fromCity != null">
+        #{fromCity,jdbcType=INTEGER},
+      </if>
+      <if test="toCity != null">
+        #{toCity,jdbcType=INTEGER},
+      </if>
+      <if test="hasTransfer != null">
+        #{hasTransfer,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=TINYINT},
+      </if>
+      <if test="flyTime != null">
+        #{flyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="returnFlyTime != null">
+        #{returnFlyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        #{price,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkAirLineExample" resultType="java.lang.Long">
+    select count(*) from sk_air_line
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_air_line
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=INTEGER},
+      </if>
+      <if test="record.title != null">
+        title = #{record.title,jdbcType=VARCHAR},
+      </if>
+      <if test="record.fromCity != null">
+        from_city = #{record.fromCity,jdbcType=INTEGER},
+      </if>
+      <if test="record.toCity != null">
+        to_city = #{record.toCity,jdbcType=INTEGER},
+      </if>
+      <if test="record.hasTransfer != null">
+        has_transfer = #{record.hasTransfer,jdbcType=TINYINT},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=TINYINT},
+      </if>
+      <if test="record.flyTime != null">
+        fly_time = #{record.flyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.returnFlyTime != null">
+        return_fly_time = #{record.returnFlyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="record.price != null">
+        price = #{record.price,jdbcType=INTEGER},
+      </if>
+      <if test="record.description != null">
+        description = #{record.description,jdbcType=VARCHAR},
+      </if>
+      <if test="record.createTime != null">
+        create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="record.updateTime != null">
+        update_time = #{record.updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_air_line
+    set id = #{record.id,jdbcType=INTEGER},
+      title = #{record.title,jdbcType=VARCHAR},
+      from_city = #{record.fromCity,jdbcType=INTEGER},
+      to_city = #{record.toCity,jdbcType=INTEGER},
+      has_transfer = #{record.hasTransfer,jdbcType=TINYINT},
+      type = #{record.type,jdbcType=TINYINT},
+      fly_time = #{record.flyTime,jdbcType=VARCHAR},
+      return_fly_time = #{record.returnFlyTime,jdbcType=VARCHAR},
+      price = #{record.price,jdbcType=INTEGER},
+      description = #{record.description,jdbcType=VARCHAR},
+      create_time = #{record.createTime,jdbcType=TIMESTAMP},
+      update_time = #{record.updateTime,jdbcType=TIMESTAMP}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkAirLine">
+    update sk_air_line
+    <set>
+      <if test="title != null">
+        title = #{title,jdbcType=VARCHAR},
+      </if>
+      <if test="fromCity != null">
+        from_city = #{fromCity,jdbcType=INTEGER},
+      </if>
+      <if test="toCity != null">
+        to_city = #{toCity,jdbcType=INTEGER},
+      </if>
+      <if test="hasTransfer != null">
+        has_transfer = #{hasTransfer,jdbcType=TINYINT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=TINYINT},
+      </if>
+      <if test="flyTime != null">
+        fly_time = #{flyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="returnFlyTime != null">
+        return_fly_time = #{returnFlyTime,jdbcType=VARCHAR},
+      </if>
+      <if test="price != null">
+        price = #{price,jdbcType=INTEGER},
+      </if>
+      <if test="description != null">
+        description = #{description,jdbcType=VARCHAR},
+      </if>
+      <if test="createTime != null">
+        create_time = #{createTime,jdbcType=TIMESTAMP},
+      </if>
+      <if test="updateTime != null">
+        update_time = #{updateTime,jdbcType=TIMESTAMP},
+      </if>
+    </set>
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkAirLine">
+    update sk_air_line
+    set title = #{title,jdbcType=VARCHAR},
+      from_city = #{fromCity,jdbcType=INTEGER},
+      to_city = #{toCity,jdbcType=INTEGER},
+      has_transfer = #{hasTransfer,jdbcType=TINYINT},
+      type = #{type,jdbcType=TINYINT},
+      fly_time = #{flyTime,jdbcType=VARCHAR},
+      return_fly_time = #{returnFlyTime,jdbcType=VARCHAR},
+      price = #{price,jdbcType=INTEGER},
+      description = #{description,jdbcType=VARCHAR},
+      create_time = #{createTime,jdbcType=TIMESTAMP},
+      update_time = #{updateTime,jdbcType=TIMESTAMP}
+    where id = #{id,jdbcType=INTEGER}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

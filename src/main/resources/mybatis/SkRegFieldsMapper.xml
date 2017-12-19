@@ -1,0 +1,245 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkRegFieldsMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkRegFields">
+    <id column="id" jdbcType="TINYINT" property="id" />
+    <result column="reg_field_name" jdbcType="VARCHAR" property="regFieldName" />
+    <result column="dis_order" jdbcType="TINYINT" property="disOrder" />
+    <result column="display" jdbcType="BIT" property="display" />
+    <result column="type" jdbcType="BIT" property="type" />
+    <result column="is_need" jdbcType="BIT" property="isNeed" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    id, reg_field_name, dis_order, display, type, is_need
+  </sql>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkRegFieldsExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_reg_fields
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Byte" resultMap="BaseResultMap">
+    select 
+    <include refid="Base_Column_List" />
+    from sk_reg_fields
+    where id = #{id,jdbcType=TINYINT}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Byte">
+    delete from sk_reg_fields
+    where id = #{id,jdbcType=TINYINT}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkRegFieldsExample">
+    delete from sk_reg_fields
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkRegFields">
+    insert into sk_reg_fields (id, reg_field_name, dis_order, 
+      display, type, is_need)
+    values (#{id,jdbcType=TINYINT}, #{regFieldName,jdbcType=VARCHAR}, #{disOrder,jdbcType=TINYINT}, 
+      #{display,jdbcType=BIT}, #{type,jdbcType=BIT}, #{isNeed,jdbcType=BIT})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkRegFields">
+    insert into sk_reg_fields
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        id,
+      </if>
+      <if test="regFieldName != null">
+        reg_field_name,
+      </if>
+      <if test="disOrder != null">
+        dis_order,
+      </if>
+      <if test="display != null">
+        display,
+      </if>
+      <if test="type != null">
+        type,
+      </if>
+      <if test="isNeed != null">
+        is_need,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="id != null">
+        #{id,jdbcType=TINYINT},
+      </if>
+      <if test="regFieldName != null">
+        #{regFieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="disOrder != null">
+        #{disOrder,jdbcType=TINYINT},
+      </if>
+      <if test="display != null">
+        #{display,jdbcType=BIT},
+      </if>
+      <if test="type != null">
+        #{type,jdbcType=BIT},
+      </if>
+      <if test="isNeed != null">
+        #{isNeed,jdbcType=BIT},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkRegFieldsExample" resultType="java.lang.Long">
+    select count(*) from sk_reg_fields
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_reg_fields
+    <set>
+      <if test="record.id != null">
+        id = #{record.id,jdbcType=TINYINT},
+      </if>
+      <if test="record.regFieldName != null">
+        reg_field_name = #{record.regFieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.disOrder != null">
+        dis_order = #{record.disOrder,jdbcType=TINYINT},
+      </if>
+      <if test="record.display != null">
+        display = #{record.display,jdbcType=BIT},
+      </if>
+      <if test="record.type != null">
+        type = #{record.type,jdbcType=BIT},
+      </if>
+      <if test="record.isNeed != null">
+        is_need = #{record.isNeed,jdbcType=BIT},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_reg_fields
+    set id = #{record.id,jdbcType=TINYINT},
+      reg_field_name = #{record.regFieldName,jdbcType=VARCHAR},
+      dis_order = #{record.disOrder,jdbcType=TINYINT},
+      display = #{record.display,jdbcType=BIT},
+      type = #{record.type,jdbcType=BIT},
+      is_need = #{record.isNeed,jdbcType=BIT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkRegFields">
+    update sk_reg_fields
+    <set>
+      <if test="regFieldName != null">
+        reg_field_name = #{regFieldName,jdbcType=VARCHAR},
+      </if>
+      <if test="disOrder != null">
+        dis_order = #{disOrder,jdbcType=TINYINT},
+      </if>
+      <if test="display != null">
+        display = #{display,jdbcType=BIT},
+      </if>
+      <if test="type != null">
+        type = #{type,jdbcType=BIT},
+      </if>
+      <if test="isNeed != null">
+        is_need = #{isNeed,jdbcType=BIT},
+      </if>
+    </set>
+    where id = #{id,jdbcType=TINYINT}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkRegFields">
+    update sk_reg_fields
+    set reg_field_name = #{regFieldName,jdbcType=VARCHAR},
+      dis_order = #{disOrder,jdbcType=TINYINT},
+      display = #{display,jdbcType=BIT},
+      type = #{type,jdbcType=BIT},
+      is_need = #{isNeed,jdbcType=BIT}
+    where id = #{id,jdbcType=TINYINT}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

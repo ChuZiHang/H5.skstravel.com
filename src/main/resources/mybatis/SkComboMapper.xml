@@ -1,0 +1,632 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkComboMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkCombo">
+    <id column="combo_id" jdbcType="INTEGER" property="comboId" />
+    <result column="combo_name" jdbcType="VARCHAR" property="comboName" />
+    <result column="combo_title" jdbcType="VARCHAR" property="comboTitle" />
+    <result column="combo_intro" jdbcType="VARCHAR" property="comboIntro" />
+    <result column="combo_logo" jdbcType="VARCHAR" property="comboLogo" />
+    <result column="combo_img" jdbcType="VARCHAR" property="comboImg" />
+    <result column="combo_color" jdbcType="VARCHAR" property="comboColor" />
+    <result column="combo_pitchs" jdbcType="VARCHAR" property="comboPitchs" />
+    <result column="combo_travels" jdbcType="VARCHAR" property="comboTravels" />
+    <result column="combo_travel_type_id" jdbcType="INTEGER" property="comboTravelTypeId" />
+    <result column="combo_head" jdbcType="VARCHAR" property="comboHead" />
+    <result column="combo_foot" jdbcType="VARCHAR" property="comboFoot" />
+    <result column="combo_intro_title" jdbcType="VARCHAR" property="comboIntroTitle" />
+    <result column="combo_intro_button" jdbcType="VARCHAR" property="comboIntroButton" />
+    <result column="is_show" jdbcType="TINYINT" property="isShow" />
+    <result column="combo_price" jdbcType="DECIMAL" property="comboPrice" />
+    <result column="sort_order" jdbcType="SMALLINT" property="sortOrder" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.skstravel.common.model.sksports2.SkComboWithBLOBs">
+    <result column="combo_tickets" jdbcType="LONGVARCHAR" property="comboTickets" />
+    <result column="combo_intro_big" jdbcType="LONGVARCHAR" property="comboIntroBig" />
+    <result column="combo_intro_small" jdbcType="LONGVARCHAR" property="comboIntroSmall" />
+    <result column="combo_reserve_content" jdbcType="LONGVARCHAR" property="comboReserveContent" />
+    <result column="combo_money_content" jdbcType="LONGVARCHAR" property="comboMoneyContent" />
+    <result column="combo_visa_content" jdbcType="LONGVARCHAR" property="comboVisaContent" />
+    <result column="combo_editor" jdbcType="LONGVARCHAR" property="comboEditor" />
+    <result column="combo_charge" jdbcType="LONGVARCHAR" property="comboCharge" />
+    <result column="combo_visa" jdbcType="LONGVARCHAR" property="comboVisa" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    combo_id, combo_name, combo_title, combo_intro, combo_logo, combo_img, combo_color, 
+    combo_pitchs, combo_travels, combo_travel_type_id, combo_head, combo_foot, combo_intro_title, 
+    combo_intro_button, is_show, combo_price, sort_order
+  </sql>
+  <sql id="Blob_Column_List">
+    combo_tickets, combo_intro_big, combo_intro_small, combo_reserve_content, combo_money_content, 
+    combo_visa_content, combo_editor, combo_charge, combo_visa
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkComboExample" resultMap="ResultMapWithBLOBs">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_combo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkComboExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_combo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_combo
+    where combo_id = #{comboId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_combo
+    where combo_id = #{comboId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkComboExample">
+    delete from sk_combo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkComboWithBLOBs">
+    insert into sk_combo (combo_id, combo_name, combo_title, 
+      combo_intro, combo_logo, combo_img, 
+      combo_color, combo_pitchs, combo_travels, 
+      combo_travel_type_id, combo_head, combo_foot, 
+      combo_intro_title, combo_intro_button, is_show, 
+      combo_price, sort_order, combo_tickets, 
+      combo_intro_big, combo_intro_small, 
+      combo_reserve_content, combo_money_content, 
+      combo_visa_content, combo_editor, 
+      combo_charge, combo_visa)
+    values (#{comboId,jdbcType=INTEGER}, #{comboName,jdbcType=VARCHAR}, #{comboTitle,jdbcType=VARCHAR}, 
+      #{comboIntro,jdbcType=VARCHAR}, #{comboLogo,jdbcType=VARCHAR}, #{comboImg,jdbcType=VARCHAR}, 
+      #{comboColor,jdbcType=VARCHAR}, #{comboPitchs,jdbcType=VARCHAR}, #{comboTravels,jdbcType=VARCHAR}, 
+      #{comboTravelTypeId,jdbcType=INTEGER}, #{comboHead,jdbcType=VARCHAR}, #{comboFoot,jdbcType=VARCHAR}, 
+      #{comboIntroTitle,jdbcType=VARCHAR}, #{comboIntroButton,jdbcType=VARCHAR}, #{isShow,jdbcType=TINYINT}, 
+      #{comboPrice,jdbcType=DECIMAL}, #{sortOrder,jdbcType=SMALLINT}, #{comboTickets,jdbcType=LONGVARCHAR}, 
+      #{comboIntroBig,jdbcType=LONGVARCHAR}, #{comboIntroSmall,jdbcType=LONGVARCHAR}, 
+      #{comboReserveContent,jdbcType=LONGVARCHAR}, #{comboMoneyContent,jdbcType=LONGVARCHAR}, 
+      #{comboVisaContent,jdbcType=LONGVARCHAR}, #{comboEditor,jdbcType=LONGVARCHAR}, 
+      #{comboCharge,jdbcType=LONGVARCHAR}, #{comboVisa,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkComboWithBLOBs">
+    insert into sk_combo
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="comboId != null">
+        combo_id,
+      </if>
+      <if test="comboName != null">
+        combo_name,
+      </if>
+      <if test="comboTitle != null">
+        combo_title,
+      </if>
+      <if test="comboIntro != null">
+        combo_intro,
+      </if>
+      <if test="comboLogo != null">
+        combo_logo,
+      </if>
+      <if test="comboImg != null">
+        combo_img,
+      </if>
+      <if test="comboColor != null">
+        combo_color,
+      </if>
+      <if test="comboPitchs != null">
+        combo_pitchs,
+      </if>
+      <if test="comboTravels != null">
+        combo_travels,
+      </if>
+      <if test="comboTravelTypeId != null">
+        combo_travel_type_id,
+      </if>
+      <if test="comboHead != null">
+        combo_head,
+      </if>
+      <if test="comboFoot != null">
+        combo_foot,
+      </if>
+      <if test="comboIntroTitle != null">
+        combo_intro_title,
+      </if>
+      <if test="comboIntroButton != null">
+        combo_intro_button,
+      </if>
+      <if test="isShow != null">
+        is_show,
+      </if>
+      <if test="comboPrice != null">
+        combo_price,
+      </if>
+      <if test="sortOrder != null">
+        sort_order,
+      </if>
+      <if test="comboTickets != null">
+        combo_tickets,
+      </if>
+      <if test="comboIntroBig != null">
+        combo_intro_big,
+      </if>
+      <if test="comboIntroSmall != null">
+        combo_intro_small,
+      </if>
+      <if test="comboReserveContent != null">
+        combo_reserve_content,
+      </if>
+      <if test="comboMoneyContent != null">
+        combo_money_content,
+      </if>
+      <if test="comboVisaContent != null">
+        combo_visa_content,
+      </if>
+      <if test="comboEditor != null">
+        combo_editor,
+      </if>
+      <if test="comboCharge != null">
+        combo_charge,
+      </if>
+      <if test="comboVisa != null">
+        combo_visa,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="comboId != null">
+        #{comboId,jdbcType=INTEGER},
+      </if>
+      <if test="comboName != null">
+        #{comboName,jdbcType=VARCHAR},
+      </if>
+      <if test="comboTitle != null">
+        #{comboTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="comboIntro != null">
+        #{comboIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="comboLogo != null">
+        #{comboLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="comboImg != null">
+        #{comboImg,jdbcType=VARCHAR},
+      </if>
+      <if test="comboColor != null">
+        #{comboColor,jdbcType=VARCHAR},
+      </if>
+      <if test="comboPitchs != null">
+        #{comboPitchs,jdbcType=VARCHAR},
+      </if>
+      <if test="comboTravels != null">
+        #{comboTravels,jdbcType=VARCHAR},
+      </if>
+      <if test="comboTravelTypeId != null">
+        #{comboTravelTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="comboHead != null">
+        #{comboHead,jdbcType=VARCHAR},
+      </if>
+      <if test="comboFoot != null">
+        #{comboFoot,jdbcType=VARCHAR},
+      </if>
+      <if test="comboIntroTitle != null">
+        #{comboIntroTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="comboIntroButton != null">
+        #{comboIntroButton,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+        #{isShow,jdbcType=TINYINT},
+      </if>
+      <if test="comboPrice != null">
+        #{comboPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sortOrder != null">
+        #{sortOrder,jdbcType=SMALLINT},
+      </if>
+      <if test="comboTickets != null">
+        #{comboTickets,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboIntroBig != null">
+        #{comboIntroBig,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboIntroSmall != null">
+        #{comboIntroSmall,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboReserveContent != null">
+        #{comboReserveContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboMoneyContent != null">
+        #{comboMoneyContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboVisaContent != null">
+        #{comboVisaContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboEditor != null">
+        #{comboEditor,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboCharge != null">
+        #{comboCharge,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboVisa != null">
+        #{comboVisa,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkComboExample" resultType="java.lang.Long">
+    select count(*) from sk_combo
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_combo
+    <set>
+      <if test="record.comboId != null">
+        combo_id = #{record.comboId,jdbcType=INTEGER},
+      </if>
+      <if test="record.comboName != null">
+        combo_name = #{record.comboName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboTitle != null">
+        combo_title = #{record.comboTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboIntro != null">
+        combo_intro = #{record.comboIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboLogo != null">
+        combo_logo = #{record.comboLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboImg != null">
+        combo_img = #{record.comboImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboColor != null">
+        combo_color = #{record.comboColor,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboPitchs != null">
+        combo_pitchs = #{record.comboPitchs,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboTravels != null">
+        combo_travels = #{record.comboTravels,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboTravelTypeId != null">
+        combo_travel_type_id = #{record.comboTravelTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="record.comboHead != null">
+        combo_head = #{record.comboHead,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboFoot != null">
+        combo_foot = #{record.comboFoot,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboIntroTitle != null">
+        combo_intro_title = #{record.comboIntroTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboIntroButton != null">
+        combo_intro_button = #{record.comboIntroButton,jdbcType=VARCHAR},
+      </if>
+      <if test="record.isShow != null">
+        is_show = #{record.isShow,jdbcType=TINYINT},
+      </if>
+      <if test="record.comboPrice != null">
+        combo_price = #{record.comboPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="record.sortOrder != null">
+        sort_order = #{record.sortOrder,jdbcType=SMALLINT},
+      </if>
+      <if test="record.comboTickets != null">
+        combo_tickets = #{record.comboTickets,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.comboIntroBig != null">
+        combo_intro_big = #{record.comboIntroBig,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.comboIntroSmall != null">
+        combo_intro_small = #{record.comboIntroSmall,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.comboReserveContent != null">
+        combo_reserve_content = #{record.comboReserveContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.comboMoneyContent != null">
+        combo_money_content = #{record.comboMoneyContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.comboVisaContent != null">
+        combo_visa_content = #{record.comboVisaContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.comboEditor != null">
+        combo_editor = #{record.comboEditor,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.comboCharge != null">
+        combo_charge = #{record.comboCharge,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="record.comboVisa != null">
+        combo_visa = #{record.comboVisa,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sk_combo
+    set combo_id = #{record.comboId,jdbcType=INTEGER},
+      combo_name = #{record.comboName,jdbcType=VARCHAR},
+      combo_title = #{record.comboTitle,jdbcType=VARCHAR},
+      combo_intro = #{record.comboIntro,jdbcType=VARCHAR},
+      combo_logo = #{record.comboLogo,jdbcType=VARCHAR},
+      combo_img = #{record.comboImg,jdbcType=VARCHAR},
+      combo_color = #{record.comboColor,jdbcType=VARCHAR},
+      combo_pitchs = #{record.comboPitchs,jdbcType=VARCHAR},
+      combo_travels = #{record.comboTravels,jdbcType=VARCHAR},
+      combo_travel_type_id = #{record.comboTravelTypeId,jdbcType=INTEGER},
+      combo_head = #{record.comboHead,jdbcType=VARCHAR},
+      combo_foot = #{record.comboFoot,jdbcType=VARCHAR},
+      combo_intro_title = #{record.comboIntroTitle,jdbcType=VARCHAR},
+      combo_intro_button = #{record.comboIntroButton,jdbcType=VARCHAR},
+      is_show = #{record.isShow,jdbcType=TINYINT},
+      combo_price = #{record.comboPrice,jdbcType=DECIMAL},
+      sort_order = #{record.sortOrder,jdbcType=SMALLINT},
+      combo_tickets = #{record.comboTickets,jdbcType=LONGVARCHAR},
+      combo_intro_big = #{record.comboIntroBig,jdbcType=LONGVARCHAR},
+      combo_intro_small = #{record.comboIntroSmall,jdbcType=LONGVARCHAR},
+      combo_reserve_content = #{record.comboReserveContent,jdbcType=LONGVARCHAR},
+      combo_money_content = #{record.comboMoneyContent,jdbcType=LONGVARCHAR},
+      combo_visa_content = #{record.comboVisaContent,jdbcType=LONGVARCHAR},
+      combo_editor = #{record.comboEditor,jdbcType=LONGVARCHAR},
+      combo_charge = #{record.comboCharge,jdbcType=LONGVARCHAR},
+      combo_visa = #{record.comboVisa,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_combo
+    set combo_id = #{record.comboId,jdbcType=INTEGER},
+      combo_name = #{record.comboName,jdbcType=VARCHAR},
+      combo_title = #{record.comboTitle,jdbcType=VARCHAR},
+      combo_intro = #{record.comboIntro,jdbcType=VARCHAR},
+      combo_logo = #{record.comboLogo,jdbcType=VARCHAR},
+      combo_img = #{record.comboImg,jdbcType=VARCHAR},
+      combo_color = #{record.comboColor,jdbcType=VARCHAR},
+      combo_pitchs = #{record.comboPitchs,jdbcType=VARCHAR},
+      combo_travels = #{record.comboTravels,jdbcType=VARCHAR},
+      combo_travel_type_id = #{record.comboTravelTypeId,jdbcType=INTEGER},
+      combo_head = #{record.comboHead,jdbcType=VARCHAR},
+      combo_foot = #{record.comboFoot,jdbcType=VARCHAR},
+      combo_intro_title = #{record.comboIntroTitle,jdbcType=VARCHAR},
+      combo_intro_button = #{record.comboIntroButton,jdbcType=VARCHAR},
+      is_show = #{record.isShow,jdbcType=TINYINT},
+      combo_price = #{record.comboPrice,jdbcType=DECIMAL},
+      sort_order = #{record.sortOrder,jdbcType=SMALLINT}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkComboWithBLOBs">
+    update sk_combo
+    <set>
+      <if test="comboName != null">
+        combo_name = #{comboName,jdbcType=VARCHAR},
+      </if>
+      <if test="comboTitle != null">
+        combo_title = #{comboTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="comboIntro != null">
+        combo_intro = #{comboIntro,jdbcType=VARCHAR},
+      </if>
+      <if test="comboLogo != null">
+        combo_logo = #{comboLogo,jdbcType=VARCHAR},
+      </if>
+      <if test="comboImg != null">
+        combo_img = #{comboImg,jdbcType=VARCHAR},
+      </if>
+      <if test="comboColor != null">
+        combo_color = #{comboColor,jdbcType=VARCHAR},
+      </if>
+      <if test="comboPitchs != null">
+        combo_pitchs = #{comboPitchs,jdbcType=VARCHAR},
+      </if>
+      <if test="comboTravels != null">
+        combo_travels = #{comboTravels,jdbcType=VARCHAR},
+      </if>
+      <if test="comboTravelTypeId != null">
+        combo_travel_type_id = #{comboTravelTypeId,jdbcType=INTEGER},
+      </if>
+      <if test="comboHead != null">
+        combo_head = #{comboHead,jdbcType=VARCHAR},
+      </if>
+      <if test="comboFoot != null">
+        combo_foot = #{comboFoot,jdbcType=VARCHAR},
+      </if>
+      <if test="comboIntroTitle != null">
+        combo_intro_title = #{comboIntroTitle,jdbcType=VARCHAR},
+      </if>
+      <if test="comboIntroButton != null">
+        combo_intro_button = #{comboIntroButton,jdbcType=VARCHAR},
+      </if>
+      <if test="isShow != null">
+        is_show = #{isShow,jdbcType=TINYINT},
+      </if>
+      <if test="comboPrice != null">
+        combo_price = #{comboPrice,jdbcType=DECIMAL},
+      </if>
+      <if test="sortOrder != null">
+        sort_order = #{sortOrder,jdbcType=SMALLINT},
+      </if>
+      <if test="comboTickets != null">
+        combo_tickets = #{comboTickets,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboIntroBig != null">
+        combo_intro_big = #{comboIntroBig,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboIntroSmall != null">
+        combo_intro_small = #{comboIntroSmall,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboReserveContent != null">
+        combo_reserve_content = #{comboReserveContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboMoneyContent != null">
+        combo_money_content = #{comboMoneyContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboVisaContent != null">
+        combo_visa_content = #{comboVisaContent,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboEditor != null">
+        combo_editor = #{comboEditor,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboCharge != null">
+        combo_charge = #{comboCharge,jdbcType=LONGVARCHAR},
+      </if>
+      <if test="comboVisa != null">
+        combo_visa = #{comboVisa,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where combo_id = #{comboId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkComboWithBLOBs">
+    update sk_combo
+    set combo_name = #{comboName,jdbcType=VARCHAR},
+      combo_title = #{comboTitle,jdbcType=VARCHAR},
+      combo_intro = #{comboIntro,jdbcType=VARCHAR},
+      combo_logo = #{comboLogo,jdbcType=VARCHAR},
+      combo_img = #{comboImg,jdbcType=VARCHAR},
+      combo_color = #{comboColor,jdbcType=VARCHAR},
+      combo_pitchs = #{comboPitchs,jdbcType=VARCHAR},
+      combo_travels = #{comboTravels,jdbcType=VARCHAR},
+      combo_travel_type_id = #{comboTravelTypeId,jdbcType=INTEGER},
+      combo_head = #{comboHead,jdbcType=VARCHAR},
+      combo_foot = #{comboFoot,jdbcType=VARCHAR},
+      combo_intro_title = #{comboIntroTitle,jdbcType=VARCHAR},
+      combo_intro_button = #{comboIntroButton,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=TINYINT},
+      combo_price = #{comboPrice,jdbcType=DECIMAL},
+      sort_order = #{sortOrder,jdbcType=SMALLINT},
+      combo_tickets = #{comboTickets,jdbcType=LONGVARCHAR},
+      combo_intro_big = #{comboIntroBig,jdbcType=LONGVARCHAR},
+      combo_intro_small = #{comboIntroSmall,jdbcType=LONGVARCHAR},
+      combo_reserve_content = #{comboReserveContent,jdbcType=LONGVARCHAR},
+      combo_money_content = #{comboMoneyContent,jdbcType=LONGVARCHAR},
+      combo_visa_content = #{comboVisaContent,jdbcType=LONGVARCHAR},
+      combo_editor = #{comboEditor,jdbcType=LONGVARCHAR},
+      combo_charge = #{comboCharge,jdbcType=LONGVARCHAR},
+      combo_visa = #{comboVisa,jdbcType=LONGVARCHAR}
+    where combo_id = #{comboId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkCombo">
+    update sk_combo
+    set combo_name = #{comboName,jdbcType=VARCHAR},
+      combo_title = #{comboTitle,jdbcType=VARCHAR},
+      combo_intro = #{comboIntro,jdbcType=VARCHAR},
+      combo_logo = #{comboLogo,jdbcType=VARCHAR},
+      combo_img = #{comboImg,jdbcType=VARCHAR},
+      combo_color = #{comboColor,jdbcType=VARCHAR},
+      combo_pitchs = #{comboPitchs,jdbcType=VARCHAR},
+      combo_travels = #{comboTravels,jdbcType=VARCHAR},
+      combo_travel_type_id = #{comboTravelTypeId,jdbcType=INTEGER},
+      combo_head = #{comboHead,jdbcType=VARCHAR},
+      combo_foot = #{comboFoot,jdbcType=VARCHAR},
+      combo_intro_title = #{comboIntroTitle,jdbcType=VARCHAR},
+      combo_intro_button = #{comboIntroButton,jdbcType=VARCHAR},
+      is_show = #{isShow,jdbcType=TINYINT},
+      combo_price = #{comboPrice,jdbcType=DECIMAL},
+      sort_order = #{sortOrder,jdbcType=SMALLINT}
+    where combo_id = #{comboId,jdbcType=INTEGER}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>

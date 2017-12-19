@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:context="http://www.springframework.org/schema/context" xmlns:tx="http://www.springframework.org/schema/tx"
+	xmlns:aop="http://www.springframework.org/schema/aop" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="
+     http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-4.2.xsd
+     http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
+     http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
+     http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
+
+	<!-- ds0 -->
+	<bean id="sksports2" class="org.apache.tomcat.jdbc.pool.DataSource"
+		destroy-method="close">
+		<property name="poolProperties">
+			<bean class="org.apache.tomcat.jdbc.pool.PoolProperties">
+				<property name="url"
+					value="jdbc:mysql://60.205.187.255:3306/skstravel?characterEncoding=utf-8" />
+				<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+				<property name="username" value="root" />
+				<property name="password" value="qiuwei" />
+				<property name="jmxEnabled" value="false" />
+				<property name="testWhileIdle" value="true" />
+				<property name="testOnBorrow" value="true" />
+				<property name="testOnReturn" value="false" />
+				<property name="validationQuery" value="select 1 from dual" />
+				<property name="validationInterval" value="60000" />
+				<property name="timeBetweenEvictionRunsMillis" value="60000" />
+				<property name="maxActive" value="50" />
+				<property name="minIdle" value="5" />
+				<property name="maxIdle" value="20" />
+				<property name="initialSize" value="5" />
+				<property name="maxWait" value="60000" />
+				<property name="removeAbandonedTimeout" value="120" />
+				<property name="removeAbandoned" value="false" />
+				<property name="logAbandoned" value="true" />
+				<property name="minEvictableIdleTimeMillis" value="60000" />
+				<property name="jdbcInterceptors"
+					value="org.apache.tomcat.jdbc.pool.interceptor.ConnectionState;org.apache.tomcat.jdbc.pool.interceptor.StatementFinalizer" />
+			</bean>
+		</property>
+	</bean>
+
+	<!-- 用于非mybatis的jdbc操作 -->
+	<bean id="jdbcTemplateForSksports2" class="org.springframework.jdbc.core.JdbcTemplate">
+		<property name="dataSource" ref="sksports2" />
+	</bean>
+
+	<!-- 实现化Mybatis工厂 -->
+	<bean id="sqlSessionFactorySksports2" class="org.mybatis.spring.SqlSessionFactoryBean">
+		<!-- Mybatis操作数据库 DataSource -->
+		<property name="dataSource" ref="sksports2" />
+		<property name="configurationProperties">
+			<props>
+				<prop key="cacheEnabled">true</prop>
+				<prop key="callSettersOnNulls">true</prop>
+				<prop key="lazyLoadingEnabled">false</prop>
+			</props>
+		</property>
+		<property name="mapperLocations" value="classpath:mybatis/*.xml"></property>
+	</bean>
+
+	<!-- 扫描mybatis 对象所在包 -->
+	<bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+		<property name="sqlSessionFactoryBeanName" value="sqlSessionFactorySksports2" />
+		<!-- 指定 Dao所在包 -->
+		<property name="basePackage" value="com.skstravel.common.mapper.sksports2" />
+	</bean>
+
+	<!-- Spring 事务 -->
+	<bean id="transactionManagerSksports2"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="sksports2"></property>
+		<qualifier value="tmSksports2" />
+	</bean>
+
+	<!-- 开启注解事务 -->
+	<tx:annotation-driven transaction-manager="transactionManagerSksports2" />
+</beans>

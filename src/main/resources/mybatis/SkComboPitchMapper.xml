@@ -1,0 +1,272 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.skstravel.common.mapper.sksports2.SkComboPitchMapper">
+  <resultMap id="BaseResultMap" type="com.skstravel.common.model.sksports2.SkComboPitch">
+    <id column="combo_pitch_id" jdbcType="INTEGER" property="comboPitchId" />
+    <result column="combo_pitch_name" jdbcType="VARCHAR" property="comboPitchName" />
+    <result column="combo_pitch_contain" jdbcType="VARCHAR" property="comboPitchContain" />
+    <result column="combo_pitch_img" jdbcType="VARCHAR" property="comboPitchImg" />
+  </resultMap>
+  <resultMap extends="BaseResultMap" id="ResultMapWithBLOBs" type="com.skstravel.common.model.sksports2.SkComboPitch">
+    <result column="combo_pitch_desc" jdbcType="LONGVARCHAR" property="comboPitchDesc" />
+  </resultMap>
+  <sql id="Example_Where_Clause">
+    <where>
+      <foreach collection="oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Update_By_Example_Where_Clause">
+    <where>
+      <foreach collection="example.oredCriteria" item="criteria" separator="or">
+        <if test="criteria.valid">
+          <trim prefix="(" prefixOverrides="and" suffix=")">
+            <foreach collection="criteria.criteria" item="criterion">
+              <choose>
+                <when test="criterion.noValue">
+                  and ${criterion.condition}
+                </when>
+                <when test="criterion.singleValue">
+                  and ${criterion.condition} #{criterion.value}
+                </when>
+                <when test="criterion.betweenValue">
+                  and ${criterion.condition} #{criterion.value} and #{criterion.secondValue}
+                </when>
+                <when test="criterion.listValue">
+                  and ${criterion.condition}
+                  <foreach close=")" collection="criterion.value" item="listItem" open="(" separator=",">
+                    #{listItem}
+                  </foreach>
+                </when>
+              </choose>
+            </foreach>
+          </trim>
+        </if>
+      </foreach>
+    </where>
+  </sql>
+  <sql id="Base_Column_List">
+    combo_pitch_id, combo_pitch_name, combo_pitch_contain, combo_pitch_img
+  </sql>
+  <sql id="Blob_Column_List">
+    combo_pitch_desc
+  </sql>
+  <select id="selectByExampleWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkComboPitchExample" resultMap="ResultMapWithBLOBs">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_combo_pitch
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByExample" parameterType="com.skstravel.common.model.sksports2.SkComboPitchExample" resultMap="BaseResultMap">
+    <include refid="pagePrefix" />
+    select
+    <if test="distinct">
+      distinct
+    </if>
+    <include refid="Base_Column_List" />
+    from sk_combo_pitch
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+    <if test="orderByClause != null">
+      order by ${orderByClause}
+    </if>
+    <include refid="pageSuffix" />
+  </select>
+  <select id="selectByPrimaryKey" parameterType="java.lang.Integer" resultMap="ResultMapWithBLOBs">
+    select 
+    <include refid="Base_Column_List" />
+    ,
+    <include refid="Blob_Column_List" />
+    from sk_combo_pitch
+    where combo_pitch_id = #{comboPitchId,jdbcType=INTEGER}
+  </select>
+  <delete id="deleteByPrimaryKey" parameterType="java.lang.Integer">
+    delete from sk_combo_pitch
+    where combo_pitch_id = #{comboPitchId,jdbcType=INTEGER}
+  </delete>
+  <delete id="deleteByExample" parameterType="com.skstravel.common.model.sksports2.SkComboPitchExample">
+    delete from sk_combo_pitch
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </delete>
+  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkComboPitch">
+    insert into sk_combo_pitch (combo_pitch_id, combo_pitch_name, combo_pitch_contain, 
+      combo_pitch_img, combo_pitch_desc)
+    values (#{comboPitchId,jdbcType=INTEGER}, #{comboPitchName,jdbcType=VARCHAR}, #{comboPitchContain,jdbcType=VARCHAR}, 
+      #{comboPitchImg,jdbcType=VARCHAR}, #{comboPitchDesc,jdbcType=LONGVARCHAR})
+  </insert>
+  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkComboPitch">
+    insert into sk_combo_pitch
+    <trim prefix="(" suffix=")" suffixOverrides=",">
+      <if test="comboPitchId != null">
+        combo_pitch_id,
+      </if>
+      <if test="comboPitchName != null">
+        combo_pitch_name,
+      </if>
+      <if test="comboPitchContain != null">
+        combo_pitch_contain,
+      </if>
+      <if test="comboPitchImg != null">
+        combo_pitch_img,
+      </if>
+      <if test="comboPitchDesc != null">
+        combo_pitch_desc,
+      </if>
+    </trim>
+    <trim prefix="values (" suffix=")" suffixOverrides=",">
+      <if test="comboPitchId != null">
+        #{comboPitchId,jdbcType=INTEGER},
+      </if>
+      <if test="comboPitchName != null">
+        #{comboPitchName,jdbcType=VARCHAR},
+      </if>
+      <if test="comboPitchContain != null">
+        #{comboPitchContain,jdbcType=VARCHAR},
+      </if>
+      <if test="comboPitchImg != null">
+        #{comboPitchImg,jdbcType=VARCHAR},
+      </if>
+      <if test="comboPitchDesc != null">
+        #{comboPitchDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </trim>
+  </insert>
+  <select id="countByExample" parameterType="com.skstravel.common.model.sksports2.SkComboPitchExample" resultType="java.lang.Long">
+    select count(*) from sk_combo_pitch
+    <if test="_parameter != null">
+      <include refid="Example_Where_Clause" />
+    </if>
+  </select>
+  <update id="updateByExampleSelective" parameterType="map">
+    update sk_combo_pitch
+    <set>
+      <if test="record.comboPitchId != null">
+        combo_pitch_id = #{record.comboPitchId,jdbcType=INTEGER},
+      </if>
+      <if test="record.comboPitchName != null">
+        combo_pitch_name = #{record.comboPitchName,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboPitchContain != null">
+        combo_pitch_contain = #{record.comboPitchContain,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboPitchImg != null">
+        combo_pitch_img = #{record.comboPitchImg,jdbcType=VARCHAR},
+      </if>
+      <if test="record.comboPitchDesc != null">
+        combo_pitch_desc = #{record.comboPitchDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExampleWithBLOBs" parameterType="map">
+    update sk_combo_pitch
+    set combo_pitch_id = #{record.comboPitchId,jdbcType=INTEGER},
+      combo_pitch_name = #{record.comboPitchName,jdbcType=VARCHAR},
+      combo_pitch_contain = #{record.comboPitchContain,jdbcType=VARCHAR},
+      combo_pitch_img = #{record.comboPitchImg,jdbcType=VARCHAR},
+      combo_pitch_desc = #{record.comboPitchDesc,jdbcType=LONGVARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByExample" parameterType="map">
+    update sk_combo_pitch
+    set combo_pitch_id = #{record.comboPitchId,jdbcType=INTEGER},
+      combo_pitch_name = #{record.comboPitchName,jdbcType=VARCHAR},
+      combo_pitch_contain = #{record.comboPitchContain,jdbcType=VARCHAR},
+      combo_pitch_img = #{record.comboPitchImg,jdbcType=VARCHAR}
+    <if test="_parameter != null">
+      <include refid="Update_By_Example_Where_Clause" />
+    </if>
+  </update>
+  <update id="updateByPrimaryKeySelective" parameterType="com.skstravel.common.model.sksports2.SkComboPitch">
+    update sk_combo_pitch
+    <set>
+      <if test="comboPitchName != null">
+        combo_pitch_name = #{comboPitchName,jdbcType=VARCHAR},
+      </if>
+      <if test="comboPitchContain != null">
+        combo_pitch_contain = #{comboPitchContain,jdbcType=VARCHAR},
+      </if>
+      <if test="comboPitchImg != null">
+        combo_pitch_img = #{comboPitchImg,jdbcType=VARCHAR},
+      </if>
+      <if test="comboPitchDesc != null">
+        combo_pitch_desc = #{comboPitchDesc,jdbcType=LONGVARCHAR},
+      </if>
+    </set>
+    where combo_pitch_id = #{comboPitchId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKeyWithBLOBs" parameterType="com.skstravel.common.model.sksports2.SkComboPitch">
+    update sk_combo_pitch
+    set combo_pitch_name = #{comboPitchName,jdbcType=VARCHAR},
+      combo_pitch_contain = #{comboPitchContain,jdbcType=VARCHAR},
+      combo_pitch_img = #{comboPitchImg,jdbcType=VARCHAR},
+      combo_pitch_desc = #{comboPitchDesc,jdbcType=LONGVARCHAR}
+    where combo_pitch_id = #{comboPitchId,jdbcType=INTEGER}
+  </update>
+  <update id="updateByPrimaryKey" parameterType="com.skstravel.common.model.sksports2.SkComboPitch">
+    update sk_combo_pitch
+    set combo_pitch_name = #{comboPitchName,jdbcType=VARCHAR},
+      combo_pitch_contain = #{comboPitchContain,jdbcType=VARCHAR},
+      combo_pitch_img = #{comboPitchImg,jdbcType=VARCHAR}
+    where combo_pitch_id = #{comboPitchId,jdbcType=INTEGER}
+  </update>
+  <sql id="pagePrefix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        select * from ( select row_.*, rownum rownum_ from ( 
+      </if>
+    </if>
+  </sql>
+  <sql id="pageSuffix">
+    <if test="page != null">
+      <if test="dialect == 'oracle'">
+        <![CDATA[ ) row_ ) where rownum_ > #{page.start} and rownum_ <= (#{page.start} + #{page.limit}) ]]>
+      </if>
+      <if test="dialect == 'mysql'">
+        limit #{page.start} , #{page.limit}
+      </if>
+    </if>
+  </sql>
+</mapper>
