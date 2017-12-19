@@ -55,9 +55,6 @@
     <div class="matchList">
         <ul>
         	<c:forEach  items="${matcheList }"  var ="m">
-        	
-        	
-        	
             <li>
                 <a href="detail.html">
                 <div class="matchImg">
