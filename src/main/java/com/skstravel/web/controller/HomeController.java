@@ -36,14 +36,14 @@ public class HomeController {
     @Autowired
     private  JdbcTemplate jdbcTemplateForSksports2; 
     
-    
+  
     
     
     
     @RequestMapping("/index/{param}")
     public String index(HttpServletRequest request, Model model,@PathVariable String param ) {
     	//List<MatcheInfo> list=matcherService.findAll();
-    	String sql=" select   b.id  matchId , b.batch_sn matchTitle , b.add_time  matchTime,"
+    	String sql=" select   b.id  matchId , b.batch_sn matchTitle , FROM_UNIXTIME(b.add_time,'%Y-%m-%d %h:%i:%s')  matchTime,"
     			+ "p.pitch_name  matchAddress  ,g.shop_price matchPrice  , p.pitch_img  matchImg  "
     			+ " FROM sk_batch b ,sk_batch_info i,sk_goods g ,sk_pitch p WHERE "
     			+ "b.id=i.batch_id AND i.goods_id=g.goods_id AND g.pitch_id=p.id";
