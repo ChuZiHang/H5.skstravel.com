@@ -43,12 +43,17 @@ public class HomeController {
     @RequestMapping("/index/{param}")
     public String index(HttpServletRequest request, Model model,@PathVariable String param ) {
     	//List<MatcheInfo> list=matcherService.findAll();
-    	String sql=" select   b.id  matchId , b.batch_sn matchTitle , FROM_UNIXTIME(b.add_time,'%Y-%m-%d %h:%i:%s')  matchTime,"
+    	String sql=" select   b.id  matchId , g.goods_name matchTitle , FROM_UNIXTIME(g.add_time,'%Y-%m-%d %h:%i:%s')  matchTime,"
     			+ "p.pitch_name  matchAddress  ,g.shop_price matchPrice  , p.pitch_img  matchImg  "
     			+ " FROM sk_batch b ,sk_batch_info i,sk_goods g ,sk_pitch p WHERE "
-    			+ "b.id=i.batch_id AND i.goods_id=g.goods_id AND g.pitch_id=p.id";
+    			+ "b.id=i.batch_id AND i.goods_id=g.goods_id AND g.pitch_id=p.id  AND g.goods_sn LIKE 'FWC%'";
     	List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql);
     	//System.out.println(list);
+    	
+    	String sql1="";
+    	
+    	
+    	
     	
     	request.setAttribute("matcheList", list);
     	return param ;

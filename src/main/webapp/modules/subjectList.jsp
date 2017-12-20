@@ -38,16 +38,31 @@
     </header>
     <div class="subject-title">2018俄罗斯世界杯</div>
     <div class="subject-title">
-        <select name="" id="se0" class="subSe">
-            <option value="">所有赛段</option>
+        <select name="gameStage" id="se0" class="subSe">
+            <option value="gameStage">所有赛段</option>
+            <option value="gameStage">1</option>
         </select>
-        <select name="" id="se1" class="subSe">
-            <option value="">所有城市</option>
+        <select name="city" id="se1" class="subSe">
+            <option value="city">所有城市</option>
         </select>
-        <select name="" id="se2" class="subSe">
-            <option value="">所有等级</option>
+        <select name="rank" id="se2" class="subSe">
+            <option value="rank">所有等级</option>
         </select>
     </div>
+    <script type="text/javascript">
+    	$(function(){
+    		$("#se0").change(function(){
+    			alert("aaa");
+    		});    		
+    		
+    		
+    	});
+    
+    
+    
+    
+    
+    </script>
     <div class="matchList">
         <ul>
         
