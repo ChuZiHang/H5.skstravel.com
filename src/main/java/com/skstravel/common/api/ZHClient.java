@@ -129,8 +129,8 @@ public class ZHClient {
             // 1. 拼接请求头
             String prefix = funcName + ".json";
             // 2. 增加公共参数
-            params.put("mid", "a1eabca4ef6443c6a15def95ab4bf6c0");
-            params.put("aid", "0cb30543eaf24ce6873327969f0a944c");
+            params.put("mid", Constants.mid);
+            params.put("aid", Constants.aid);
             params.put("date", CmblifeUtils.genDate());
             params.put("random", CmblifeUtils.genRandom());
             // 3. 签名
