@@ -32,7 +32,7 @@
     <div class="cupList">
         <ul>
             <li>
-                <a href="subjectList.jsp">
+                <a href="${prc }/index/subjectList">
                     <div class="copListImg">
                         <p class="copListTitle">2016-2017英格兰足球超级联赛</p>
                         <p class="copListItem"><span>足球</span></p>
