@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head lang="en">
@@ -52,8 +53,8 @@
 	        </div>
 	        <div class="gap"><img src="${prc }/assets/images/gap2.png" alt=""/></div>
 	        <div class="orderState">
-	            订单状态 : <span>审核未通过</span>
-	            <span class="orderCheck"><a href="javascript:void(0)">取消订单</a><a href="myOrderDetail.html" class="checkOrderBtns">查看订单</a></span>
+	            订单状态 : <span>${o.orderStatus }</span>
+	            <span class="orderCheck"><a href="javascript:void(0)">取消订单</a><a href="/getorderinfo.controller?orderId=${o.orderId }" class="checkOrderBtns">查看订单</a></span>
 	        </div>
 	    </div>
     </c:forEach>
