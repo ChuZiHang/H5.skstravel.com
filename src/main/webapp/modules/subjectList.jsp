@@ -13,15 +13,6 @@
     <link href="${prc }/assets/css/swiper.min.css" rel="stylesheet" />
     <script src="${prc }/assets/js/jquery-3.2.1.min.js"></script>
     <script src="${prc }/assets/js/swiper.min.js"></script>
-    <script type="text/javascript">
-    		$(function(){
-    			//alert("aa");
-				//window.location.href="${prc}/index.controller"; 
-				
-				
-    		});
-    
-    </script>
 </head>
 <body class="gary-bg">
 <div class="wrapper bot60">
@@ -39,20 +30,48 @@
     <div class="subject-title">2018俄罗斯世界杯</div>
     <div class="subject-title">
         <select name="gameStage" id="se0" class="subSe">
-            <option value="gameStage">所有赛段</option>
-            <option value="gameStage">1</option>
+            <option >所有赛段</option>
+            <c:forEach  items="${gameStage }"  var ="gameStage">
+            <option value="${gameStage.scheduleId }">${gameStage.scheName }</option>
+        	</c:forEach>
         </select>
         <select name="city" id="se1" class="subSe">
-            <option value="city">所有城市</option>
+        	<option >所有城市</option>
+        	<c:forEach  items="${cityList }"  var ="c">
+            <option value="${c.id }">${c.region_name }</option>
+        	</c:forEach>
         </select>
         <select name="rank" id="se2" class="subSe">
-            <option value="rank">所有等级</option>
+            <option>所有等级</option>
+           <c:forEach items="${rankList }"  var ="rankList">
+           	 <option value="${rankList.rank }">${rankList.rank }</option>
+           </c:forEach>
         </select>
     </div>
     <script type="text/javascript">
     	$(function(){
     		$("#se0").change(function(){
-    			alert("aaa");
+    			//alert("aaa");
+    			var url="${prc}/selectByGameStage";
+    			var gameStage=$("#se0").val();
+    			alert(gameStage);
+    			$.post(
+    				url,
+    				{"gameStage":gameStage},
+    				function(data){
+    					//alert(data);
+    					$(".matchList").hide();
+    				}
+    				
+    				
+    				
+    				
+    				
+    				
+    			
+    			); 
+    			
+    			
     		});    		
     		
     		
@@ -103,6 +122,26 @@
                     <i class="fa fa-plus"></i>
                 </div>
             </li> --%>
+        </ul>
+    </div>
+     <div class="matchList"  style="">
+        <ul>
+            <li>
+                <a href="detail.html">
+                <div class="matchImg">
+                    <div class="matchImgWrap">
+                        <img src="${m.matchImg }" alt=""/>
+                    </div>
+                </div>
+                <div class="matchText">
+                    <div class="matchTitle">${m.matchTitle }</div>
+                    <div class="matchTime">${m.matchTime }</div>
+                    <div class="matchAddress">${m.matchAddress }</div>
+                    <div class="matchPrice"><span>酒店+机票</span><em>${m.matchPrice }元起</em></div>
+                    <div class="match-txt">票价包含一张当日球票+一晚当晚三星级酒店,酋长 ...  </div>
+                </div>
+                </a>
+            </li>
         </ul>
     </div>
 
