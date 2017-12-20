@@ -13,6 +13,15 @@
     <link href="${prc }/assets/css/swiper.min.css" rel="stylesheet" />
     <script src="${prc }/assets/js/jquery-3.2.1.min.js"></script>
     <script src="${prc }/assets/js/swiper.min.js"></script>
+    <script type="text/javascript">
+    		$(function(){
+    			//alert("aa");
+				//window.location.href="${prc}/index.controller"; 
+				
+				
+    		});
+    
+    </script>
 </head>
 <body class="gary-bg">
 <div class="wrapper bot60">
@@ -41,23 +50,27 @@
     </div>
     <div class="matchList">
         <ul>
+        
+        
+        	<c:forEach  items="${matcheList }"  var ="m">
             <li>
+                <a href="detail.html">
                 <div class="matchImg">
                     <div class="matchImgWrap">
-                        <img src="${prc }/assets/images/product.jpg" alt=""/>
+                        <img src="${m.matchImg }" alt=""/>
                     </div>
                 </div>
                 <div class="matchText">
-                    <div class="matchTitle">A1 vs A2</div>
-                    <div class="matchTime">2017-05-21 00:00:00</div>
-                    <div class="matchAddress">圣彼得堡 酋长球场</div>
-                    <div class="matchPrice"><span>酒店+机票</span><em>3819元起</em></div>
+                    <div class="matchTitle">${m.matchTitle }</div>
+                    <div class="matchTime">${m.matchTime }</div>
+                    <div class="matchAddress">${m.matchAddress }</div>
+                    <div class="matchPrice"><span>酒店+机票</span><em>${m.matchPrice }元起</em></div>
                     <div class="match-txt">票价包含一张当日球票+一晚当晚三星级酒店,酋长 ...  </div>
                 </div>
-                <div class="putIn">
-                    <i class="fa fa-plus"></i>
-                </div>
+                </a>
             </li>
+           </c:forEach>
+            
            <%--  <li>
                 <div class="matchImg">
                     <div class="matchImgWrap">
