@@ -34,7 +34,7 @@ public class HomeController {
     private MatcheService matcherService;
     
     @Autowired
-    private  JdbcTemplate JdbcTemplate; 
+    private  JdbcTemplate jdbcTemplateForSksports2; 
     
     
     
@@ -42,29 +42,13 @@ public class HomeController {
     
     @RequestMapping("/index/{param}")
     public String index(HttpServletRequest request, Model model,@PathVariable String param ) {
-    	/**
-    	 * //赛事id
-				private int matchId;
-				//赛事标题
-				private String matchTitle;
-				//赛事事件
-				private String matchTime;
-				//赛事地址
-				private String matchAddress;
-				//赛事价格
-				private double matchPrice;
-				//赛事介绍
-				private  String  matchTxt;
-				//图片信息
-				private String  matchImg;
-    	 */
     	//List<MatcheInfo> list=matcherService.findAll();
     	String sql=" select   b.id  matchId , b.batch_sn matchTitle , b.add_time  matchTime,"
     			+ "p.pitch_name  matchAddress  ,g.shop_price matchPrice  , p.pitch_img  matchImg  "
     			+ " FROM sk_batch b ,sk_batch_info i,sk_goods g ,sk_pitch p WHERE "
     			+ "b.id=i.batch_id AND i.goods_id=g.goods_id AND g.pitch_id=p.id";
-    	List<Map<String, Object>> list = JdbcTemplate.queryForList(sql);
-    	System.out.println(list);
+    	List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql);
+    	//System.out.println(list);
     	
     	request.setAttribute("matcheList", list);
     	return param ;
