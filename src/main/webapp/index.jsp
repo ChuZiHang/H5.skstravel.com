@@ -8,5 +8,6 @@
 </head>
 <body>
 			<jsp:forward page="/index/index"></jsp:forward>
+			<jsp:forward page="/orderList/myorder"></jsp:forward>
 </body>
 </html>
