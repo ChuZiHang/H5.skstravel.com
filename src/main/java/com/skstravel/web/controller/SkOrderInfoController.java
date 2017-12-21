@@ -11,11 +11,14 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.skstravel.common.model.sksports2.SkOrderCombo;
+import com.skstravel.common.model.sksports2.SkOrderComboExample;
 import com.skstravel.common.model.sksports2.SkOrderInfo;
 import com.skstravel.common.model.sksports2.SkOrderInfoExample;
 import com.skstravel.common.plugin.Page;
 import com.skstravel.common.plugin.Pager;
 import com.skstravel.common.plugin.PagerService;
+import com.skstravel.common.service.ISkOrderComboService;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.utils.ParamUtils;
 import com.skstravel.pojo.MatcheInfo;
@@ -37,6 +40,8 @@ public class SkOrderInfoController {
 
     @Autowired
     private ISkOrderInfoService skOrderInfoService;
+    @Autowired
+    private ISkOrderComboService skOrderComboService;
     
 
     @RequestMapping("/orderinfo/{param}")
@@ -73,7 +78,15 @@ public class SkOrderInfoController {
         skOrderInfoExample.createCriteria().andOrderIdEqualTo(orderId);
         
         SkOrderInfo orderInfo = skOrderInfoService.selectByPrimaryKey(orderId);
+        //查票务信息
+        SkOrderComboExample skOrderComboExample = new SkOrderComboExample();
+        skOrderComboExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
+        List<SkOrderCombo> coList = this.skOrderComboService.selectByExample(skOrderComboExample);
+        SkOrderCombo skOrderCombo = coList.get(0);
+        
+        
         model.addAttribute("order", orderInfo);
+        model.addAttribute("orderCombo", skOrderCombo);
         return "myOrderDetail" ;
     }
 }
