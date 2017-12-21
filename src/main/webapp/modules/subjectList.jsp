@@ -78,7 +78,7 @@
     
      <div class="matchList2"  >
         <ul id="matchList2">
-					          					 <li>
+					          					<%--  <li>
 					                <a href="detail.html">
 					                <div class="matchImg">
 					                    <div class="matchImgWrap">
@@ -94,7 +94,7 @@
 					                    <div class="matchTxt" style="float: right"><font size="1px">${string2 }....</font></div>
 					                </div>
 					                </a>
-					            			</li>	
+					            			</li>	 --%>
         </ul>
     </div>
 	<script type="text/javascript">
@@ -115,16 +115,25 @@
     					$("#matchList2").empty();
     					for(var i=0;i<data.length;i++){
     							//var img=$(".matchImgWrap").css("src","123");
-    							var tbody ="";
-    							tbody+='<li><a href="detail.html"><div class="matchImg">';
-    							tbody+=" <div class='matchImgWrap'><img src='"+data[i].matchImg+"'  alt=''/> </div></div>";
-    							tbody+=' <div class="matchText"> <div class="matchTitle">'+data[i].matchTitle+'</div>';
-    							tbody+=' <div class="matchTime">'+data[i].matchTime+'</div>';
-    							tbody+=' <div class="matchAddress">'+data[i].matchAddress+'</div>';
-    							tbody+='  <div class="matchPrice"><span>酒店+机票</span><em>'+data[i].matchPrice+'元起</em></div>';
-    							tbody+='<div class="match-txt">票价包含一张当日球票+一晚当晚三星级酒店,酋长 ...  </div> </div> </a></li>';
-    							tbody+="<br/>"
-    								$("#matchList2").append(tbody);
+    							var doc=
+    								'<li>'
+    			               +' <a href="detail.html">'
+    			               +' <div class="matchImg">'
+    			               +'  <div class="matchImgWrap">'
+    			               +'  <img src="'+data[i].matchImg+'" alt=""/>'
+    			               +' </div>'
+    			               +' </div>'
+    			               +' <div class="matchText">'
+    			               +'<div class="matchTitle">'+data[i].matchTitle+'</div>'
+    			               +'<div class="matchTime">'+data[i].matchTime+'</div>'
+    			               +' <div class="matchAddress">'+data[i].matchAddress+'</div>'
+    			               +' <div class="matchPrice"><span>酒店+机票</span><em>'+data[i].matchPrice+'元起</em></div>'
+    			               +' <div class="matchTxt" style="float: right"><font size="1px">'+data[i].matchTxt+'....</font></div>'
+    			               +'</div>'
+    			               +'</a>'
+    			               +'</li>'
+    								
+    							$("#matchList2").append(doc);
     					}
     					
     				}
