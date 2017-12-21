@@ -22,20 +22,17 @@ public class MatcheServiceImpl implements MatcheService {
 				+ "matchImg ,FROM_UNIXTIME(sg.add_time,'%Y-%m-%d %h:%i:%s')  matchTime,"
 				+ "sg.ticket_business matchTxt FROM sk_goods sg, sk_pitch sp ,sk_region   sr  "
 				+ "WHERE  sp.region_id =sr.region_id AND sp.id=sg.pitch_id AND  sg.game_id='60'";
-		
-		
-		
-		String sql1=" select   b.id  matchId , g.goods_name matchTitle , FROM_UNIXTIME(g.add_time,'%Y-%m-%d %h:%i:%s')  matchTime,"
+		/*String sql1=" select   b.id  matchId , g.goods_name matchTitle , FROM_UNIXTIME(g.add_time,'%Y-%m-%d %h:%i:%s')  matchTime,"
 	 			+ "p.pitch_name  matchAddress  ,g.shop_price matchPrice  , p.pitch_img  matchImg  "
 	 			+ " FROM sk_batch b ,sk_batch_info i,sk_goods g ,sk_pitch p WHERE "
-	 			+ "b.id=i.batch_id AND i.goods_id=g.goods_id AND g.pitch_id=p.id  AND g.goods_sn LIKE 'FWC%'";
+	 			+ "b.id=i.batch_id AND i.goods_id=g.goods_id AND g.pitch_id=p.id  AND g.goods_sn LIKE 'FWC%'";*/
 	 	List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql);
 		return list;
 	}
 
 	public List<Map<String, Object>> findGameStage() {
 		String sql3="SELECT sc.id  scheduleId ,sc.sche_name  scheName FROM "
-				+ "sk_game ga,sk_schedule sc  WHERE  ga.id=sc.game_id AND ga.id='60'";
+				+ "sk_game ga,sk_schedule sc  WHERE  ga.id=sc.game_id AND ga.id='60'  order by sc.id asc  ";
      	List<Map<String, Object>> gameStage = jdbcTemplateForSksports2.queryForList(sql3);
 		return gameStage;
 	}
