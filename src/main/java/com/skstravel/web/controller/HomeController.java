@@ -11,9 +11,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import com.alibaba.fastjson.JSON;
 import com.skstravel.pojo.MatcheInfo;
 import com.skstravel.service.MatcheService;
 
+import java.io.IOException;
+import java.util.Enumeration;
 import java.util.List;
 import java.util.Map;
 
@@ -27,35 +30,59 @@ import javax.servlet.http.HttpServletResponse;
 public class HomeController {
 
     private static final Logger LOGGER = LoggerFactory.getLogger(HomeController.class);
-
-    
-    
     @Autowired
     private MatcheService matcherService;
-    
-    @Autowired
-    private  JdbcTemplate jdbcTemplateForSksports2; 
-    
-  
-    
-    
-    
+    /**
+     * 查询前台页面数据(index.jsp)
+     * 查询subjectList.jsp页面数据
+     * @param request
+     * @param model
+     * @param param
+     * @return
+     */
     @RequestMapping("/index/{param}")
     public String index(HttpServletRequest request, Model model,@PathVariable String param ) {
-    	//List<MatcheInfo> list=matcherService.findAll();
-    	String sql=" select   b.id  matchId , g.goods_name matchTitle , FROM_UNIXTIME(g.add_time,'%Y-%m-%d %h:%i:%s')  matchTime,"
-    			+ "p.pitch_name  matchAddress  ,g.shop_price matchPrice  , p.pitch_img  matchImg  "
-    			+ " FROM sk_batch b ,sk_batch_info i,sk_goods g ,sk_pitch p WHERE "
-    			+ "b.id=i.batch_id AND i.goods_id=g.goods_id AND g.pitch_id=p.id  AND g.goods_sn LIKE 'FWC%'";
-    	List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql);
-    	//System.out.println(list);
-    	
-    	String sql1="";
-    	
-    	
-    	
-    	
+    	List<Map<String, Object>>   list=matcherService.findMatchListForIndex();
+    	if(param!="index"){
+    	List<Map<String, Object>> gameStage   =matcherService.findGameStage();
+    	List<Map<String, Object>> rankList   =matcherService.findRankList();
+    	List<Map<String, Object>> cityList   =matcherService.findCityList();
+    	request.setAttribute("gameStage", gameStage);
+     	request.setAttribute("rankList", rankList);
+     	request.setAttribute("cityList", cityList);
+     	}
     	request.setAttribute("matcheList", list);
+     	
     	return param ;
     }
+    
+    
+    /**
+     * 列表数据查询检索
+     * @param request
+     * @param gameStage
+     * @param response
+     * @throws IOException
+     */
+    @RequestMapping("/selectByGameStage")
+    public void  selectByGameStage(HttpServletRequest request,String  gameStage,HttpServletResponse response) throws IOException {
+    	int gameS = Integer.parseInt(gameStage);
+    	System.out.println(gameStage);
+    	List<Map<String, Object>> list=null;
+    	if(gameS ==0){
+    		list = matcherService.findMatchListForIndex();
+    	}else{
+    		list=matcherService.findByGameStage(gameS);
+    	}
+    	String str = JSON.toJSONString(list);
+    	response.setContentType("text/json;charset=utf-8");
+    	response.getWriter().write(str);
+    	
+    }
+    
+    
+   
+    
+    
+    
 }
