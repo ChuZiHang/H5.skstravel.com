@@ -126,7 +126,6 @@
     							tbody+="<br/>"
     								$("#matchList2").append(tbody);
     					}
-    					
     				}
     			); 
     		});    		
