@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <head lang="en">
     <meta charset="UTF-8">
@@ -30,19 +31,19 @@
     <div class="subject-title">2018俄罗斯世界杯</div>
     <div class="subject-title">
         <select name="gameStage" id="se0" class="subSe">
-            <option >所有赛段</option>
+            <option  value ="0" >所有赛段</option>
             <c:forEach  items="${gameStage }"  var ="gameStage">
             <option value="${gameStage.scheduleId }">${gameStage.scheName }</option>
         	</c:forEach>
         </select>
         <select name="city" id="se1" class="subSe">
-        	<option >所有城市</option>
+        	<option  value="0" >所有城市</option>
         	<c:forEach  items="${cityList }"  var ="c">
             <option value="${c.id }">${c.region_name }</option>
         	</c:forEach>
         </select>
         <select name="rank" id="se2" class="subSe">
-            <option>所有等级</option>
+            <option  value="0">所有等级</option>
            <c:forEach items="${rankList }"  var ="rankList">
            	 <option value="${rankList.rank }">${rankList.rank }</option>
            </c:forEach>
@@ -52,15 +53,16 @@
     	$(function(){
     		$("#se0").change(function(){
     			//alert("aaa");
-    			var url="${prc}/selectByGameStage";
+    			var url="${prc}/selectByGameStage/subjectList";
     			var gameStage=$("#se0").val();
     			alert(gameStage);
     			$.post(
     				url,
     				{"gameStage":gameStage},
     				function(data){
+    					
     					//alert(data);
-    					$(".matchList").hide();
+    					//$(".matchList").hide();
     				}
     				
     				
@@ -87,6 +89,8 @@
         
         
         	<c:forEach  items="${matcheList }"  var ="m">
+        	<c:set var="string1" value="${m.matchTxt }"/>
+			<c:set var="string2" value="${fn:substring(string1, 0, 55)}" />
             <li>
                 <a href="detail.html">
                 <div class="matchImg">
@@ -99,7 +103,8 @@
                     <div class="matchTime">${m.matchTime }</div>
                     <div class="matchAddress">${m.matchAddress }</div>
                     <div class="matchPrice"><span>酒店+机票</span><em>${m.matchPrice }元起</em></div>
-                    <div class="match-txt">票价包含一张当日球票+一晚当晚三星级酒店,酋长 ...  </div>
+                    
+                    <div class="matchTxt" style="float: right"><font size="1px">${string2 }....</font></div>
                 </div>
                 </a>
             </li>

@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head lang="en">
@@ -56,6 +57,8 @@
     <div class="matchList">
         <ul>
         	<c:forEach  items="${matcheList }"  var ="m">
+        	<c:set var="string1" value="${m.matchTxt }"/>
+			<c:set var="string2" value="${fn:substring(string1, 0, 55)}" />
             <li>
                 <a href="detail.html">
                 <div class="matchImg">
@@ -68,7 +71,7 @@
                     <div class="matchTime">${m.matchTime }</div>
                     <div class="matchAddress">${m.matchAddress }</div>
                     <div class="matchPrice"><span>酒店+机票</span><em>${m.matchPrice }元起</em></div>
-                    <div class="match-txt">票价包含一张当日球票+一晚当晚三星级酒店,酋长 ...  </div>
+                    <div class="match-txt">${string2 }....</div>
                 </div>
                 </a>
             </li>
