@@ -31,29 +31,24 @@
     </header>
     <div class="subject-title">2018俄罗斯世界杯</div>
     <div class="subject-title">
-    	<form action="${prc}/selectByGameStageAndCity/subjectList"  id="form1"  method="post">
-        <select name="gameStage1" id="se0" class="subSe">
-            		<option  value ="0" >所有赛段</option>
-            	 <c:forEach  items="${pageBean.gameStageList }"  var ="gameStage">
-            		<option value="${gameStage.scheduleId }"  >${gameStage.scheName}</option>
-        		</c:forEach>
-        </select>
-        <input type="hidden"  name ="gameStage"  value="${pageBean.gameStage }">
-        <select name="city" id="se1" class="subSe">
-        	<option  value="0" >所有城市</option>
-        	<c:forEach  items="${pageBean.cityList }"  var ="c">
-            <option  value="${c.region_id }" >${c.region_name }</option>
+        <select name="gameStage" id="se0" class="subSe">
+            <option  value ="0" >所有赛段</option>
+            <c:forEach  items="${gameStage }"  var ="gameStage">
+            <option value="${gameStage.scheduleId }">${gameStage.scheName }</option>
         	</c:forEach>
         </select>
-         <input type="hidden"  name ="city"  value="${pageBean.city }">
-         
+        <select name="city" id="se1" class="subSe">
+        	<option  value="0" >所有城市</option>
+        	<c:forEach  items="${cityList }"  var ="c">
+            <option value="${c.id }">${c.region_name }</option>
+        	</c:forEach>
+        </select>
         <select name="rank" id="se2" class="subSe">
             <option  value="0">所有等级</option>
-           <c:forEach items="${pageBean.rankList }"  var ="rankList">
-           	 <option value="${rankList.id }" >${rankList.rank }</option>
+           <c:forEach items="${rankList }"  var ="rankList">
+           	 <option value="${rankList.rank }">${rankList.rank }</option>
            </c:forEach>
         </select>
-        </form>
     </div>
     <!-- <script type="text/javascript">
     		new Vue({
@@ -64,7 +59,7 @@
     
     <div class="matchList"  id="matchList">
         <ul>
-        	<c:forEach  items="${pageBean.list  }"  var ="m">
+        	<c:forEach  items="${matcheList }"  var ="m">
         	<c:set var="string1" value="${m.matchTxt }"/>
 			<c:set var="string2" value="${fn:substring(string1, 0, 55)}" />
             <li>
@@ -88,26 +83,50 @@
         </ul>
     </div>
     
-     <!-- <div class="matchList2"  >
+     <div class="matchList2"  >
         <ul id="matchList2">
         </ul>
-    </div> -->
+    </div>
 	<script type="text/javascript">
     	$(function(){
     		$("#se0").change(function(){
     			//alert("aaa");
     			var url="${prc}/selectByGameStage";
     			var gameStage=$("#se0").val();
-    			window.location.href="${prc}/selectByGameStage/subjectList?gameStage="+gameStage;
-    		});
-    		
-    		$("#se1").change(function(){
-    			$("#form1").submit();
-    		});
-    		
-    		
-    		
-    		
+    			//alert(gameStage);
+    			$.post(
+    				url,
+    				{"gameStage":gameStage},
+    				function(data){
+    					//alert(data);
+    					$("#matchList").empty();
+    					$(".matchList2").show();
+    					$("#matchList2").empty();
+    					for(var i=0;i<data.length;i++){
+    							var doc=
+    								'<li>'
+    			               +' <a href="detail.html">'
+    			               +' <div class="matchImg">'
+    			               +'  <div class="matchImgWrap">'
+    			               +'  <img src="'+data[i].matchImg+'" alt=""/>'
+    			               +' </div>'
+    			               +' </div>'
+    			               +' <div class="matchText">'
+    			               +'<div class="matchTitle">'+data[i].matchTitle+'</div>'
+    			               +'<div class="matchTime">'+data[i].matchTime+'</div>'     
+    			               +' <div class="matchAddress">'+data[i].matchAddress+'</div>'
+    			               +' <div class="matchPrice"><span>酒店+机票</span><em>'+data[i].matchPrice+'元起</em></div>'
+    			               +' <div class="matchTxt"   ><font size="1px">'+data[i].matchTxt+'....</font></div>'
+    			               +'</div>'
+    			               +'</a>'
+    			               +'</li>'
+    								
+    							$("#matchList2").append(doc);
+    					}
+    					
+    				}
+    			); 
+    		});    		
     	});
     </script>
 

@@ -56,7 +56,7 @@
     </div>
     <div class="matchList">
         <ul>
-        	<c:forEach  items="${matcheList }"  var ="m">
+        	<c:forEach  items="${pageBean.list }"  var ="m">
         	<c:set var="string1" value="${m.matchTxt }"/>
 			<c:set var="string2" value="${fn:substring(string1, 0, 55)}" />
             <li>
