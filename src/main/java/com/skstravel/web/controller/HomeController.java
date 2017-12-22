@@ -10,9 +10,11 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import com.alibaba.fastjson.JSON;
 import com.skstravel.pojo.MatcheInfo;
+import com.skstravel.pojo.PageBean;
 import com.skstravel.service.MatcheService;
 
 import java.io.IOException;
@@ -43,16 +45,17 @@ public class HomeController {
     @RequestMapping("/index/{param}")
     public String index(HttpServletRequest request, Model model,@PathVariable String param ) {
     	List<Map<String, Object>>   list=matcherService.findMatchListForIndex();
+    	PageBean  page =new PageBean();
     	if(param!="index"){
     	List<Map<String, Object>> gameStage   =matcherService.findGameStage();
     	List<Map<String, Object>> rankList   =matcherService.findRankList();
     	List<Map<String, Object>> cityList   =matcherService.findCityList();
-    	request.setAttribute("gameStage", gameStage);
-     	request.setAttribute("rankList", rankList);
-     	request.setAttribute("cityList", cityList);
+    	page.setGameStageList(gameStage);
+    	page.setRankList(null);
+    	page.setCityList(null);
      	}
-    	request.setAttribute("matcheList", list);
-     	
+    	page.setList(list);
+    	request.setAttribute("pageBean", page);
     	return param ;
     }
     
@@ -64,22 +67,109 @@ public class HomeController {
      * @param response
      * @throws IOException
      */
-    @RequestMapping("/selectByGameStage")
-    public void  selectByGameStage(HttpServletRequest request,String  gameStage,HttpServletResponse response) throws IOException {
-    	int gameS = Integer.parseInt(gameStage);
-    	System.out.println(gameStage);
+    @RequestMapping("/selectByGameStage/{param}")
+    public String  selectByGameStage(HttpServletRequest request,@PathVariable 
+    		String param,HttpServletResponse response,@RequestParam(defaultValue="0")int  gameStage) throws IOException {
+    	//int gameS = Integer.parseInt(param);
+    	//System.out.println(gameS);
+    	//存放查询到的list数据
     	List<Map<String, Object>> list=null;
-    	if(gameS ==0){
+    	List<Map<String, Object>> gameStageList=null;
+    	List<Map<String, Object>> rankList   =null;
+    	List<Map<String, Object>> cityList   =null;
+    	PageBean  page =new PageBean();
+    	if(gameStage == 0){
     		list = matcherService.findMatchListForIndex();
+    		page.setList(list);
+    		page.setCityList(null);
+    		page.setRankList(null);
+    		page.setGameStage("所有赛段");
+    		
     	}else{
-    		list=matcherService.findByGameStage(gameS);
+    		//赛事列表
+    		list=matcherService.findByGameStage(gameStage);
+    		//从页面返回的数据名称
+    		//String name =matcherService.findGameStageByPage(gameStage);
+    		//城市列表
+    		cityList=matcherService.findCityByGameStage(gameStage);
+    		//赛事列表
+    		gameStageList   =matcherService.findGameStage();
+    		page.setList(list);
+    		page.setGameStageList(gameStageList);
+    		//列表中的选中值
+    		page.setGameStage(String.valueOf(gameStage));
+    		//城市列表
+    		page.setCityList(cityList);
+    		//级别列表
+    		page.setRankList(null);
     	}
-    	String str = JSON.toJSONString(list);
-    	response.setContentType("text/json;charset=utf-8");
-    	response.getWriter().write(str);
+    	request.setAttribute("pageBean", page);
+    	
+		return param;
     	
     }
     
+    
+    
+    
+    @RequestMapping("/selectByGameStageAndCity/{param}")
+    public String  selectByGameStageAndCity(HttpServletRequest request,@PathVariable 
+    		String param,HttpServletResponse response,Integer 
+    		gameStage,@RequestParam(defaultValue="0")int city) throws IOException {
+    	
+    	
+    	
+    	//存放查询到的list数据
+    	List<Map<String, Object>> list=null;
+    	List<Map<String, Object>> gameStageList=null;
+    	List<Map<String, Object>> rankList   =null;
+    	List<Map<String, Object>> cityList   =null;
+    	PageBean  page =new PageBean();
+    	
+    
+    	
+    	if(gameStage == 0){
+    		list = matcherService.findMatchListForIndex();
+    		page.setList(list);
+    		page.setCityList(null);
+    		page.setRankList(null);
+    		page.setGameStage("所有赛段");
+    		
+    	}else{
+    		//通过赛事和城市确定----》赛事列表
+    		list=matcherService.findByGameStageAndCity(gameStage,city);
+    		//从页面返回的数据名称
+    		//String gameStageName =matcherService.findGameStageByPage(gameStage);
+    		//从页面返回的
+    		String cityName =matcherService.findCityByPage(city);
+    		
+    		//城市列表
+    		cityList=matcherService.findCityByGameStage(gameStage);
+    		//通过城市+赛事确定 级别---->级别列表
+    		rankList=matcherService.findRankByCityAndgameStage(gameStage,city);
+    		//赛事列表
+    		gameStageList   =matcherService.findGameStage();
+    		
+    		//赛事主页列表封装
+    		page.setList(list);
+    		//封装赛事列表
+    		page.setGameStageList(gameStageList);
+    		//封装城市列表
+    		page.setCityList(cityList);
+    		//封装级别列表
+    		page.setRankList(rankList);
+    		//列表中的选中值
+    		page.setGameStage(String.valueOf(gameStage));
+    		//城市列表
+    		page.setCity(String.valueOf(city));
+    		
+    		
+    	}
+    	request.setAttribute("pageBean", page);
+    	
+		return param;
+    	
+    }
     
    
     

@@ -17,6 +17,16 @@ public interface MatcheService {
 
 	List<Map<String, Object>> findByGameStage(int gameS);
 
+	List<Map<String, Object>> findCityByGameStage(int gameStage);
+
+	String findGameStageByPage(int gameStage);
+
+	List<Map<String, Object>> findByGameStageAndCity(int gameStage, int city);
+
+	String findCityByPage(int city);
+
+	List<Map<String, Object>> findRankByCityAndgameStage(int gameStage, int city);
+
 	
 
 }
