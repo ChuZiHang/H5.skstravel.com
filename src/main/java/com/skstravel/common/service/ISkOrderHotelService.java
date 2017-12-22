@@ -2,27 +2,26 @@ package com.skstravel.common.service;
 
 import java.util.List;
 
-
 import com.skstravel.common.model.sksports2.SkOrderCombo;
-import com.skstravel.common.model.sksports2.SkOrderComboExample;
-import com.skstravel.common.model.sksports2.SkOrderInfo;
+import com.skstravel.common.model.sksports2.SkOrderHotel;
+import com.skstravel.common.model.sksports2.SkOrderHotelExample;
 
 public interface ISkOrderHotelService {
     
-    long countByExample(SkOrderComboExample example);
+    long countByExample(SkOrderHotelExample example);
 
-    int insertSelective(SkOrderCombo record);
+    int insertSelective(SkOrderHotel record);
 
-    List<SkOrderCombo> selectByExampleWithBLOBs(SkOrderComboExample example);
+    List<SkOrderHotel> selectByExampleWithBLOBs(SkOrderHotelExample example);
 
-    List<SkOrderCombo> selectByExample(SkOrderComboExample example);
+    List<SkOrderHotel> selectByExample(SkOrderHotelExample example);
 
-    SkOrderCombo selectByPrimaryKey(Integer orderId);
+    SkOrderHotel selectByPrimaryKey(Integer orderId);
 
-    int updateByPrimaryKeySelective(SkOrderCombo record);
+    int updateByPrimaryKeySelective(SkOrderHotel record);
 
-    int updateByPrimaryKeyWithBLOBs(SkOrderCombo record);
+    int updateByPrimaryKeyWithBLOBs(SkOrderHotel record);
 
-    int updateByPrimaryKey(SkOrderCombo record);
+    int updateByPrimaryKey(SkOrderHotel record);
 
 }

@@ -53,7 +53,18 @@
 	        </div>
 	        <div class="gap"><img src="${prc }/assets/images/gap2.png" alt=""/></div>
 	        <div class="orderState">
-	            订单状态 : <span>${o.orderStatus }</span>
+	            订单状态 : 
+	         <c:choose>
+            	<c:when test="${order.orderStatus }">
+	            	 <span>支付成功</span>
+            	</c:when>
+            	<c:when test="${order.orderStatus }">
+	            	 <span>待付款</span>
+            	</c:when>
+            	<c:when test="${order.orderStatus }">
+	            	 <span>已取消</span>
+            	</c:when>
+            </c:choose>
 	            <span class="orderCheck"><a href="javascript:void(0)">取消订单</a><a href="/getorderinfo.controller?orderId=${o.orderId }" class="checkOrderBtns">查看订单</a></span>
 	        </div>
 	    </div>
