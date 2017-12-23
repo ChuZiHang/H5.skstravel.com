@@ -5,12 +5,14 @@ import com.skstravel.common.model.sksports2.SkUsers;
 import com.skstravel.common.model.sksports2.SkUsersExample;
 import com.skstravel.common.service.SkUsersService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
 
 /**
  * Created by qw on 2017/12/20.
  */
+@Service("skUsersService")
 public class SkUsersServiceImpl implements SkUsersService {
 
     @Autowired

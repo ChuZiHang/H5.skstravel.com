@@ -202,7 +202,7 @@
       #{creditsNum,jdbcType=INTEGER}, #{usedCreditsNum,jdbcType=INTEGER}, #{source,jdbcType=BIT}, 
       #{wxOpenId,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkUsers">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="userId" parameterType="com.skstravel.common.model.sksports2.SkUsers">
     insert into sk_users
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="userId != null">

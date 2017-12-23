@@ -7,6 +7,8 @@ import com.skstravel.common.model.sksports2.SkUserAddress;
 import com.skstravel.common.model.sksports2.SkUserAddressExample;
 
 public interface ISkUserAddressService {
+
+    int deleteByPrimaryKey(Integer addressId);
     
     long countByExample(SkUserAddressExample example);
 
