@@ -148,4 +148,46 @@ public class SkOrderInfoController {
         model.addAttribute("skBearerInfo", skBearerInfo);
         return "myOrderDetail" ;
     }
+    
+    @RequestMapping("/cancelOrder")
+    public String cancelOrder(HttpServletRequest request, Model model) {
+        
+        int orderId = ParamUtils.getIntParameter(request, "orderId",1);
+        
+        SkOrderInfo orderInfo = skOrderInfoService.selectByPrimaryKey(orderId);
+        orderInfo.setOrderStatus(false);
+        this.skOrderInfoService.updateByPrimaryKey(orderInfo);
+        
+        
+int pageNo = ParamUtils.getIntParameter(request, "pageNo",1);
+        
+        SkOrderInfoExample skOrderInfoExample = new SkOrderInfoExample();
+        SkOrderInfoExample.Criteria criteria = skOrderInfoExample.createCriteria();
+        
+        //取用户id
+//        String userId = null;
+//        Cookie[] cookies = request.getCookies();
+//        for(Cookie cookie : cookies){
+//            if(cookie.getName().equals("memberId")){
+//                userId = cookie.getValue();
+//            }
+//         }
+//        skOrderInfoExample.createCriteria().andUserIdEqualTo(Integer.parseInt(userId));
+        
+        
+        long total = skOrderInfoService.countByExample(skOrderInfoExample);
+        int pageSize = 10;
+        Page page = new Page();
+        page.setTotal(total);
+        page.setLimit(pageSize);
+        page.setNo(pageNo);
+        skOrderInfoExample.setPage(page);
+        Pager pager = PagerService.getPager(pageNo, total, pageSize, 5);
+        
+        
+        List<SkOrderInfo> list = skOrderInfoService.selectByExample(skOrderInfoExample);
+        model.addAttribute("orderList", list);
+        
+        return "myorder" ;
+    }
 }
