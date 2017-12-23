@@ -267,7 +267,7 @@
       #{spm,jdbcType=VARCHAR}, #{credisNum,jdbcType=INTEGER}, #{thirdPlatform,jdbcType=BIT}, 
       #{buyerMessage,jdbcType=VARCHAR}, #{thirdInfo,jdbcType=LONGVARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkOrderInfo">
+  <insert id="insertSelective"  useGeneratedKeys="true" keyProperty="orderId" parameterType="com.skstravel.common.model.sksports2.SkOrderInfo">
     insert into sk_order_info
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="orderId != null">
