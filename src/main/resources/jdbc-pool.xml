@@ -14,7 +14,7 @@
 		<property name="poolProperties">
 			<bean class="org.apache.tomcat.jdbc.pool.PoolProperties">
 				<property name="url"
-					value="jdbc:mysql://60.205.187.255:3306/sksports2?characterEncoding=utf-8" />
+				value="jdbc:mysql://60.205.187.255:3306/sksports2?characterEncoding=utf-8" />
 				<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 				<property name="username" value="root" />
 				<property name="password" value="qiuwei" />

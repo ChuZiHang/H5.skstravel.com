@@ -27,6 +27,10 @@ public interface MatcheService {
 
 	List<Map<String, Object>> findRankByCityAndgameStage(int gameStage, int city);
 
+	List<Map<String, Object>> findByGameStageAndCityAndRank(int gameStage1, int city1, int rank1);
+
+	void findDetailsById(int id);
+
 	
 
 }

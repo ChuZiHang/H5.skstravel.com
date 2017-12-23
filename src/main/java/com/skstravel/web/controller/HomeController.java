@@ -115,20 +115,14 @@ public class HomeController {
     @RequestMapping("/selectByGameStageAndCity/{param}")
     public String  selectByGameStageAndCity(HttpServletRequest request,@PathVariable 
     		String param,HttpServletResponse response,Integer 
-    		gameStage,@RequestParam(defaultValue="0")int city) throws IOException {
-    	
-    	
-    	
+    		gameStage1,@RequestParam(defaultValue="0")int city) throws IOException {
     	//存放查询到的list数据
     	List<Map<String, Object>> list=null;
     	List<Map<String, Object>> gameStageList=null;
     	List<Map<String, Object>> rankList   =null;
     	List<Map<String, Object>> cityList   =null;
     	PageBean  page =new PageBean();
-    	
-    
-    	
-    	if(gameStage == 0){
+    	if(gameStage1 == 0){
     		list = matcherService.findMatchListForIndex();
     		page.setList(list);
     		page.setCityList(null);
@@ -137,16 +131,16 @@ public class HomeController {
     		
     	}else{
     		//通过赛事和城市确定----》赛事列表
-    		list=matcherService.findByGameStageAndCity(gameStage,city);
+    		list=matcherService.findByGameStageAndCity(gameStage1,city);
     		//从页面返回的数据名称
     		//String gameStageName =matcherService.findGameStageByPage(gameStage);
     		//从页面返回的
     		String cityName =matcherService.findCityByPage(city);
     		
     		//城市列表
-    		cityList=matcherService.findCityByGameStage(gameStage);
+    		cityList=matcherService.findCityByGameStage(gameStage1);
     		//通过城市+赛事确定 级别---->级别列表
-    		rankList=matcherService.findRankByCityAndgameStage(gameStage,city);
+    		rankList=matcherService.findRankByCityAndgameStage(gameStage1,city);
     		//赛事列表
     		gameStageList   =matcherService.findGameStage();
     		
@@ -159,18 +153,72 @@ public class HomeController {
     		//封装级别列表
     		page.setRankList(rankList);
     		//列表中的选中值
-    		page.setGameStage(String.valueOf(gameStage));
+    		page.setGameStage(String.valueOf(gameStage1));
     		//城市列表
     		page.setCity(String.valueOf(city));
-    		
-    		
     	}
     	request.setAttribute("pageBean", page);
-    	
 		return param;
-    	
     }
     
+    @RequestMapping("/selectByGameStageAndCityAndRank/{param}")
+    public String  selectByGameStageAndCityAndRank(HttpServletRequest request,@PathVariable 
+    		String param,HttpServletResponse response,@RequestParam(defaultValue="0")int 
+    		gameStage1,@RequestParam(defaultValue="0")int city1,@RequestParam(defaultValue="0")int rank1) throws IOException {
+    	//存放查询到的list数据
+    	List<Map<String, Object>> list=null;
+    	List<Map<String, Object>> gameStageList=null;
+    	List<Map<String, Object>> rankList   =null;
+    	List<Map<String, Object>> cityList   =null;
+    	
+    	PageBean  page =new PageBean();
+    	if(gameStage1 == 0 ||city1==0 ){
+    		list = matcherService.findMatchListForIndex();
+    		page.setList(list);
+    		page.setCityList(null);
+    		page.setRankList(null);
+    		page.setGameStage("所有赛段");
+    		
+    	}else{
+    		//通过赛事和城市确定----》赛事列表
+    		list=matcherService.findByGameStageAndCityAndRank(gameStage1,city1,rank1);
+    		//从页面返回的数据名称
+    		//String gameStageName =matcherService.findGameStageByPage(gameStage);
+    		//从页面返回的
+    		//String cityName =matcherService.findCityByPage(city1);
+    		
+    		//城市列表
+    		cityList=matcherService.findCityByGameStage(gameStage1);
+    		//通过城市+赛事确定 级别---->级别列表
+    		rankList=matcherService.findRankByCityAndgameStage(gameStage1,city1);
+    		//赛事列表
+    		gameStageList   =matcherService.findGameStage();
+    		
+    		//赛事主页列表封装
+    		page.setList(list);
+    		//封装赛事列表
+    		page.setGameStageList(gameStageList);
+    		//封装城市列表
+    		page.setCityList(cityList);
+    		//封装级别列表
+    		page.setRankList(rankList);
+    		//列表中的选中值
+    		page.setGameStage(String.valueOf(gameStage1));
+    		//城市列表
+    		page.setCity(String.valueOf(city1));
+    	}
+    	request.setAttribute("pageBean", page);
+		return param;
+    }
+    
+    @RequestMapping("findDetailsById/{param}")
+    public  String  findDetailsById(HttpServletRequest request,@PathVariable 
+    		String param,@RequestParam(defaultValue="0")int id) {
+		
+    	//matcherService.findDetailsById(id);
+    	
+    	return param;
+	}
    
     
     

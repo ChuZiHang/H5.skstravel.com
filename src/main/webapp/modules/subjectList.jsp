@@ -32,22 +32,23 @@
     <div class="subject-title">2018俄罗斯世界杯</div>
     <div class="subject-title">
     	<form action="${prc}/selectByGameStageAndCity/subjectList"  id="form1"  method="post">
-        <select name="gameStage1" id="se0" class="subSe">
+        <select name="gameStage" id="se0" class="subSe">
             		<option  value ="0" >所有赛段</option>
             	 <c:forEach  items="${pageBean.gameStageList }"  var ="gameStage">
             		<option value="${gameStage.scheduleId }"  >${gameStage.scheName}</option>
         		</c:forEach>
         </select>
-        <input type="hidden"  name ="gameStage"  value="${pageBean.gameStage }">
+        <input type="hidden"  name ="gameStage1"  value="${pageBean.gameStage }">
+        
         <select name="city" id="se1" class="subSe">
         	<option  value="0" >所有城市</option>
         	<c:forEach  items="${pageBean.cityList }"  var ="c">
             <option  value="${c.region_id }" >${c.region_name }</option>
         	</c:forEach>
         </select>
-         <input type="hidden"  name ="city"  value="${pageBean.city }">
+         <input type="hidden"  name ="city1"  value="${pageBean.city }">
          
-        <select name="rank" id="se2" class="subSe">
+        <select name="rank1" id="se2" class="subSe">
             <option  value="0">所有等级</option>
            <c:forEach items="${pageBean.rankList }"  var ="rankList">
            	 <option value="${rankList.id }" >${rankList.rank }</option>
@@ -55,11 +56,6 @@
         </select>
         </form>
     </div>
-    <!-- <script type="text/javascript">
-    		new Vue({
-    		});
-    
-    </script> -->
     
     
     <div class="matchList"  id="matchList">
@@ -68,7 +64,7 @@
         	<c:set var="string1" value="${m.matchTxt }"/>
 			<c:set var="string2" value="${fn:substring(string1, 0, 55)}" />
             <li>
-                <a href="detail.html">
+                <a href="${prc }/findDetailsById/detail?id=${m.matchId }">
                 <div class="matchImg">
                     <div class="matchImgWrap">
                         <img src="${m.matchImg }" alt=""/>
@@ -102,8 +98,18 @@
     		});
     		
     		$("#se1").change(function(){
+    			//document.forms("0").
     			$("#form1").submit();
     		});
+    		
+    		$("#se2").change(function(){
+    			//$("#form1").submit();
+    			
+    			document.forms[0].action="${prc}/selectByGameStageAndCityAndRank/subjectList";
+    			$("#form1").submit();
+    			
+    		});
+    		
     		
     		
     		

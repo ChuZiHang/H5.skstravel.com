@@ -22,10 +22,6 @@ public class MatcheServiceImpl implements MatcheService {
 				+ "matchImg ,FROM_UNIXTIME(sg.add_time,'%Y-%m-%d %h:%i:%s')  matchTime,"
 				+ "sg.ticket_business matchTxt FROM sk_goods sg, sk_pitch sp ,sk_region   sr  "
 				+ "WHERE  sp.region_id =sr.region_id AND sp.id=sg.pitch_id AND  sg.game_id='60'";
-		/*String sql1=" select   b.id  matchId , g.goods_name matchTitle , FROM_UNIXTIME(g.add_time,'%Y-%m-%d %h:%i:%s')  matchTime,"
-	 			+ "p.pitch_name  matchAddress  ,g.shop_price matchPrice  , p.pitch_img  matchImg  "
-	 			+ " FROM sk_batch b ,sk_batch_info i,sk_goods g ,sk_pitch p WHERE "
-	 			+ "b.id=i.batch_id AND i.goods_id=g.goods_id AND g.pitch_id=p.id  AND g.goods_sn LIKE 'FWC%'";*/
 	 	List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql);
 		return list;
 	}
@@ -121,12 +117,33 @@ public class MatcheServiceImpl implements MatcheService {
 	 * 通过城市和赛事确定级别列表
 	 */
 	public List<Map<String, Object>> findRankByCityAndgameStage(int gameStage, int city) {
-		String sql=" SELECT DISTINCT sgo.rank rank  FROM sk_game sga,sk_schedule ss,sk_goods sgo ,sk_pitch sp,sk_region sr WHERE " 
+		String sql=" SELECT DISTINCT sgo.rank rank ,sgo.goods_id id  FROM sk_game sga,sk_schedule ss,sk_goods sgo ,sk_pitch sp,sk_region sr WHERE " 
 				+" sgo.game_id=sga.id AND sgo.sche_id =ss.id AND sga.id= ss.game_id AND sr.region_id=sp.region_id "
 				+" AND sgo.pitch_id=sp.id AND sga.id='60' "
-				+" AND ss.id=?  and sr.region_id=? ";
+				+" AND ss.id=?  and sr.region_id=?  group by sgo.rank   asc  ";
 		List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql,gameStage,city);
 		return list;
+	}
+
+	/**
+	 * 通过赛事和城市和级别获得展示列表
+	 */
+	public List<Map<String, Object>> findByGameStageAndCityAndRank(int gameStage1, int city1, int rank1) {
+		String sql=" SELECT  sg.goods_id matchId ,sg.goods_name matchTitle ,sg.shop_price matchPrice ,sp.pitch_name  matchAddress"
+				+" ,sp.big_pitch_img matchImg ,FROM_UNIXTIME(sg.add_time,'%Y-%m-%d %h:%i:%s')  matchTime, "
+				+" sg.ticket_business matchTxt FROM sk_goods sg, sk_pitch sp ,sk_region   sr  ,sk_schedule ss  "
+				+" WHERE  sp.region_id =sr.region_id AND sp.id=sg.pitch_id AND ss.id= sg.sche_id AND ss.id=?  AND  sg.game_id='60' "
+				 +" AND sr.region_id=? and sg.goods_id=? " ;
+	List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql,gameStage1,city1,rank1);
+	return list;
+	}
+
+	/**
+	 * 查询选中的赛事的详情
+	 */
+	public void findDetailsById(int id) {
+		
+		
 	}
  
 	
