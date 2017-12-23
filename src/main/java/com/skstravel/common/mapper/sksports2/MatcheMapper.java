@@ -7,5 +7,5 @@ import com.skstravel.pojo.MatcheInfo;
 public interface MatcheMapper {
 
 	List<MatcheInfo> findAll();
-
+	
 }
