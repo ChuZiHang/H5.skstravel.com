@@ -34,7 +34,7 @@
     </header>
     <div class="top-wrap">
         <div class="top-wrap-img">
-            <div class="matchImgWrap"><img src="${prc }/assets/images/product.jpg" alt=""/></div>
+            <div class="matchImgWrap"><img src="${pageBean.big_pitch_img}" alt=""/></div>
 
         </div>
         <div class="introduce">
@@ -44,14 +44,14 @@
         </div>
     </div>
     <div class="jag"><img src="${prc }/assets/images/jag.png" alt=""/></div>
-    <div class="buyBtn"><a href="order.html">立即购买</a></div>
+    <div class="buyBtn"><a href="${prc }/queryOrderInfo?goodsId=${str.str}">立即购买</a></div>
     <div class="venue">
         <div class="venueTitle">
             <span class="venueIco"><img src="${prc }/assets/images/venueIco.png" alt=""/></span>
-            卢日尼基体育场
+           ${pageBean.pitch_name}
         </div>
         <div class="venueText">
-            卢日尼基综合奥林匹克大型体育竞技场坐落在俄罗斯莫斯科市区，简称卢日尼基体育场。它是俄罗斯最大的体育场，曾被称为列宁体育场。 体育场是两支俄超球队莫斯科鱼雷和莫斯科斯巴达克的主赛场。
+           ${pageBean.combo_pitch_desc}
         </div>
     </div>
     <div class="gap"><img src="${prc }/assets/images/gap.png" alt=""/></div>

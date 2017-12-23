@@ -16,6 +16,27 @@ public class PageBean implements Serializable {
 	//放置查询到的赛事列表
 	private   List<Map<String, Object>>  gameStageList=new ArrayList<>();
 	
+	//显示的图片页面地址 
+	private String imgUrl;
+	
+	//公共字段
+	private  String str;
+	
+	
+	
+	
+	public String getStr() {
+		return str;
+	}
+	public void setStr(String str) {
+		this.str = str;
+	}
+	public String getImgUrl() {
+		return imgUrl;
+	}
+	public void setImgUrl(String imgUrl) {
+		this.imgUrl = imgUrl;
+	}
 	//用于封装从页面返回的赛事字段
 	private String gameStage;
 	//用于封装从页面返回的城市字段

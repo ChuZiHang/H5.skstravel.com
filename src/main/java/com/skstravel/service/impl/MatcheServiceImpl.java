@@ -131,7 +131,7 @@ public class MatcheServiceImpl implements MatcheService {
 	 * 通过赛事和城市和级别获得展示列表
 	 */
 	public List<Map<String, Object>> findByGameStageAndCityAndRank(int gameStage1, int city1, int rank1) {
-		String sql="  SELECT  sg.goods_id matchId ,sg.goods_name matchTitle ,sg.shop_price matchPrice ,sp.pitch_name  matchAddress "
+		String sql="  SELECT  sp.id  pitchId,  sg.goods_id matchId ,sg.goods_name matchTitle ,sg.shop_price matchPrice ,sp.pitch_name  matchAddress "
 					+" ,sp.big_pitch_img matchImg ,FROM_UNIXTIME(ss.sche_start,'%Y-%m-%d %h:%i:%s')  matchTime, "
 					+" sg.ticket_business matchTxt FROM sk_goods sg, sk_pitch sp ,sk_region   sr  ,sk_schedule ss  , sk_number sn "
 					+" WHERE  sp.region_id =sr.region_id AND ss.id= sg.sche_id  AND  sg.game_id='60' "
@@ -143,14 +143,16 @@ public class MatcheServiceImpl implements MatcheService {
 	/**
 	 * 查询选中的赛事的详情
 	 */
-	public void findDetailsById(int id) {
-		 String sql="SELECT DISTINCT sg.goods_id  , scp.combo_pitch_id ,sp.pitch_name ,scp.combo_pitch_name ,combo_pitch_desc, "
+	public List<Map<String, Object>>  findDetailsById(int id,int pitchId) {
+		 String sql=" SELECT DISTINCT  scp.combo_pitch_id ,sp.pitch_name ,scp.combo_pitch_name ,combo_pitch_desc," 
 				 	+" sp.big_pitch_img FROM sk_combo_pitch scp , "
 				 	+" sk_combo sco ,sk_combo_ticket  sct ,sk_goods  sg,sk_pitch sp ,sk_number sn "
 				 	+" WHERE scp.combo_pitch_id =sco.combo_pitchs AND sco.combo_id= "
-				 	+" sct.combo_id AND sct.goods_id=sg.goods_id AND sg.game_id='60' AND "  
-				 	+" sg.number_id=sn.id AND sn.pitch_id= sp.id  AND sco.is_show='0' AND  sg.goods_id = ?   ";
-		
+				 	+" sct.combo_id AND sct.goods_id=sg.goods_id AND sg.game_id='60' AND  "
+				 	+" sg.number_id=sn.id AND sn.pitch_id= sp.id   AND sp.id=?  ";
+		 List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql,pitchId);
+		 
+		return list;
 	}
  
 	

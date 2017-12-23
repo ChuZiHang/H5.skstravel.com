@@ -213,10 +213,24 @@ public class HomeController {
     
     @RequestMapping("findDetailsById/{param}")
     public  String  findDetailsById(HttpServletRequest request,@PathVariable 
-    		String param,@RequestParam(defaultValue="0")int id) {
+    		String param,@RequestParam(defaultValue="0")int id, @RequestParam(defaultValue="0")int pitchId) {
 		
-    	//matcherService.findDetailsById(id);
+    	List<Map<String, Object>>  list=matcherService.findDetailsById(id,pitchId);
+    	PageBean pageBean =new PageBean();
+    	pageBean.setStr(String.valueOf(id));
     	
+    	//matcherService.findSchedule
+    	
+    	
+    	//pageBean.setList(list);
+    	Map<String, Object> l1=null;
+    	if(list!=null&&list.size()>0){
+    	l1 = list.get(0);
+    	}
+    	
+    	
+    	request.setAttribute("str", pageBean);
+    	request.setAttribute("pageBean", l1);
     	return param;
 	}
    

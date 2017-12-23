@@ -29,7 +29,7 @@ public interface MatcheService {
 
 	List<Map<String, Object>> findByGameStageAndCityAndRank(int gameStage1, int city1, int rank1);
 
-	void findDetailsById(int id);
+	List<Map<String, Object>>  findDetailsById(int id, int pitchId);
 
 	
 
