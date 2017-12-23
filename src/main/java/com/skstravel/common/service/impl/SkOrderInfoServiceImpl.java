@@ -15,9 +15,13 @@ import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
 import com.skstravel.common.mapper.sksports2.MatcheMapper;
+import com.skstravel.common.mapper.sksports2.SkOrderGoodsMapper;
 import com.skstravel.common.mapper.sksports2.SkOrderInfoMapper;
+import com.skstravel.common.mapper.sksports2.SkOrderPlaneMapper;
+import com.skstravel.common.model.sksports2.SkOrderGoods;
 import com.skstravel.common.model.sksports2.SkOrderInfo;
 import com.skstravel.common.model.sksports2.SkOrderInfoExample;
+import com.skstravel.common.model.sksports2.SkOrderPlane;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.utils.CookieUtils;
 import com.skstravel.pojo.MatcheInfo;
@@ -29,6 +33,10 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
     private SkOrderInfoMapper skOrderInfoMapper;
     @Autowired
     private  JdbcTemplate jdbcTemplateForSksports2;
+    @Autowired
+    private SkOrderGoodsMapper orderGoodsMapper;
+    @Autowired
+    private SkOrderPlaneMapper orderPlaneMapper;
 
     @Override
     public long countByExample(SkOrderInfoExample example) {
@@ -101,7 +109,26 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         orderInfo.setMobile(phone);
         orderInfo.setGoodsAmount(new BigDecimal(jsonObject.get("shopPrice")+""));
         orderInfo.setAddTime((int)System.currentTimeMillis());
-        int insertSelective = this.insertSelective(orderInfo);
+        int orderId = this.insertSelective(orderInfo);
+        //维护订单商品信息
+        SkOrderGoods orderGoods = new SkOrderGoods();
+        orderGoods.setOrderId(orderId);
+        orderGoods.setGoodsId(Integer.parseInt(jsonObject.get("goodsId").toString()));
+        orderGoods.setGoodsName(jsonObject.get("goodsName").toString());
+        orderGoods.setGoodsSn(jsonObject.get("goodsSn").toString());
+        orderGoods.setGoodsPrice(new BigDecimal(jsonObject.get("shopPrice").toString()));
+        orderGoods.setGoodsNumber(Short.parseShort(jsonObject.get("sumNum").toString()));
+        orderGoodsMapper.insert(orderGoods);
+        //维护机票信息
+        SkOrderPlane orderPlane = new SkOrderPlane();
+        orderPlane.setOrderId(orderId);
+        orderPlane.setFromCity(Integer.parseInt(jsonObject.get("fromCity").toString()));
+        orderPlane.setToCity(Integer.parseInt(jsonObject.get("toCity").toString()));
+        orderPlane.setFlyDate(new Date(jsonObject.get("flyTime").toString()));
+        orderPlane.setReturnFlyDate(new Date(jsonObject.get("returnFlyTime").toString()));
+        orderPlane.setGoodsNumber(Integer.parseInt(jsonObject.get("jipiaonum").toString()));
+        orderPlane.setAirId(Integer.parseInt(jsonObject.get("airId").toString()));
+        this.orderPlaneMapper.insert(orderPlane);
     }
 
     public static void main(String[] args) {

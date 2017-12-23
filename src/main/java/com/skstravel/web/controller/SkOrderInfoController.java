@@ -19,6 +19,8 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.skstravel.common.mapper.sksports2.SkGoodsMapper;
 import com.skstravel.common.mapper.sksports2.SkHotelMapper;
+import com.skstravel.common.mapper.sksports2.SkOrderGoodsMapper;
+import com.skstravel.common.mapper.sksports2.SkOrderPlaneMapper;
 import com.skstravel.common.model.sksports2.SkBearerInfo;
 import com.skstravel.common.model.sksports2.SkBearerInfoExample;
 import com.skstravel.common.model.sksports2.SkGoods;
@@ -26,10 +28,14 @@ import com.skstravel.common.model.sksports2.SkGoodsExample;
 import com.skstravel.common.model.sksports2.SkHotel;
 import com.skstravel.common.model.sksports2.SkOrderCombo;
 import com.skstravel.common.model.sksports2.SkOrderComboExample;
+import com.skstravel.common.model.sksports2.SkOrderGoods;
+import com.skstravel.common.model.sksports2.SkOrderGoodsExample;
 import com.skstravel.common.model.sksports2.SkOrderHotel;
 import com.skstravel.common.model.sksports2.SkOrderHotelExample;
 import com.skstravel.common.model.sksports2.SkOrderInfo;
 import com.skstravel.common.model.sksports2.SkOrderInfoExample;
+import com.skstravel.common.model.sksports2.SkOrderPlane;
+import com.skstravel.common.model.sksports2.SkOrderPlaneExample;
 import com.skstravel.common.model.sksports2.SkUserAddress;
 import com.skstravel.common.model.sksports2.SkUserAddressExample;
 import com.skstravel.common.plugin.Page;
@@ -81,6 +87,10 @@ public class SkOrderInfoController {
     private  JdbcTemplate jdbcTemplateForSksports2;
     @Autowired
     private SkHotelMapper skHotelMapper;
+    @Autowired
+    private SkOrderGoodsMapper orderGoodsMapper;
+    @Autowired
+    private SkOrderPlaneMapper orderPlaneMapper;
 
     @RequestMapping("/orderinfo/{param}")
     public String orderList(HttpServletRequest request, Model model,@PathVariable String param ) throws Exception {
@@ -233,7 +243,7 @@ public class SkOrderInfoController {
      */
     @RequestMapping("/queryOrderInfo")
     public String queryOrderInfo(HttpServletRequest request, Model model) {
-        int goodId = ParamUtils.getIntParameter(request, "goodId",1);
+        int goodId = ParamUtils.getIntParameter(request, "goodsId",1);
         //查询商品信息
         SkGoods skGoods = this.skGoodsMapper.selectByPrimaryKey(Integer.valueOf(201));
         //查询吉祥物信息
@@ -253,6 +263,34 @@ public class SkOrderInfoController {
         model.addAttribute("jpList", jpList);
         model.addAttribute("jdList", jdList);
         return "order" ;
+    }
+    
+    @RequestMapping("/queryOrderInfoForPay")
+    public String queryOrderInfoForPay(HttpServletRequest request, Model model) {
+        int orderId = ParamUtils.getIntParameter(request, "orderId",1);
+        //查询订单信息
+        SkOrderInfo orderInfo = this.skOrderInfoService.selectByPrimaryKey(orderId);
+        //查询商品信息
+        SkOrderGoodsExample goodsExamle = new SkOrderGoodsExample();
+        goodsExamle.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
+        List<SkOrderGoods> orderGoddsList = this.orderGoodsMapper.selectByExample(goodsExamle);
+        SkOrderGoods goods = new SkOrderGoods();
+        if(!orderGoddsList.isEmpty()){
+            goods = orderGoddsList.get(0);
+        }
+        //查询机票信息
+        SkOrderPlaneExample planeExample = new SkOrderPlaneExample();
+        planeExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
+        List<SkOrderPlane> planList = this.orderPlaneMapper.selectByExample(planeExample);
+        SkOrderPlane plane = new SkOrderPlane();
+        if(!planList.isEmpty()){
+            plane = planList.get(0);
+        }
+        
+        model.addAttribute("orderInfo", orderInfo);
+        model.addAttribute("goods", goods);
+        model.addAttribute("plane", plane);
+        return "order-pay" ;
     }
     
     
@@ -275,15 +313,6 @@ public class SkOrderInfoController {
         return buffer;
     }
 
-    /**      
-     * 描述:获取 post 请求内容
-     * <pre>
-     * 举例：
-     * </pre>
-     * @param request
-     * @return
-     * @throws IOException      
-     */
     public static String getRequestPostStr(HttpServletRequest request)
             throws IOException {
         byte buffer[] = getRequestPostBytes(request);

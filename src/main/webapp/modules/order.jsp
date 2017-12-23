@@ -32,6 +32,7 @@
             <div class="order-item"><span>套餐类型：</span>
             	<input type="hidden" value="${goods.goodsType }" id="goodsType">
             	<input type="hidden" value="${goods.goodsId }" id="goodsId">
+            	<input type="hidden" value="${goods.goodsSn }" id="goodsSn">
             	<c:choose>
             	<c:when test="${goods.goodsType==0 }">
 	            	2018FIFA俄罗斯世界杯
@@ -95,11 +96,12 @@
                 <div class="ticketTitle">去程</div>
                 <c:forEach  items="${jpList }"  var ="p">
                 <div class="ticketList">
-                	<input type="hidden" id="fromCity">
-                	<input type="hidden" id="toCity">
-                	<input type="hidden" id="title">
-                	<input type="hidden" id="fly_time1">
-                	<input type="hidden" id="return_fly_time">
+                	<input type="hidden" id="fromCity"  value="${goods.fromCity }">
+                	<input type="hidden" id="toCity" value="${goods.toCity }">
+                	<input type="hidden" id="title" value="${goods.title }">
+                	<input type="hidden" id="fly_time1" value="${goods.fly_time1 }">
+                	<input type="hidden" id="return_fly_time" value="${goods.return_fly_time }">
+                	<input type="hidden" id="id" value="${goods.id }">
                     <ul>
                         <li><span>出发城市</span><em style="color:#333" >${p.cname }</em></li>
                         <li><span>抵达城市</span><em style="color:#333">${p.dname }</em></li>
@@ -212,6 +214,7 @@
         	data['goodsName'] = $('.order-name').val();
         	data['goodsId'] = $('#goodsId').val();
         	data['goodsType'] = $('#goodsType').val();
+        	data['goodsSn'] = $('#goodsSn').val();
         	data['sumNum'] = $('.orderPrice .sumNum').text();
         	data['shopPrice'] = $('.orderPriceColor em').text();
         	//纪念品信息
@@ -222,8 +225,9 @@
         	data['fromCity'] = $('#fromCity').val();
         	data['toCity'] = $('#toCity').val();
         	data['title'] = $('#title').val();
-        	data['fly_time'] = $('#fly_time1').val();
-        	data['return_fly_time'] = $('#return_fly_time').val();
+        	data['flyTime'] = $('#fly_time1').val();
+        	data['airId'] = $('#id').val();
+        	data['returnFlyTime'] = $('#return_fly_time').val();
         	data['jipiaonum'] = $('#jipiaov').text();
         	//酒店
         	
