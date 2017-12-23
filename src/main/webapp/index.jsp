@@ -7,7 +7,7 @@
 <title>Insert title here</title>
 </head>
 <body>
-			 <jsp:forward page="/index/index"></jsp:forward> 
-			<%-- <jsp:forward page="/orderinfo/myorder"></jsp:forward> --%>
+			 <%-- <jsp:forward page="/index/index"></jsp:forward> --%> 
+			<jsp:forward page="/orderinfo/myorder"></jsp:forward>
 </body>
 </html>

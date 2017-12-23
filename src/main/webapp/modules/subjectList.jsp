@@ -86,6 +86,23 @@
     
      <!-- <div class="matchList2"  >
         <ul id="matchList2">
+					          					 <li>
+					                <a href="detail.html">
+					                <div class="matchImg">
+					                    <div class="matchImgWrap">
+					                        <img src="${m.matchImg }" alt=""/>
+					                    </div>
+					                </div>
+					                <div class="matchText">
+					                    <div class="matchTitle">${m.matchTitle }</div>
+					                    <div class="matchTime">${m.matchTime }</div>
+					                    <div class="matchAddress">${m.matchAddress }</div>
+					                    <div class="matchPrice"><span>酒店+机票</span><em>${m.matchPrice }元起</em></div>
+					                    
+					                    <div class="matchTxt" style="float: right"><font size="1px">${string2 }....</font></div>
+					                </div>
+					                </a>
+					            			</li>	
         </ul>
     </div> -->
 	<script type="text/javascript">
@@ -94,6 +111,33 @@
     			//alert("aaa");
     			var url="${prc}/selectByGameStage";
     			var gameStage=$("#se0").val();
+    			alert(gameStage);
+    			var tbody1=""
+    			$.post(
+    				url,
+    				{"gameStage":gameStage},
+    				function(data){
+    					alert(data);
+    					$("#matchList").empty();
+    					$(".matchList2").show();
+    					$("#matchList2").empty();
+    					for(var i=0;i<data.length;i++){
+    							//var img=$(".matchImgWrap").css("src","123");
+    							var tbody ="";
+    							tbody+='<li><a href="detail.html"><div class="matchImg">';
+    							tbody+=" <div class='matchImgWrap'><img src='"+data[i].matchImg+"'  alt=''/> </div></div>";
+    							tbody+=' <div class="matchText"> <div class="matchTitle">'+data[i].matchTitle+'</div>';
+    							tbody+=' <div class="matchTime">'+data[i].matchTime+'</div>';
+    							tbody+=' <div class="matchAddress">'+data[i].matchAddress+'</div>';
+    							tbody+='  <div class="matchPrice"><span>酒店+机票</span><em>'+data[i].matchPrice+'元起</em></div>';
+    							tbody+='<div class="match-txt">票价包含一张当日球票+一晚当晚三星级酒店,酋长 ...  </div> </div> </a></li>';
+    							tbody+="<br/>"
+    								$("#matchList2").append(tbody);
+
+    					}
+    				}
+    			); 
+    		});    		
     			window.location.href="${prc}/selectByGameStage/subjectList?gameStage="+gameStage;
     		});
     		

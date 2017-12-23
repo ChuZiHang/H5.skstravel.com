@@ -34,21 +34,21 @@
             <li>订单号：${order.orderSn }</li>
             <li>下单时间：${order.addTime }</li>
             <c:choose>
-            	<c:when test="${order.orderStatus==0 }">
+            	<c:when test="${order.orderStatus==false }">
 	            	<li>订单状态：未支付</li>
             	</c:when>
-            	<c:when test="${order.orderStatus==1 }">
+            	<c:when test="${order.orderStatus==true }">
 	            	<li>付款状态：已支付</li>
             	</c:when>
-            	<c:when test="${order.orderStatus==2 }">
+            	<c:when test="${order.orderStatus==true }">
 	            	<li>付款状态：已取消</li>
             	</c:when>
             </c:choose>
             <c:choose>
-            	<c:when test="${order.payStatus==0 }">
+            	<c:when test="${order.payStatus==false }">
 	            	<li>付款状态：未支付</li>
             	</c:when>
-            	<c:when test="${order.payStatus==1 }">
+            	<c:when test="${order.payStatus==true }">
 	            	<li>付款状态：已支付</li>
             	</c:when>
             </c:choose>
@@ -61,36 +61,36 @@
             <li>合同编号：${order.cardNum }</li>
             <li>下单时间：${order.addTime }</li>
             <c:choose>
-            	<c:when test="${order.orderStatus==0 }">
+            	<c:when test="${order.orderStatus==false }">
 	            	 <li>订单状态：<font color="red">支付成功</font></li>
             	</c:when>
-            	<c:when test="${order.orderStatus==1 }">
+            	<c:when test="${order.orderStatus==true }">
 	            	 <li>订单状态：<font color="red">待付款</font></li>
             	</c:when>
-            	<c:when test="${order.orderStatus==2 }">
+            	<c:when test="${order.orderStatus==true }">
 	            	 <li>订单状态：<font color="red">已取消</font></li>
             	</c:when>
             </c:choose>
             <c:choose>
-            	<c:when test="${order.payStatus==0 }">
+            	<c:when test="${order.payStatus==false }">
 	            	<li>付款状态：<font color="green">未付款</font></li>
             	</c:when>
-            	<c:when test="${order.payStatus==1 }">
+            	<c:when test="${order.payStatus==true }">
 	            	<li>付款状态：<font color="green">已付款</font></li>
             	</c:when>
             </c:choose>
             <li>单票：${orderCombo.goodsName }</li>
             <li>套餐：${order.packName }</li>
-            <li>酒店：Holiday Inn Lyon Vai</li>
+            <li>酒店：${hotel.hotelName }</li>
             <li>机票：无</li>
         </ul>
     </div>
     <div class="addList">
         <div class="nickname"><span>姓名：</span><span>${order.consignee }</span></div>
-        <div class="e-mail">护照号码：${order.cardNum }</div>
-        <div class="e-mail">详细地址：深圳市南山区科技园南区R2-B三楼步步高</div>
-        <div class="e-mail">电子邮件：34345656@qq.com</div>
-        <div class="e-mail">手机：13901203948</div>
+        <div class="e-mail">护照号码：${skBearerInfo.passportNumber }</div>
+        <div class="e-mail">详细地址：${userAddress.addressName }</div>
+        <div class="e-mail">电子邮件：${order.email }</div>
+        <div class="e-mail">手机：${order.mobile }</div>
     </div>
 </div>
 </body>
