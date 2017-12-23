@@ -16,6 +16,11 @@ public class SkUserAddressServiceImpl implements ISkUserAddressService {
     private SkUserAddressMapper skAddressMapper;
 
     @Override
+    public int deleteByPrimaryKey(Integer addressId) {
+        return skAddressMapper.deleteByPrimaryKey(addressId);
+    }
+
+    @Override
     public long countByExample(SkUserAddressExample example) {
         return skAddressMapper.countByExample(example);
     }

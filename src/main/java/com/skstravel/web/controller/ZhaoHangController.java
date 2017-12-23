@@ -6,7 +6,11 @@ import com.skstravel.common.api.Constants;
 import com.skstravel.common.api.ZHClient;
 import com.skstravel.common.httpclient.HttpClient;
 import com.skstravel.common.model.sksports2.SkOrderInfo;
+import com.skstravel.common.model.sksports2.SkUsers;
+import com.skstravel.common.model.sksports2.SkUsersZhaohang;
 import com.skstravel.common.service.ISkOrderInfoService;
+import com.skstravel.common.service.SkUsersService;
+import com.skstravel.common.service.SkUsersZhaohangService;
 import com.skstravel.common.utils.CookieUtils;
 import com.skstravel.common.utils.ParamUtils;
 import org.slf4j.Logger;
@@ -21,6 +25,8 @@ import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.GeneralSecurityException;
 import java.security.interfaces.RSAKey;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -38,6 +44,12 @@ public class ZhaoHangController {
 
     @Autowired
     private ISkOrderInfoService iSkOrderInfoService;
+
+    @Autowired
+    private SkUsersZhaohangService skUsersZhaohangService;
+
+    @Autowired
+    private SkUsersService skUsersService;
 
     /**
      * 首页
@@ -90,7 +102,7 @@ public class ZhaoHangController {
      * @throws GeneralSecurityException
      */
     @RequestMapping("/getCode")
-    public void getCode(HttpServletRequest request, HttpServletResponse response) throws GeneralSecurityException {
+    public void getCode(HttpServletRequest request, HttpServletResponse response) throws GeneralSecurityException, IOException {
         String respCode = ParamUtils.getParameter(request, "respCode");
         String respMsg = ParamUtils.getParameter(request, "respMsg");
         String mid = ParamUtils.getParameter(request, "mid");
@@ -123,9 +135,31 @@ public class ZhaoHangController {
         if(respCode.equals("1000")){
             String acccessToken = asJsonObject.get("acccessToken").getAsString();
             String openId = asJsonObject.get("openId").getAsString();
+            String expiresIn = asJsonObject.get("expiresIn").getAsString();
             // 是否建表存储令牌和openId
+            Date now = new Date();
+            Calendar calendar = Calendar.getInstance();
+            calendar.setTime(now);
+            calendar.add(Calendar.MILLISECOND,Integer.parseInt(expiresIn));
 
+            // 确定一下第一次需要填充的字段
+            SkUsers skUsers = new SkUsers();
+            skUsers.setRegTime((int) now.getTime());
+            skUsers.setLastTime(now);
+            skUsers.setIsThird("1");
+            // 设置主键返回
+            int i = skUsersService.insertSelective(skUsers);
+
+            SkUsersZhaohang skUsersZhaohang = new SkUsersZhaohang();
+            skUsersZhaohang.setUserId(i);
+            skUsersZhaohang.setOpenId(openId);
+            skUsersZhaohang.setAcccessToken(acccessToken);
+            skUsersZhaohang.setCreateDate(now);
+            skUsersZhaohang.setExpiresIn(calendar.getTime());
+            skUsersZhaohangService.insertSelective(skUsersZhaohang);
         }
+
+        response.sendRedirect("/index/index");
     }
 
     /**
