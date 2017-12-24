@@ -22,9 +22,20 @@ public class PageBean implements Serializable {
 	//公共字段
 	private  String str;
 	
+	//页面详情数据展示
+	private List travelList=new ArrayList<>();
 	
 	
 	
+	
+	
+	
+	public List getTravelList() {
+		return travelList;
+	}
+	public void setTravelList(List travelList) {
+		this.travelList = travelList;
+	}
 	public String getStr() {
 		return str;
 	}

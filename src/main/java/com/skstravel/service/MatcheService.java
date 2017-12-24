@@ -31,6 +31,9 @@ public interface MatcheService {
 
 	List<Map<String, Object>>  findDetailsById(int id, int pitchId);
 
+
+	List<Map<String, Object>> findTravleByGoodsId(int id);
+
 	
 
 }

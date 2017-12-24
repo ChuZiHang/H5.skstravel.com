@@ -33,6 +33,7 @@
             	<input type="hidden" value="${goods.goodsType }" id="goodsType">
             	<input type="hidden" value="${goods.goodsId }" id="goodsId">
             	<input type="hidden" value="${goods.goodsSn }" id="goodsSn">
+            	<input type="hidden" value="${goods.shopPrice }" id="shopPrice">
             	<c:choose>
             	<c:when test="${goods.goodsType==0 }">
 	            	2018FIFA俄罗斯世界杯
@@ -57,7 +58,7 @@
     </div>
     <div class="orderProduct">
         <div class="orderProductItem">
-            <span><img src="${prc }/assets/images/order01.png"></span>
+            <span><img src="${prc }/assets/images/order01.png"></span>goodsImg
             官方纪念品
             <div class="checkbox">
                 <input type="checkbox">
@@ -65,10 +66,10 @@
             </div>
         </div>
         <div class="orderAccessory none souvenir">
-            <div class="souvenirLeft">
-                <img src="${prc }/assets/images/lion.png" alt=""/>
-            </div>
             <c:forEach  items="${jxwList }"  var ="x">
+            <div class="souvenirLeft">
+                <img src="${prc }/${x.goodsImg }" alt=""/>
+            </div>
             <div class="souvenirRight">
                 <div class="soucenirName"><span>${x.goodsName }</span></div>
                 <div class="soucenirTxt">
@@ -76,7 +77,7 @@
                     <span>¥<em id="jnpPrice">${x.shopPrice }</em></span>
                     <div class="soucenirNum">
                         <em class="soPlus soBtns"><i class="fa fa-plus"></i></em>
-                        <em class="soNum" id="jinianpin">1</em>
+                        <em class="soNum jinianpin" id="jinianpin">1</em>
                         <em class="soMinus soBtns"><i class="fa fa-minus"></i></em>
                     </div>
                 </div>
@@ -95,13 +96,13 @@
             <div class="air-ticket">
                 <div class="ticketTitle">去程</div>
                 <c:forEach  items="${jpList }"  var ="p">
+                	<input type="hidden" id="fromCity"  value="${p.fromCity }">
                 <div class="ticketList">
-                	<input type="hidden" id="fromCity"  value="${goods.fromCity }">
-                	<input type="hidden" id="toCity" value="${goods.toCity }">
-                	<input type="hidden" id="title" value="${goods.title }">
-                	<input type="hidden" id="fly_time1" value="${goods.fly_time1 }">
-                	<input type="hidden" id="return_fly_time" value="${goods.return_fly_time }">
-                	<input type="hidden" id="id" value="${goods.id }">
+                	<input type="hidden" id="toCity" value="${p.toCity }">
+                	<input type="hidden" id="title" value="${p.title }">
+                	<input type="hidden" id="fly_time1" value="${p.fly_time1 }">
+                	<input type="hidden" id="return_fly_time" value="${p.return_fly_time }">
+                	<input type="hidden" id="id" value="${p.id }">
                     <ul>
                         <li><span>出发城市</span><em style="color:#333" >${p.cname }</em></li>
                         <li><span>抵达城市</span><em style="color:#333">${p.dname }</em></li>
@@ -150,7 +151,7 @@
 </div>
 <div class="orderBtns">
     <span class="orderTatalPrice">¥45，0000</span>
-    <span class="orderTatalBtns"><a href="order-pay.html">提交订单</a></span>
+    <span class="orderTatalBtns"><a href="#">提交订单</a></span>
 </div>
 <script>
     $(function(){
@@ -168,48 +169,53 @@
         /*商品*/
         $('.orderPrice .fa-plus').click(function(){
         	var sumNum = $('.orderPrice .sumNum').text();
+        	var price = $('#shopPrice').val();
         	sumNum++;
+        	$('.orderPriceColor em').text(price*sumNum);
         	$('.orderPrice .sumNum').text(sumNum);
         });
         $('.orderPrice .fa-minus').click(function(){
         	var sumNum = $('.orderPrice .sumNum').text();
+        	var price = $('#shopPrice').val();
         	sumNum--;
+        	$('.orderPriceColor em').text(price*sumNum);
         	if(sumNum<0){
         		sumNum=0;
+	        	$('.orderPriceColor em').text(0);
         	}
         	$('.orderPrice .sumNum').text(sumNum);
         });
 		/*纪念品*/
         $('.orderProduct .fa-plus').click(function(){
-        	var sumNum = $('#jinianpin').text();
+        	var sumNum = $(this).parent().next().text();
         	sumNum++;
-        	$('#jinianpin').text(sumNum);
+        	$(this).parent().next().text(sumNum);
         });
         $('.orderProduct .fa-minus').click(function(){
-        	var sumNum = $('#jinianpin').text();
+        	var sumNum = $(this).parent().prev().text();
         	sumNum--;
         	if(sumNum<0){
         		sumNum=0;
         	}
-        	$('#jinianpin').text(sumNum);
+        	$(this).parent().prev().text(sumNum);
         });
         /*机票*/
-        $('#jipiaoa').click(function(){
-        	var sumNum = $('#jipiaov').text();
+        $('.airticket .fa-plus').click(function(){
+        	var sumNum =  $(this).parent().next().text();
         	sumNum++;
-        	$('#jipiaov').text(sumNum);
+        	$(this).parent().next().text(sumNum);
         });
-        $('#jipiaoj').click(function(){
-        	var sumNum = $('#jipiaov').text();
+        $('.airticket .fa-minus').click(function(){
+        	var sumNum = $(this).parent().prev().text();
         	sumNum--;
         	if(sumNum<0){
         		sumNum=0;
         	}
-        	$('#jipiaov').text(sumNum);
+        	$(this).parent().prev().text(sumNum);
         });
         //提交订单
         $('.orderTatalBtns').click(function(){
-        	var data = {"1111":111,"222":222,"333":333};
+        	var data = {};
         	//商品信息
         	data['goodsName'] = $('.order-name').val();
         	data['goodsId'] = $('#goodsId').val();

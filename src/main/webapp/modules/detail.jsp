@@ -34,7 +34,7 @@
     </header>
     <div class="top-wrap">
         <div class="top-wrap-img">
-            <div class="matchImgWrap"><img src="${pageBean.big_pitch_img}" alt=""/></div>
+            <div class="matchImgWrap"><img src="${str.pitchImg}" alt=""/></div>
 
         </div>
         <div class="introduce">
@@ -46,12 +46,12 @@
     <div class="jag"><img src="${prc }/assets/images/jag.png" alt=""/></div>
     <div class="buyBtn"><a href="${prc }/queryOrderInfo?goodsId=${str.str}">立即购买</a></div>
     <div class="venue">
-        <div class="venueTitle">
+     	<div class="venueTitle">
             <span class="venueIco"><img src="${prc }/assets/images/venueIco.png" alt=""/></span>
-           ${pageBean.pitch_name}
+           ${str.pitchName}
         </div>
         <div class="venueText">
-           ${pageBean.combo_pitch_desc}
+          ${str.comboPitchDesc}
         </div>
     </div>
     <div class="gap"><img src="${prc }/assets/images/gap.png" alt=""/></div>
@@ -63,12 +63,16 @@
         <div class="buy"><a href="order.html">立即预订</a></div>
     </div>
     <div id="p1" class="venueDetail padB0">
+    	<c:forEach  items="${pageBean.travelList}"  var ="travel">
+    	<c:forEach  items="${travel}" var="v">
         <div class="dayWarp">
-            <div class="venueH3"><i></i>第一天 6月12日 北京-莫斯科</div>
-            <div class="venuetxt marB10">国内/北京-莫斯科 乘坐国际航班前往莫斯科，下飞机后，乘大巴车前往酒店，入住酒店休息。</div>
-            <div class="venueDetailImg"><img src="${prc }/assets/images/pro01.jpg" alt=""/></div>
+            <div class="venueH3"><i></i>${v.title }</div>
+            <div class="venuetxt marB10">${v.content }</div>
+            <div class="venueDetailImg"><img src="${v.img }" alt=""/></div>
         </div>
-        <div class="dayWarp">
+        </c:forEach>
+        </c:forEach>
+      <%--   <div class="dayWarp">
             <div class="venueH3"><i></i>第二天 6月13日 莫斯科</div>
             <div class="venuetxt marB10">早餐后游览革命胜地-红场、原苏联的巡礼地—列宁墓（周一，五不开放则只能外观，其他时间入内参观30分钟)、圣瓦西里升天大教堂（外观），克里姆林宫（入内参观，含门票）；无名烈士墓、亚历山大花园，前往俄罗斯最大的购物中心-尊百货。晚餐后送回酒店休息。</div>
             <div class="venueDetailImg"><img src="${prc }/assets/images/pro02.png" alt=""/></div>
@@ -81,7 +85,7 @@
         <div class="dayWarp">
             <div class="venueH3"><i></i>第四天 6月15日 国内</div>
             <div class="venuetxt marB10">抵达国内</div>
-        </div>
+        </div> --%>
     </div>
     <div class="gap"><img src="${prc }/assets/images/gap.png" alt=""/></div>
     <div id="p2" class="detailModule">
