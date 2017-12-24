@@ -30,7 +30,7 @@
         </div>
         <img src="/assets/images/logo.png" alt="" width="80"/>
         <div class="center">
-            <a href="center.html"><img src="/assets/images/my.png " alt=""/></a>
+            <a href="/user/center.controller"><img src="/assets/images/my.png " alt=""/></a>
         </div>
     </header>
     <div class="user">
