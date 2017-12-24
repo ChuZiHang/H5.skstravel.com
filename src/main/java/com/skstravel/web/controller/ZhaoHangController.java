@@ -92,7 +92,7 @@ public class ZhaoHangController {
             List<SkUsersZhaohang> skUsersZhaohangs = skUsersZhaohangService.selectByExample(skUsersZhaohangExample);
             SkUsersZhaohang skUsersZhaohang = skUsersZhaohangs.get(0);
             // 放进cookie
-            CookieUtils.setCookie("memberId", skUsersZhaohang.getUserId()+"", -1, response, "域名");
+            CookieUtils.setCookie("memberId", skUsersZhaohang.getUserId()+"", -1, response, Constants.domain);
             // 重定向到首页
             response.sendRedirect("域名地址/index/index.controller");
         }
@@ -206,7 +206,7 @@ public class ZhaoHangController {
             skUsersZhaohang.setExpiresIn(calendar.getTime());
             skUsersZhaohangService.insertSelective(skUsersZhaohang);
 
-            CookieUtils.setCookie("memberId", i+"", -1, response, "域名");
+            CookieUtils.setCookie("memberId", i+"", -1, response, Constants.domain);
 
             // 跳转项目首页
             response.sendRedirect("域名地址/index/index.controller");

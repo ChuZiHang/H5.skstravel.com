@@ -13,6 +13,8 @@ package com.skstravel.common.api;
 
 public final class Constants {
 
+    public static String domain = ".shankaisports.com";
+
     public static String URL = "https://open.cmbchina.com";
 
     public static String mid = "c71587ef69eb327caa0c338813032f60";

@@ -8,14 +8,15 @@
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-4.2.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-4.2.xsd">
 
-	<!-- ds0 -->
 	<bean id="sksports2" class="org.apache.tomcat.jdbc.pool.DataSource"
 		destroy-method="close">
 		<property name="poolProperties">
 			<bean class="org.apache.tomcat.jdbc.pool.PoolProperties">
-				<property name="url"
-				value="jdbc:mysql://60.205.187.255:3306/sksports2?characterEncoding=utf-8" />
+				<!--<property name="url" value="jdbc:mysql://10.170.240.176:3306/sksports2?characterEncoding=utf-8" />-->
+				<property name="url" value="jdbc:mysql://60.205.187.255:3306/sksports2?characterEncoding=utf-8" />
 				<property name="driverClassName" value="com.mysql.jdbc.Driver" />
+				<!--<property name="username" value="dbuser" />-->
+				<!--<property name="password" value="admin888" />-->
 				<property name="username" value="root" />
 				<property name="password" value="qiuwei" />
 				<property name="jmxEnabled" value="false" />
