@@ -18,7 +18,7 @@ public class MatcheServiceImpl implements MatcheService {
 	 private  JdbcTemplate jdbcTemplateForSksports2; 
 
 	public List<Map<String, Object>> findMatchListForIndex() {
-		String sql=" SELECT  sg.goods_id matchId ,sg.goods_name matchTitle ,sg.shop_price matchPrice ,sp.pitch_name  matchAddress "
+		String sql=" SELECT  sg.goods_id matchId ,sg.goods_name matchTitle ,sp.id pitchId ,sg.shop_price matchPrice ,sp.pitch_name  matchAddress "
 					+" ,sp.big_pitch_img matchImg ,FROM_UNIXTIME(ss.sche_start,'%Y-%m-%d %h:%i:%s')  matchTime, "
 					+" sg.ticket_business matchTxt FROM sk_goods sg, sk_pitch sp ,sk_region   sr  ,sk_schedule ss  , sk_number sn "
 					+" WHERE  sp.region_id =sr.region_id AND ss.id= sg.sche_id  AND  sg.game_id='60' "

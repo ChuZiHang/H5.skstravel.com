@@ -44,7 +44,7 @@
         </div>
     </div>
     <div class="jag"><img src="${prc }/assets/images/jag.png" alt=""/></div>
-    <div class="buyBtn"><a href="${prc }/queryOrderInfo?goodsId=${str.str}">立即购买</a></div>
+    <div class="buyBtn"><a href="${prc }/queryOrderInfo?goodsId=${pageBean.str}">立即购买</a></div>
     <div class="venue">
      	<div class="venueTitle">
             <span class="venueIco"><img src="${prc }/assets/images/venueIco.png" alt=""/></span>

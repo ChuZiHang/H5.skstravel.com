@@ -62,7 +62,7 @@
         	<c:set var="string1" value="${m.matchTxt }"/>
 			<c:set var="string2" value="${fn:substring(string1, 0, 55)}" />
             <li>
-                <a href="detail.html">
+                <a href="${prc }/findDetailsById/detail?id=${m.matchId }&pitchId=${m.pitchId}">
                 <div class="matchImg">
                     <div class="matchImgWrap">
                         <img src="${m.matchImg }" alt=""/>
