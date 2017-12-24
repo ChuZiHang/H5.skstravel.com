@@ -167,7 +167,7 @@ public class MatcheServiceImpl implements MatcheService {
 	public List<Map<String, Object>> findTravleByGoodsId(int id) {
 		String sql="SELECT sg.goods_id id,sc.combo_travels FROM sk_goods sg, sk_combo sc ,sk_combo_ticket sct  WHERE "
 					+" sc.combo_id=sct.combo_id AND sct.goods_id=sg.goods_id AND sg.game_id='60'  AND sg.goods_id=?  ";
-		
+		id=895;
 		String  id2="";
 		List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql,id);
 		for (Map<String, Object> map : list) {
