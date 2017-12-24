@@ -246,7 +246,7 @@
 					alert("错误!","网络异常", "error");
 				},
 				success : function(data) {
-					
+					window.location.href="queryOrderInfoForPay.controller?orderId="+data;
 				}
 			 });
         });

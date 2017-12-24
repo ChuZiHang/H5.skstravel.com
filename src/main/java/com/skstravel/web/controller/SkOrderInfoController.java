@@ -221,17 +221,18 @@ public class SkOrderInfoController {
      * @throws Exception 
      */
     @RequestMapping("/createOrder")
-    public String createOrder(HttpServletRequest request, Model model) throws Exception {
+    public void createOrder(HttpServletRequest request, HttpServletResponse response ,Model model) throws Exception {
+        String str1= "";
         try {
             String str = getRequestPostStr(request);
             JsonElement parse = new JsonParser().parse(str);
             JsonObject jsonObject = parse.getAsJsonObject();
             int orderId = this.skOrderInfoService.createOrderInfo(request,jsonObject);
-            model = queryOrderInfoForPay(request, model,orderId);
+            str1 = String.valueOf(orderId);
+            response.getWriter().println(orderId);;
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "order-pay";
     }
     
     /**
@@ -265,8 +266,9 @@ public class SkOrderInfoController {
         return "order" ;
     }
     
-    public Model queryOrderInfoForPay(HttpServletRequest request, Model model,int orderId) {
-//        int orderId = ParamUtils.getIntParameter(request, "orderId",1);
+    @RequestMapping("/queryOrderInfoForPay")
+    public String queryOrderInfoForPay(HttpServletRequest request, Model model) {
+        int orderId = ParamUtils.getIntParameter(request, "orderId",1);
         //查询订单信息
         SkOrderInfo orderInfo = this.skOrderInfoService.selectByPrimaryKey(orderId);
         //查询商品信息
@@ -289,7 +291,7 @@ public class SkOrderInfoController {
         model.addAttribute("orderInfo", orderInfo);
         model.addAttribute("goods", goods);
         model.addAttribute("plane", plane);
-        return model;
+        return "order-pay" ;
     }
     
     
