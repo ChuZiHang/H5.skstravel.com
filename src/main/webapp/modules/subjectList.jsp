@@ -32,28 +32,35 @@
     <div class="subject-title">2018俄罗斯世界杯</div>
     <div class="subject-title">
     	<form action="${prc}/selectByGameStageAndCity/subjectList"  id="form1"  method="post">
+    	<c:set var="string1" value="${pageBean.gameStage }"/>
+		
         <select name="gameStage" id="se0" class="subSe">
             		<option  value ="0" >所有赛段</option>
             	 <c:forEach  items="${pageBean.gameStageList }"  var ="gameStage">
-            		<option value="${gameStage.scheduleId }"  >${gameStage.scheName}</option>
+            		<option value="${gameStage.scheduleId }"  <c:if  test="${gameStage.scheduleId eq  string1}">selected</c:if> >${gameStage.scheName}</option>
+        			
+        		
         		</c:forEach>
         </select>
         <input type="hidden"  name ="gameStage1"  value="${pageBean.gameStage }">
         
+        	<c:set var="string2" value="${pageBean.city }"/>
         <select name="city" id="se1" class="subSe">
         	<option  value="0" >所有城市</option>
         	<c:forEach  items="${pageBean.cityList }"  var ="c">
-            <option  value="${c.region_id }" >${c.region_name }</option>
+            <option  value="${c.region_id }"   <c:if  test="${c.region_id eq  string2}">selected</c:if> >${c.region_name }</option>
         	</c:forEach>
         </select>
          <input type="hidden"  name ="city1"  value="${pageBean.city }">
          
+          <c:set var="string3" value="${pageBean.rank }"/> 
         <select name="rank1" id="se2" class="subSe">
             <option  value="0">所有等级</option>
            <c:forEach items="${pageBean.rankList }"  var ="rankList">
-           	 <option value="${rankList.id }" >${rankList.rank }</option>
+           	 <option value="${rankList.id }"   <c:if  test="${rankList.id eq  string3}">selected</c:if>  >${rankList.rank }</option>
            </c:forEach>
         </select>
+         <input type="hidden"  name ="city1"  value="${pageBean.rank }">
         </form>
     </div>
     

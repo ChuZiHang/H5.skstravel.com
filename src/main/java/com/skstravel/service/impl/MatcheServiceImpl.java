@@ -1,5 +1,6 @@
 package com.skstravel.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -141,18 +142,47 @@ public class MatcheServiceImpl implements MatcheService {
 	}
 
 	/**
-	 * 查询选中的赛事的详情
+	 * 查询选中的赛事的详情  卢日尼基体育场/斯巴达克体育场/圣彼得堡体育场  可以用
+	 * 
+	 * 
+	 * SELECT DISTINCT scp.combo_pitch_name,scp.combo_pitch_desc FROM sk_combo sc ,sk_combo_pitch  scp ,sk_goods sg, sk_combo_ticket sct
+		WHERE sg.goods_id =sct.goods_id AND sct.combo_id =sc.combo_id AND sc.combo_pitchs =scp.combo_pitch_id  AND sg.game_id='60';
+			
+	 *
+	 *
+	 *
 	 */
 	public List<Map<String, Object>>  findDetailsById(int id,int pitchId) {
-		 String sql=" SELECT DISTINCT  scp.combo_pitch_id ,sp.pitch_name ,scp.combo_pitch_name ,combo_pitch_desc," 
-				 	+" sp.big_pitch_img FROM sk_combo_pitch scp , "
-				 	+" sk_combo sco ,sk_combo_ticket  sct ,sk_goods  sg,sk_pitch sp ,sk_number sn "
-				 	+" WHERE scp.combo_pitch_id =sco.combo_pitchs AND sco.combo_id= "
-				 	+" sct.combo_id AND sct.goods_id=sg.goods_id AND sg.game_id='60' AND  "
-				 	+" sg.number_id=sn.id AND sn.pitch_id= sp.id   AND sp.id=?  ";
+		//String pitchId1="89";
+			String sql=" SELECT  sp.pitch_name  pitchName, sp.big_pitch_img   pitchImg ,scp.combo_pitch_name  comboPitchName   ,"
+					+ "scp.combo_pitch_desc   comboPitchDesc FROM  sk_pitch sp  ,sk_combo_pitch scp ,sk_comboPitch_pitch scpi "
+						+" WHERE scpi.combo_pitch_id=scp.combo_pitch_id    AND scpi.pitch_id=sp.id and  sp.id=? ";
 		 List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql,pitchId);
-		 
 		return list;
+	}
+
+	/**
+	 * 查询goods_id数据获得id值
+	 */
+	public List<Map<String, Object>> findTravleByGoodsId(int id) {
+		String sql="SELECT sg.goods_id id,sc.combo_travels FROM sk_goods sg, sk_combo sc ,sk_combo_ticket sct  WHERE "
+					+" sc.combo_id=sct.combo_id AND sct.goods_id=sg.goods_id AND sg.game_id='60'  AND sg.goods_id=?  ";
+		
+		String  id2="";
+		List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql,id);
+		for (Map<String, Object> map : list) {
+			id2 = (String) map.get("combo_travels");
+		}
+		
+		String[] travelIds = id2.split("\\|");
+		List TravelList=new ArrayList<>();
+		for (String travelId : travelIds) {
+			String sql1="SELECT  sct.combo_travel_title  title ,sct.combo_travel_content content "
+					+ ", sct.combo_travel_img  img FROM sk_combo_travel sct WHERE   sct.combo_travel_id=? ";
+			List<Map<String, Object>> travel = jdbcTemplateForSksports2.queryForList(sql1,travelId);
+			TravelList.add(travel);
+		}
+		return TravelList;
 	}
  
 	

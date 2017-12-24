@@ -21,21 +21,23 @@
 <div class="wrapper">
     <header>
         <div class="mobile-nav">
-            <span></span>
-            <span></span>
-            <span></span>
+           <div class="left">
+            <a href="${prc }/index/subjectList">
+                <img src="${prc }/assets/images/my.png "  style="width: 23px;height: 23px" alt=""/>
+            </a>
+        </div>
         </div>
         <a href="index.html"><img src="${prc }/assets/images/logo.png" alt="" width="80"/></a>
-        <div class="center">
+        <div class=center>
             <a href="center.html">
-                <img src="${prc }/assets/images/my.png " alt=""/>
+                <img src="${prc }/assets/images/my.png "   style="width: 23px;height: 23px"  alt=""/>
             </a>
         </div>
     </header>
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide">
-                <a href="subject.html">
+                <a href="${prc }/index/subjectList">
                     <img src="${prc }/assets/images/banner.png">
                     <div class="bannerTxt"></div>
                 </a>
@@ -76,23 +78,6 @@
                 </a>
             </li>
            </c:forEach>
-            
-            <%-- <li>
-                <a href="detail.html">
-                <div class="matchImg">
-                    <div class="matchImgWrap">
-                        <img src="${prc }/assets/images/product.jpg" alt=""/>
-                    </div>
-                </div>
-                <div class="matchText">
-                    <div class="matchTitle">阿森纳 vs 埃佛顿</div>
-                    <div class="matchTime">2017-05-21 00:00:00</div>
-                    <div class="matchAddress">伦敦 酋长球场</div>
-                    <div class="matchPrice"><span>酒店+机票</span><em>3819元起</em></div>
-                    <div class="match-txt">票价包含一张当日球票+一晚当晚三星级酒店,酋长 ...  </div>
-                </div>
-                </a>
-            </li> --%>
         </ul>
     </div>
     <footer>
@@ -107,16 +92,16 @@
         <p>京ICP备14000536号-2</p>
         <p>咨询热线：400-885-0132</p>
     </footer>
-    <div class="mobileNavgation">
+   <%--  <div class="mobileNavgation">
         <ul>
-            <li><a href="${prc }/modules/cupList.jsp">足球</a></li>
-            <li><a href="${prc }/modules/cupList.jsp">高尔夫</a></li>
+            <li><a href="${prc }/index/subjectList">足球</a></li> 
+           <li><a href="${prc }/modules/cupList.jsp">高尔夫</a></li>
             <li><a href="${prc }/modules/cupList.jsp">滑雪</a></li>
             <li><a href="${prc }/modules/cupList.jsp">户外</a></li>
             <li><a href="${prc }/modules/cupList.jsp">NFL橄榄球</a></li>
             <li class="closeNav"><i class="fa fa-times close"></i></li>
         </ul>
-    </div>
+    </div> --%>
 </div>
 <script>
 $(function(){

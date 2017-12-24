@@ -206,6 +206,7 @@ public class HomeController {
     		page.setGameStage(String.valueOf(gameStage1));
     		//城市列表
     		page.setCity(String.valueOf(city1));
+    		page.setRank(String.valueOf(rank1));
     	}
     	request.setAttribute("pageBean", page);
 		return param;
@@ -219,18 +220,15 @@ public class HomeController {
     	PageBean pageBean =new PageBean();
     	pageBean.setStr(String.valueOf(id));
     	
-    	//matcherService.findSchedule
+    	List travelList =matcherService.findTravleByGoodsId(id);
+    	pageBean.setTravelList(travelList);
     	
-    	
-    	//pageBean.setList(list);
     	Map<String, Object> l1=null;
     	if(list!=null&&list.size()>0){
     	l1 = list.get(0);
     	}
-    	
-    	
-    	request.setAttribute("str", pageBean);
-    	request.setAttribute("pageBean", l1);
+    	request.setAttribute("pageBean", pageBean);
+    	request.setAttribute("str", l1);
     	return param;
 	}
    
