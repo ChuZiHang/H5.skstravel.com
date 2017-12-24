@@ -33,6 +33,6 @@ public interface ISkOrderInfoService {
     /**
      * 创建订单信息
      */
-    void createOrderInfo(HttpServletRequest request,JsonObject jsonObject) throws Exception;
+    int createOrderInfo(HttpServletRequest request,JsonObject jsonObject) throws Exception;
    
 }

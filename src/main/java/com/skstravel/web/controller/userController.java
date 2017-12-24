@@ -5,7 +5,6 @@ import com.skstravel.common.service.ISkBearerInfoService;
 import com.skstravel.common.service.ISkUserAddressService;
 import com.skstravel.common.utils.CookieUtils;
 import com.skstravel.common.utils.ParamUtils;
-import com.sun.javafx.logging.PulseLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
