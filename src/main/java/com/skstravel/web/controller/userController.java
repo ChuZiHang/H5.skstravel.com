@@ -5,7 +5,6 @@ import com.skstravel.common.service.ISkBearerInfoService;
 import com.skstravel.common.service.ISkUserAddressService;
 import com.skstravel.common.utils.CookieUtils;
 import com.skstravel.common.utils.ParamUtils;
-import com.sun.javafx.logging.PulseLogger;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -34,7 +33,7 @@ public class userController {
     private JdbcTemplate jdbcTemplateForSksports2;
 
     @Autowired
-    ISkUserAddressService skUserAddressService;
+    private ISkUserAddressService skUserAddressService;
 
 
     /**
@@ -46,12 +45,13 @@ public class userController {
      */
     @RequestMapping("/center")
     public String userCenter(HttpServletRequest request,Model model) throws Exception {
-        String memberId = CookieUtils.getCookie(request, "memberId");
+//        String memberId = CookieUtils.getCookie(request, "memberId");
+        String memberId = "4129";
         String sql = "SELECT user_name userName FROM sk_users WHERE user_id = ? ";
         List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{memberId});
         String userName = (String)maps.get(0).get("userName");
         model.addAttribute("userName",userName);
-        return "modules/center";
+        return "center";
     }
 
     /**
@@ -97,7 +97,7 @@ public class userController {
         List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{memberId});
         model.addAttribute("beanList",maps);
 
-        return "modules/personalData";
+        return "personalData";
     }
 
     /**
@@ -170,9 +170,9 @@ public class userController {
         List<SkBearerInfo> skBearerInfos = skBearerInfoService.selectByExample(skBearerInfoExample);
         if(skBearerInfos != null && skBearerInfos.size() > 0){
             model.addAttribute("beanList",skBearerInfos);
-            return "modules/bearer";
+            return "bearer";
         } else {
-            return "modules/addBearer";
+            return "addBearer";
         }
     }
 
@@ -185,7 +185,7 @@ public class userController {
      */
     @RequestMapping("/toaddbearer")
     public String toaddbearer(HttpServletRequest request, Model model) throws Exception {
-        return "modules/addBearer";
+        return "addBearer";
     }
 
     /**
@@ -200,7 +200,7 @@ public class userController {
         int id = ParamUtils.getIntParameter(request,"id");
         SkBearerInfo skBearerInfo = skBearerInfoService.selectByPrimaryKey(id);
         model.addAttribute("bean",skBearerInfo);
-        return "modules/addBearer";
+        return "addBearer";
     }
 
     /**
@@ -223,7 +223,7 @@ public class userController {
 
         model.addAttribute("beanList",skUserAddresses);
         model.addAttribute("userName",userName);
-        return "modules/address";
+        return "address";
     }
 
     /**
@@ -255,7 +255,7 @@ public class userController {
         SkUserAddress skUserAddress = skUserAddressService.selectByPrimaryKey(addressId);
 
         model.addAttribute("bean",skUserAddress);
-        return "modules/addLinkMan";
+        return "addLinkMan";
     }
 
     /**

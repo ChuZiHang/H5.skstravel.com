@@ -226,12 +226,12 @@ public class SkOrderInfoController {
             String str = getRequestPostStr(request);
             JsonElement parse = new JsonParser().parse(str);
             JsonObject jsonObject = parse.getAsJsonObject();
-            this.skOrderInfoService.createOrderInfo(request,jsonObject);
-            
+            int orderId = this.skOrderInfoService.createOrderInfo(request,jsonObject);
+            model = queryOrderInfoForPay(request, model,orderId);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        return "order-pay" ;
+        return "order-pay";
     }
     
     /**
@@ -245,15 +245,15 @@ public class SkOrderInfoController {
     public String queryOrderInfo(HttpServletRequest request, Model model) {
         int goodId = ParamUtils.getIntParameter(request, "goodsId",1);
         //查询商品信息
-        SkGoods skGoods = this.skGoodsMapper.selectByPrimaryKey(Integer.valueOf(201));
+        SkGoods skGoods = this.skGoodsMapper.selectByPrimaryKey(Integer.valueOf(goodId));
         //查询吉祥物信息
         SkGoodsExample skGoodsExample = new SkGoodsExample();
         skGoodsExample.createCriteria().andGoodsTypeEqualTo(Short.valueOf("14"));//吉祥物类型
         List<SkGoods> jxwList = this.skGoodsMapper.selectByExample(skGoodsExample);
         //机票,暂时查询所有的机票
-        String sql = "select DISTINCT * from (SELECT DISTINCT * from (select DISTINCT * from sk_air_ticket t,(select r.region_id cid,r.region_name cname from sk_air_ticket t LEFT JOIN sk_region r" 
-                    +"ON t.from_city=r.region_id) c where t.from_city=c.cid) zhu,(select r.region_id did,r.region_name dname from sk_air_ticket t LEFT JOIN sk_region r "
-                    +"ON t.to_city=r.region_id) d where zhu.to_city=d.did) zh,sk_air_line line where zh.air_line_id=line.id";
+        String sql = "select DISTINCT * from (SELECT DISTINCT * from (select DISTINCT * from sk_air_ticket t,(select r.region_id cid,r.region_name cname from sk_air_ticket t LEFT JOIN sk_region r " 
+                    +" ON t.from_city=r.region_id) c where t.from_city=c.cid) zhu,(select r.region_id did,r.region_name dname from sk_air_ticket t LEFT JOIN sk_region r "
+                    +" ON t.to_city=r.region_id) d where zhu.to_city=d.did) zh,sk_air_line line where zh.air_line_id=line.id ";
         List<Map<String, Object>> jpList = this.jdbcTemplateForSksports2.queryForList(sql);
         //酒店,暂时查询所有的酒店
         List<SkHotel> jdList = this.skHotelMapper.selectByExample(null);
@@ -265,9 +265,8 @@ public class SkOrderInfoController {
         return "order" ;
     }
     
-    @RequestMapping("/queryOrderInfoForPay")
-    public String queryOrderInfoForPay(HttpServletRequest request, Model model) {
-        int orderId = ParamUtils.getIntParameter(request, "orderId",1);
+    public Model queryOrderInfoForPay(HttpServletRequest request, Model model,int orderId) {
+//        int orderId = ParamUtils.getIntParameter(request, "orderId",1);
         //查询订单信息
         SkOrderInfo orderInfo = this.skOrderInfoService.selectByPrimaryKey(orderId);
         //查询商品信息
@@ -290,7 +289,7 @@ public class SkOrderInfoController {
         model.addAttribute("orderInfo", orderInfo);
         model.addAttribute("goods", goods);
         model.addAttribute("plane", plane);
-        return "order-pay" ;
+        return model;
     }
     
     
