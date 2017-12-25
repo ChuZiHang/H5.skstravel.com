@@ -5,11 +5,12 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
+    <c:set var="prc" value="${pageContext.request.contextPath }"></c:set>
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-    <link rel="stylesheet" href="/assets/css/public.css"/>
-    <link rel="stylesheet" href="/assets/css/style.css"/>
-    <link rel="stylesheet" href="/assets/css/font-awesome.css"/>
-    <script src="/assets/js/jquery-3.2.1.min.js"></script>
+    <link rel="stylesheet" href="${prc }/assets/css/public.css"/>
+    <link rel="stylesheet" href="${prc }/assets/css/style.css"/>
+    <link rel="stylesheet" href="${prc }/assets/css/font-awesome.css"/>
+    <script src="${prc }/assets/js/jquery-3.2.1.min.js"></script>
 </head>
 <body class="gary-bg">
 <div class="wrapper bot60">
@@ -19,55 +20,56 @@
             <span></span>
             <span></span>
         </div>
-        <img src="/assets/images/logo.png" alt="" width="80"/>
+        <img src="${prc }/assets/images/logo.png" alt="" width="80"/>
         <div class="center">
-            <a href="center.html"><img src="/assets/images/my.png " alt=""/></a>
+            <a href="center.html"><img src="${prc }/assets/images/my.png " alt=""/></a>
         </div>
     </header>
     <div class="order-top">
+    	<input type="hidden" id="entityId" value="${orderInfo.orderId }">
         <div class="order-top-txt">
             <div class="order-name">跟队系列小组赛单场套餐</div>
             <div class="order-item"><span>套餐类型：</span>2018FIFA俄罗斯世界杯</div>
             <div class="order-item"><span>举办地址：</span>俄罗斯</div>
         </div>
         <div class="order-tips">
-            价格：<span class="orderPriceColor">¥ <em>45000</em></span>
+            价格：<span class="orderPriceColor">¥ <em id="priductPrice">${orderInfo.goodsAmount }</em></span>
         </div>
     </div>
     <div class="orderProduct">
         <div class="orderProductItem">
-            <span><img src="/assets/images/order01.png"></span>
+            <span><img src="${prc }/assets/images/order01.png"></span>
             官方纪念品
         </div>
         <div class="orderAccessory souvenir">
             <div class="souvenirLeft">
-                <img src="/assets/images/lion.png" alt=""/>
+                <img src="${prc }/assets/images/lion.png" alt=""/>
             </div>
             <div class="souvenirRight">
-                <div class="soucenirName"><span>2018世界杯官方吉祥物</span></div>
+                <div class="soucenirName"><span>${goods.goodsName }</span></div>
                 <div class="soucenirTxt">
                     <span>25CM</span>
-                    <span><em>¥</em>45.00</span>
+                    <span>¥<em id="jnpprice">${goods.goodsPrice }</em></span>
                     <div class="soucenirNum">
-                        <span class="ariNum">X1</span>
+                        <span class="ariNum">${goods.goodsNumber }</span>
                     </div>
                 </div>
             </div>
         </div>
         <div class="orderProductItem">
-            <span><img src="/assets/images/order02.png"></span>
+            <span><img src="${prc }/assets/images/order02.png"></span>
             订机票
         </div>
         <div class="orderAccessory airInfo">
             <ul>
-                <li><em class="colorGary">北京-莫斯科 往返 7月8日-16日 </em><span class="colorCca">X1</span></li>
-                <li>去程 <span>CA909 北京 - 莫斯科卢日尼基</span></li>
-                <li>返程 <span>CA910 莫斯科卢日尼基 - 北京</span></li>
+                <li><em class="colorGary">${plane.fromCity } </em><span class="colorCca">X1</span></li>
+                <li>去程 <span>${plane.fromCity } - ${plane.toCity }</span></li>
+                <li>返程 <span>${plane.toCity } - ${plane.fromCity }</span></li>
             </ul>
-            <div class="airPirce">价格：<span class="orderPriceColor">¥<em>4200</em></span></div>
+            <div class="airPirce">价格：<span class="orderPriceColor">¥<em id="planePrice">${plane.goodsPrice }</em></span></div>
         </div>
         <div class="orderProductItem">
-            <span><img src="/assets/images/order04.png"></span>
+            <span><img src="${prc }/assets/images/order04.png"></span>
             取票方式
         </div>
         <div class="orderAccessory airInfo">
@@ -80,7 +82,7 @@
             </div>
         </div>
         <div class="orderProductItem">
-            <span><img src="/assets/images/order05.png"></span>
+            <span><img src="${prc }/assets/images/order05.png"></span>
             联系地址
         </div>
         <div class="orderAccessory airInfo">
@@ -96,7 +98,7 @@
             </div>
         </div>
         <div class="orderProductItem">
-            <span><img src="/assets/images/order06.png"></span>
+            <span><img src="${prc }/assets/images/order06.png"></span>
             付款方式
         </div>
         <div class="orderAccessory airInfo">
@@ -109,7 +111,7 @@
             </div>
         </div>
         <div class="orderProductItem">
-            <span><img src="/assets/images/order07.png"></span>
+            <span><img src="${prc }/assets/images/order07.png"></span>
             发票信息
         </div>
         <div class="orderAccessory airInfo">
@@ -153,6 +155,7 @@
     <span class="orderTatalPrice">¥45，0000</span>
     <span class="orderTatalBtns"><a href="#">确认支付</a></span>
 </div>
+<script type = "text/javascript" src = "${prc }/assets/js/cmblifeSDK.js"></script>
 <script>
     $(function(){
         // 是否需要发票
@@ -165,6 +168,29 @@
                 $(".isinvoice").removeClass("onhide")
             }
         })
+        
+        //初始化总价格
+        var priductPrice = parseFloat($('#priductPrice').text());
+        var planePrice = parseFloat($('#planePrice').text());
+        var jnpprice = parseFloat($('#jnpprice').text());
+        $('.orderTatalPrice').text(priductPrice+planePrice+jnpprice);
+        
+        $('.orderTatalBtns').click(function(){
+        	var orderId = $('#entityId').val();
+        	var totleprice = $('.orderTatalPrice').text();
+        	$.ajax({
+                type: 'POST',
+                url: "/h5/zhaohang/payOrder.controller ",
+                data: {"orderId":orderId,"total":totleprice},
+                dataType: 'json',
+                success: function (res) {
+                    console.log(res.str);
+
+                    cmblife.executeProtocol(res.str);
+                }
+
+            });
+        });
     })
 </script>
 </body>
