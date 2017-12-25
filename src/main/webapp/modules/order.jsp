@@ -58,7 +58,7 @@
     </div>
     <div class="orderProduct">
         <div class="orderProductItem">
-            <span><img src="${prc }/assets/images/order01.png"></span>goodsImg
+            <span><img src="${prc }/assets/images/order01.png"></span>
             官方纪念品
             <div class="checkbox">
                 <input type="checkbox">
@@ -66,9 +66,9 @@
             </div>
         </div>
         <div class="orderAccessory none souvenir">
-            <c:forEach  items="${jxwList }"  var ="x">
+            <%-- <c:forEach  items="${jxwList }"  var ="x">
             <div class="souvenirLeft">
-                <img src="${prc }/${x.goodsImg }" alt=""/>
+                <img src="${prc }/assets/images/lion.png" alt=""/>
             </div>
             <div class="souvenirRight">
                 <div class="soucenirName"><span>${x.goodsName }</span></div>
@@ -82,7 +82,22 @@
                     </div>
                 </div>
             </div>
-            </c:forEach>
+            </c:forEach> --%>
+            <div class="souvenirLeft">
+                <img src="${prc }/assets/images/lion.png" alt=""/>
+            </div>
+            <div class="souvenirRight">
+                <div class="soucenirName"><span>2018世界杯官方吉祥物</span></div>
+                <div class="soucenirTxt">
+                    <span>25CM</span>
+                    <span>¥<em id="jnpPrice">128</em></span>
+                    <div class="soucenirNum">
+                        <em class="soPlus soBtns"><i class="fa fa-plus" id="jnpa"></i></em>
+                        <em class="soNum jinianpin" id="jinianpin">1</em>
+                        <em class="soMinus soBtns"><i class="fa fa-minus" id="jnpj"></i></em>
+                    </div>
+                </div>
+            </div>
         </div>
         <div class="orderProductItem">
             <span><img src="${prc }/assets/images/order02.png"></span>
@@ -94,8 +109,8 @@
         </div>
         <div class="orderAccessory none airticket">
             <div class="air-ticket">
-                <div class="ticketTitle">去程</div>
-                <c:forEach  items="${jpList }"  var ="p">
+                <div class="ticketTitle">去程&nbsp;&nbsp;&nbsp;<span>说明:42000 往返商务舱含税价格</span></div>
+                <%-- <c:forEach  items="${jpList }"  var ="p">
                 	<input type="hidden" id="fromCity"  value="${p.fromCity }">
                 <div class="ticketList">
                 	<input type="hidden" id="toCity" value="${p.toCity }">
@@ -130,7 +145,38 @@
                         <li><span>数量</span><font color="#65f23f">1</font></li>
                     </ul>
                 </div>
-                </c:forEach>
+                </c:forEach> --%>
+                <div class="ticketList">
+                    <ul>
+                        <li><span>出发城市</span><em style="color:#333" >北京</em></li>
+                        <li><span>抵达城市</span><em style="color:#333">莫斯科卢日尼基</em></li>
+                        <li><span>航程选择</span><select id="hcxz" name="hcxz">
+                        	<option value="2018-07-08">北京-莫斯科 往返 7月8日 -16日 时间:1345</option>
+                        	<option value="2018-07-09">北京-莫斯科 往返 7月9日 -17日 时间:1345</option>
+                        </select></select></li>
+                        <li><span>出发日期</span><p id="cfrq"></p></li>
+                        <li>
+                            <span>数量</span>
+                            <div class="soucenirNum ticketNum">
+                                <em class="soPlus soBtns"><i class="fa fa-plus" id="jipiaoa"></i></em>
+                                <em class="soNum" id="jipiaov">1</em>
+                                <em class="soMinus soBtns"><i class="fa fa-minus" id="jipiaoj"></i></em>
+                            </div>
+                        </li>
+                    </ul>
+                </div>
+                
+                <div class="gap"><img src="${prc }/assets/images/gap2.png" alt=""/></div>
+                <div class="ticketTitle">返程</div>
+                <div class="ticketList">
+                    <ul>
+                        <li><span>返程出发城市</span><em style="color:#cca152">莫斯科卢日尼基</em></li>
+                        <li><span>返程抵达城市</span><em style="color:#cca152">北京</em></li>
+                        <li><span>航程选择</span><p id="fcxz"></p></li>
+                        <li><span>返程出发日期</span><p id="fcrq"></p></li>
+                        <li><span>数量</span><p id="fcnum" style="color:#65f23f;">1</p></li>
+                    </ul>
+                </div>
             </div>
         </div>
         <div class="orderProductItem">
@@ -173,6 +219,15 @@
         	sumNum++;
         	$('.orderPriceColor em').text(price*sumNum);
         	$('.orderPrice .sumNum').text(sumNum);
+        	//纪念品
+        	var jnpprice =$('#jnpPrice').text();
+        	var jinianpin =$('#jinianpin').text();
+        	var jnptotal = jnpprice*jinianpin;
+        	//机票
+        	var jipiaov =$('#jipiaov').text();
+        	var jipiao = 42000*jipiaov;
+        	//总
+        	$('.orderTatalPrice').text(price*sumNum+jnptotal+jipiao);
         });
         $('.orderPrice .fa-minus').click(function(){
         	var sumNum = $('.orderPrice .sumNum').text();
@@ -184,34 +239,87 @@
 	        	$('.orderPriceColor em').text(0);
         	}
         	$('.orderPrice .sumNum').text(sumNum);
+        	//纪念品
+        	var jnpprice =$('#jnpPrice').text();
+        	var jinianpin =$('#jinianpin').text();
+        	var jnptotal = jnpprice*jinianpin;
+        	//机票
+        	var jipiaov =$('#jipiaov').text();
+        	var jipiao = 42000*jipiaov;
+        	//总
+        	$('.orderTatalPrice').text(price*sumNum+jnptotal+jipiao);
         });
 		/*纪念品*/
-        $('.orderProduct .fa-plus').click(function(){
+        $('#jnpa').unbind('click').on('click',function(){
         	var sumNum = $(this).parent().next().text();
         	sumNum++;
         	$(this).parent().next().text(sumNum);
+        	//商品
+        	var sumNum1 = $('.orderPrice .sumNum').text();
+        	var price = $('#shopPrice').val();
+        	//机票
+        	var jipiaov =$('#jipiaov').text();
+        	var jipiao = 42000*jipiaov;
+        	//总
+        	$('.orderTatalPrice').text(price*sumNum1+sumNum*128+jipiao);
         });
-        $('.orderProduct .fa-minus').click(function(){
+        $('#jnpj').unbind('click').on('click',function(){
         	var sumNum = $(this).parent().prev().text();
         	sumNum--;
         	if(sumNum<0){
         		sumNum=0;
         	}
         	$(this).parent().prev().text(sumNum);
+        	//商品
+        	var sumNum1 = $('.orderPrice .sumNum').text();
+        	var price = $('#shopPrice').val();
+        	//机票
+        	var jipiaov =$('#jipiaov').text();
+        	var jipiao = 42000*jipiaov;
+        	//总
+        	$('.orderTatalPrice').text(price*sumNum1+sumNum*128+jipiao);
         });
         /*机票*/
-        $('.airticket .fa-plus').click(function(){
+        $('#jipiaoa').unbind('click').on('click',function(){
         	var sumNum =  $(this).parent().next().text();
         	sumNum++;
         	$(this).parent().next().text(sumNum);
+        	$('#fcnum').text(sumNum);
+        	//商品
+        	var sumNum1 = $('.orderPrice .sumNum').text();
+        	var price = $('#shopPrice').val();
+        	//纪念品
+        	var sumNum2 = $('#jnpj').parent().prev().text();
+        	$('.orderTatalPrice').text(price*sumNum1+sumNum*42000+sumNum2*128);
         });
-        $('.airticket .fa-minus').click(function(){
+        $('#jipiaoj').unbind('click').on('click',function(){
         	var sumNum = $(this).parent().prev().text();
         	sumNum--;
         	if(sumNum<0){
         		sumNum=0;
         	}
         	$(this).parent().prev().text(sumNum);
+        	$('#fcnum').text(sumNum);
+        	//商品
+        	var sumNum1 = $('.orderPrice .sumNum').text();
+        	var price = $('#shopPrice').val();
+        	//纪念品
+        	var sumNum2 = $('#jnpj').parent().prev().text();
+        	$('.orderTatalPrice').text(price*sumNum1+sumNum*42000+sumNum2*128);
+        });
+        //选择航程
+        $('#hcxz').change(function(){
+        	var hcxzVal = $('#hcxz option:selected').val();
+        	$('#cfrq').text(hcxzVal);
+        	//返程
+        	if("2018-07-08"==hcxzVal){
+	        	$('#fcxz').text('北京-莫斯科 往返 7月8日 -16日 时间:1845');
+	        	$('#fcrq').text('2018-07-16');
+        	}else{
+        		$('#fcxz').text('北京-莫斯科 往返 7月9日 -17日 时间:1845');
+        		$('#fcrq').text('2018-07-17');
+        	}
+        	
         });
         //提交订单
         $('.orderTatalBtns').click(function(){
