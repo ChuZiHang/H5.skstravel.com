@@ -54,6 +54,8 @@ import com.skstravel.service.MatcheService;
 
 import java.io.IOException;
 import java.sql.Timestamp;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
@@ -267,7 +269,7 @@ public class SkOrderInfoController {
     }
     
     @RequestMapping("/queryOrderInfoForPay")
-    public String queryOrderInfoForPay(HttpServletRequest request, Model model) {
+    public String queryOrderInfoForPay(HttpServletRequest request, Model model) throws ParseException {
         int orderId = ParamUtils.getIntParameter(request, "orderId",1);
         //查询订单信息
         SkOrderInfo orderInfo = this.skOrderInfoService.selectByPrimaryKey(orderId);
@@ -286,6 +288,13 @@ public class SkOrderInfoController {
         SkOrderPlane plane = new SkOrderPlane();
         if(!planList.isEmpty()){
             plane = planList.get(0);
+        }
+        //设置标志位
+        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyyMMdd");
+        if(plane.getFlyDate().getTime() == (sdf.parse("2018-07-08")).getTime()){
+            plane.setFlag("8");
+        }else{
+            plane.setFlag("9");
         }
         
         model.addAttribute("orderInfo", orderInfo);

@@ -87,7 +87,7 @@
                 <img src="${prc }/assets/images/lion.png" alt=""/>
             </div>
             <div class="souvenirRight">
-                <div class="soucenirName"><span>2018世界杯官方吉祥物</span></div>
+                <div class="soucenirName"><span id="soucenirName">2018世界杯官方吉祥物</span></div>
                 <div class="soucenirTxt">
                     <span>25CM</span>
                     <span>¥<em id="jnpPrice">128</em></span>
@@ -196,7 +196,7 @@
     </div>
 </div>
 <div class="orderBtns">
-    <span class="orderTatalPrice">¥45，0000</span>
+    <span class="orderTatalPrice"></span>
     <span class="orderTatalBtns"><a href="#">提交订单</a></span>
 </div>
 <script>
@@ -331,20 +331,19 @@
         	data['goodsSn'] = $('#goodsSn').val();
         	data['sumNum'] = $('.orderPrice .sumNum').text();
         	data['shopPrice'] = $('.orderPriceColor em').text();
+        	data['orderTatalPrice'] = $('.orderTatalPrice').text();
         	//纪念品信息
-        	data['soucenirName'] = $('.soucenirName').text();
-        	data['jnpPrice'] = $('#jnpPrice').text();
+        	data['soucenirName'] = $('#soucenirName').text();
         	data['jinianpinum'] = $('#jinianpin').text();
         	//机票
-        	data['fromCity'] = $('#fromCity').val();
-        	data['toCity'] = $('#toCity').val();
-        	data['title'] = $('#title').val();
-        	data['flyTime'] = $('#fly_time1').val();
-        	data['airId'] = $('#id').val();
-        	data['returnFlyTime'] = $('#return_fly_time').val();
+        	data['hcxz'] = $('#hcxz').val();
         	data['jipiaonum'] = $('#jipiaov').text();
         	//酒店
-        	
+        	var tatal = $('.orderTatalPrice').text();
+        	if(!tatal){
+        		alert("请选商品!");
+        		return;
+        	}
 	        $.ajax({
 				type : "POST",
 				url : "/createOrder.controller",

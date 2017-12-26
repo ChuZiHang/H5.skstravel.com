@@ -24,8 +24,20 @@ public class SkOrderPlane implements Serializable {
     private Integer goodsNumber;
 
     private BigDecimal goodsPrice;
+    
+    private String flag;
 
     private static final long serialVersionUID = 1L;
+
+    
+    
+    public String getFlag() {
+        return flag;
+    }
+
+    public void setFlag(String flag) {
+        this.flag = flag;
+    }
 
     public Integer getId() {
         return id;
