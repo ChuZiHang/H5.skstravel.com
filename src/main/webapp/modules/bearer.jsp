@@ -22,7 +22,8 @@
 </head>
 <body class="gary-bg">
 <div class="wrapper bot60">
-    <header>
+    <%@ include file="/modules/header.jsp"%>
+    <%--<header>
         <div class="mobile-nav">
             <span></span>
             <span></span>
@@ -32,7 +33,7 @@
         <div class="center">
             <a href="center.html"><img src="/assets/images/my.png " alt=""/></a>
         </div>
-    </header>
+    </header>--%>
     <c:forEach items="${beanList}" var="bean">
         <div class="addList">
             <div class="nickname"><span>姓名：</span><span>${bean.cnCustomerName}</span></div>

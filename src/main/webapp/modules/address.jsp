@@ -23,17 +23,18 @@
 </head>
 <body class="gary-bg">
 <div class="wrapper bot60">
-    <header>
-        <div class="mobile-nav">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <img src="/assets/images/logo.png" alt="" width="80"/>
-        <div class="center">
-            <a href="center.html"><img src="/assets/images/my.png " alt=""/></a>
-        </div>
-    </header>
+    <%@ include file="/modules/header.jsp"%>
+    <%--<header>--%>
+        <%--<div class="mobile-nav">--%>
+            <%--<span></span>--%>
+            <%--<span></span>--%>
+            <%--<span></span>--%>
+        <%--</div>--%>
+        <%--<img src="/assets/images/logo.png" alt="" width="80"/>--%>
+        <%--<div class="center">--%>
+            <%--<a href="center.html"><img src="/assets/images/my.png " alt=""/></a>--%>
+        <%--</div>--%>
+    <%--</header>--%>
     <c:forEach items="${beanList}" var="bean">
     <div class="addList">
         <div class="nickname"><span>nickName</span><span>${userName}</span></div>
@@ -45,7 +46,7 @@
     </div>
     </c:forEach>
     <div class="addressAdd">
-        <a href="addLinkMan.html"><i class="fa fa-plus"></i> 添加管理地址</a>
+        <a href="/user/toAddAddress"><i class="fa fa-plus"></i> 添加管理地址</a>
     </div>
 </div>
 

@@ -23,17 +23,18 @@
 </head>
 <body class="gary-bg">
 <div class="wrapper bot60">
-    <header>
-        <div class="mobile-nav">
-            <span></span>
-            <span></span>
-            <span></span>
-        </div>
-        <img src="/assets/images/logo.png" alt="" width="80"/>
-        <div class="center">
-            <a href="center.html"><img src="/assets/images/my.png " alt=""/></a>
-        </div>
-    </header>
+    <%@ include file="/modules/header.jsp"%>
+    <%--<header>--%>
+        <%--<div class="mobile-nav">--%>
+            <%--<span></span>--%>
+            <%--<span></span>--%>
+            <%--<span></span>--%>
+        <%--</div>--%>
+        <%--<img src="/assets/images/logo.png" alt="" width="80"/>--%>
+        <%--<div class="center">--%>
+            <%--<a href="center.html"><img src="/assets/images/my.png " alt=""/></a>--%>
+        <%--</div>--%>
+    <%--</header>--%>
     <form id="f1">
         <input type="hidden" name="id" value="${bean.id}">
     <div class="fillBox">
