@@ -13,7 +13,7 @@ package com.skstravel.common.api;
 
 public final class Constants {
 
-    public static String domain = ".shankaisports.com";
+    public static String domain = "cmb-h5.skstravel.com";
 
     public static String URL = "https://open.cmbchina.com";
 

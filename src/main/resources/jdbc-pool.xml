@@ -12,13 +12,18 @@
 		destroy-method="close">
 		<property name="poolProperties">
 			<bean class="org.apache.tomcat.jdbc.pool.PoolProperties">
-				<property name="url" value="jdbc:mysql://60.205.187.255:3306/sksports2?characterEncoding=utf-8" />
-				<!-- <property name="url" value="jdbc:mysql://rdsrmqld83mnlijgqn4ws.mysql.rds.aliyuncs.com:3306/sksports2?characterEncoding=utf-8" /> -->
+				<!--<property name="url" value="jdbc:mysql://10.170.240.176:3306/sksports2?characterEncoding=utf-8" />-->
+			 <property name="url" value="jdbc:mysql://60.205.187.255:3306/sksports2?characterEncoding=utf-8" />
+<!-- 			 <property name="url" value="jdbc:mysql://rdsrmqld83mnlijgqn4ws.mysql.rds.aliyuncs.com:3306/sksports2?characterEncoding=utf-8" /> -->
 				<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 				<property name="username" value="root" />
 				<property name="password" value="qiuwei" />
 				<!-- <property name="username" value="dbuser" />
 				<property name="password" value="admin888" /> -->
+<!-- 				<property name="username" value="dbuser" />
+				<property name="password" value="admin888" /> -->
+				<!-- <property name="username" value="root" />
+				<property name="password" value="root" /> -->
 				<property name="jmxEnabled" value="false" />
 				<property name="testWhileIdle" value="true" />
 				<property name="testOnBorrow" value="true" />
