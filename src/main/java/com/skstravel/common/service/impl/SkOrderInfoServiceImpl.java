@@ -119,6 +119,9 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         String price = jsonObject.get("shopPrice").toString();
         price = price.substring(1, price.length()-1);
         orderInfo.setGoodsAmount(new BigDecimal(price));
+        String total = jsonObject.get("orderTatalPrice").toString();
+        total = total.substring(1, total.length()-1);
+        orderInfo.setGoodsAmount(new BigDecimal(total));
 //        orderInfo.setAddTime(new Integer((int)System.currentTimeMillis()));
         //默认值
         orderInfo.setAgencyId(Short.parseShort("1"));
@@ -126,7 +129,8 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         orderInfo.setTax(new BigDecimal(17));
         orderInfo.setDiscount(new BigDecimal(17));
         orderInfo.setAddressId(1L);
-        int orderId = this.insertSelective(orderInfo);
+        this.insertSelective(orderInfo);
+        int orderId = orderInfo.getOrderId();
         //维护订单商品信息
         SkOrderGoods orderGoods = new SkOrderGoods();
         orderGoods.setOrderId(orderId);
@@ -145,6 +149,8 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         String sumNum = jsonObject.get("sumNum").toString();
         sumNum = sumNum.substring(1, sumNum.length()-1);
         orderGoods.setGoodsNumber(Short.parseShort(sumNum));
+        //纪念品数量
+        
         //默认值
         orderGoods.setProductId(new Integer(1));
         orderGoods.setMarketPrice(new BigDecimal(22));
@@ -159,37 +165,25 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         //维护机票信息
         SkOrderPlane orderPlane = new SkOrderPlane();
         orderPlane.setOrderId(orderId);
-        String fromCity = jsonObject.get("fromCity").toString();
-        fromCity = fromCity.substring(1, fromCity.length()-1);
-        if("".equals(fromCity)){
-            fromCity = "1";
-        }
-        orderPlane.setFromCity(Integer.parseInt(fromCity));
-        String toCity = jsonObject.get("toCity").toString();
-        toCity = toCity.substring(1, toCity.length()-1);
-        if("".equals(toCity)){
-            toCity = "1";
-        }
-        orderPlane.setToCity(Integer.parseInt(toCity));
-        String flyTime = jsonObject.get("flyTime").toString();
-        flyTime = flyTime.substring(1, flyTime.length()-1);
-        if("".equals(flyTime)){
-            orderPlane.setFlyDate(new Date());
+        String hcxz = jsonObject.get("hcxz").toString();
+        if("2018-07-08".equals(hcxz)){
+            orderPlane.setFromCity(52);
+            orderPlane.setToCity(3507);
+            orderPlane.setFlyDate(sdf.parse("2018-07-08"));
+            orderPlane.setReturnFlyDate(sdf.parse("2018-07-16"));
         }else{
-            orderPlane.setFlyDate(new Date(flyTime));
+            orderPlane.setFromCity(52);
+            orderPlane.setToCity(3507);
+            orderPlane.setFlyDate(sdf.parse("2018-07-09"));
+            orderPlane.setReturnFlyDate(sdf.parse("2018-07-17"));
         }
-        String returnFlyTime = jsonObject.get("returnFlyTime").toString();
-        returnFlyTime = returnFlyTime.substring(1, returnFlyTime.length()-1);
-        orderPlane.setReturnFlyDate(new Date());
         String jipiaonum = jsonObject.get("jipiaonum").toString();
         jipiaonum = jipiaonum.substring(1, jipiaonum.length()-1);
         orderPlane.setGoodsNumber(Integer.parseInt(jipiaonum));
-        String airId = jsonObject.get("airId").toString();
-        airId = airId.substring(1, airId.length()-1);
-        orderPlane.setAirId(Integer.parseInt(airId));
         //默认值
         orderPlane.setSpaceId(new Integer(1));
         orderPlane.setGoodsPrice(BigDecimal.ZERO);
+        orderPlane.setAirId(new Integer(1));
         this.orderPlaneMapper.insert(orderPlane);
         return orderId;
     }

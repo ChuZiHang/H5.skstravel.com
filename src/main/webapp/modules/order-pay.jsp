@@ -46,10 +46,10 @@
                 <img src="${prc }/assets/images/lion.png" alt=""/>
             </div>
             <div class="souvenirRight">
-                <div class="soucenirName"><span>${goods.goodsName }</span></div>
+                <div class="soucenirName"><span>2018世界杯官方吉祥物</span></div>
                 <div class="soucenirTxt">
                     <span>25CM</span>
-                    <span>¥<em id="jnpprice">${goods.goodsPrice }</em></span>
+                    <span>¥<em id="jnpprice">128</em></span>
                     <div class="soucenirNum">
                         <span class="ariNum">${goods.goodsNumber }</span>
                     </div>
@@ -62,9 +62,18 @@
         </div>
         <div class="orderAccessory airInfo">
             <ul>
-                <li><em class="colorGary">${plane.fromCity } </em><span class="colorCca">X1</span></li>
-                <li>去程 <span>${plane.fromCity } - ${plane.toCity }</span></li>
-                <li>返程 <span>${plane.toCity } - ${plane.fromCity }</span></li>
+         <c:choose>
+         	<c:when test="${plane.flag=="8" }">
+                <li><em class="colorGary">北京-莫斯科 往返 7月8日-16日 </em><span class="colorCca">${plane.goodsNumber }</span></li>
+                <li>去程 <span>CA909 北京 - 莫斯科卢日尼基</span></li>
+                <li>返程 <span>CA910 莫斯科卢日尼基 - 北京</span></li>
+            </c:when>
+            <c:when test="${plane.flag=="9" }">
+                <li><em class="colorGary">北京-莫斯科 往返 7月9日-17日 </em><span class="colorCca">${plane.goodsNumber }</span></li>
+                <li>去程 <span>CA909 北京 - 莫斯科卢日尼基</span></li>
+                <li>返程 <span>CA910 莫斯科卢日尼基 - 北京</span></li>
+            </c:when>
+        </c:choose>
             </ul>
             <div class="airPirce">价格：<span class="orderPriceColor">¥<em id="planePrice">${plane.goodsPrice }</em></span></div>
         </div>
@@ -152,7 +161,7 @@
     </div>
 </div>
 <div class="orderBtns">
-    <span class="orderTatalPrice">¥45，0000</span>
+    <span class="orderTatalPrice">${orderInfo.goodsAmount }</span>
     <span class="orderTatalBtns"><a href="#">确认支付</a></span>
 </div>
 <script type = "text/javascript" src = "${prc }/assets/js/cmblifeSDK.js"></script>
