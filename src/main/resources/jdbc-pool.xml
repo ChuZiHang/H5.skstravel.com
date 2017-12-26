@@ -18,6 +18,8 @@
 				<property name="driverClassName" value="com.mysql.jdbc.Driver" />
 				<property name="username" value="root" />
 				<property name="password" value="qiuwei" />
+				<!-- <property name="username" value="dbuser" />
+				<property name="password" value="admin888" /> -->
 <!-- 				<property name="username" value="dbuser" />
 				<property name="password" value="admin888" /> -->
 				<!-- <property name="username" value="root" />
