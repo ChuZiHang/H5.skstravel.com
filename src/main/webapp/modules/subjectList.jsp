@@ -27,7 +27,7 @@
         
         <img src="${prc }/assets/images/logo.png" alt="" width="80"/>
         <div class="center">
-            <img src="${prc }/assets/images/my.png " alt=""/>
+            <a href="/user/center.controller"><img src="${prc }/assets/images/my.png " alt=""/></a>
         </div>
         
     </header>

@@ -46,8 +46,8 @@ public class userController {
      */
     @RequestMapping("/center")
     public String userCenter(HttpServletRequest request,HttpServletResponse response,Model model) throws Exception {
-        String memberId = CookieUtils.getCookie(request, "memberId");
-//        String memberId = "4129";
+//        String memberId = CookieUtils.getCookie(request, "memberId");
+        String memberId = "4129";
         CookieUtils.setCookie("memberId", memberId+"", -1, response, Constants.domain);
         String sql = "SELECT user_name userName FROM sk_users WHERE user_id = ? ";
         List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{memberId});
@@ -244,7 +244,7 @@ public class userController {
     }
 
     /**
-     *
+     * 跳转修改
      * @param request
      * @param model
      * @return
@@ -257,6 +257,17 @@ public class userController {
         SkUserAddress skUserAddress = skUserAddressService.selectByPrimaryKey(addressId);
 
         model.addAttribute("bean",skUserAddress);
+        return "addLinkMan";
+    }
+
+    /**
+     * 跳转添加地址
+     * @param request
+     * @param model
+     * @return
+     */
+    @RequestMapping("/toAddAddress")
+    public String toAddAddress(HttpServletRequest request,Model model){
         return "addLinkMan";
     }
 

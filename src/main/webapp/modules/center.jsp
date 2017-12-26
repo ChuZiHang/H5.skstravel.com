@@ -55,4 +55,9 @@
     </div>
 </div>
 </body>
+<script !src="">
+    $(".mobile-nav").click(function () {
+        window.location.href="${prc }/index/subjectList";
+    })
+</script>
 </html>
