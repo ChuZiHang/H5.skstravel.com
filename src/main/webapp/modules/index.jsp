@@ -20,20 +20,36 @@
 <body>
 <div class="wrapper">
     <header>
-        <div class="mobile-nav">
+    		<div class="mobile-nav">
+            <span class="aaa"></span>
+            <span class="aaa"></span>
+            <span class="aaa"></span>
+        	</div>
+        <%-- <div class="mobile-nav">
            <div class="left">
             <a href="${prc }/index/subjectList">
                 <img src="${prc }/assets/images/my.png "  style="width: 23px;height: 23px" alt=""/>
             </a>
         </div>
-        </div>
+        </div> --%>
+        
+        
         <a href="index.html"><img src="${prc }/assets/images/logo.png" alt="" width="80"/></a>
         <div class=center>
-            <a href="center.html">
+            <a href="${prc }/user/center">
                 <img src="${prc }/assets/images/my.png "   style="width: 23px;height: 23px"  alt=""/>
             </a>
         </div>
     </header>
+    <script type="text/javascript">
+    	$(".aaa").click(function(){
+    		//alert("aa");
+    		window.location.href="${prc }/index/subjectList";
+    	});	
+    
+    
+    
+    </script>
     <div class="swiper-container">
         <div class="swiper-wrapper">
             <div class="swiper-slide">

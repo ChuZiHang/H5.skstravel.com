@@ -14,21 +14,31 @@
     <link href="${prc }/assets/css/swiper.min.css" rel="stylesheet" />
     <script src="${prc }/assets/js/jquery-3.2.1.min.js"></script>
     <script src="${prc }/assets/js/swiper.min.js"></script>
-    <script type="text/javascript"  src="${prc }/assets/js/vue.js"></script>
+   <%--  <script type="text/javascript"  src="${prc }/assets/js/vue.js"></script> --%>
 </head>
 <body class="gary-bg">
 <div class="wrapper bot60">
     <header>
-        <div class="mobile-nav">
-            <span></span>
-            <span></span>
-            <span></span>
+        <div class="mobile-nav"   >
+            <span  class="aaa"></span>
+            <span  class="aaa"></span>
+            <span  class="aaa"></span>
         </div>
+        
         <img src="${prc }/assets/images/logo.png" alt="" width="80"/>
         <div class="center">
             <img src="${prc }/assets/images/my.png " alt=""/>
         </div>
+        
     </header>
+    <script type="text/javascript">
+    		$(".aaa").click(function(){
+    			alert("aaa");
+    		});
+    
+    
+    
+    </script>
     <div class="subject-title">2018俄罗斯世界杯</div>
     <div class="subject-title">
     	<form action="${prc}/selectByGameStageAndCity/subjectList"  id="form1"  method="post">
