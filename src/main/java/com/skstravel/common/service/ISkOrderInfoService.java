@@ -35,4 +35,8 @@ public interface ISkOrderInfoService {
      */
     int createOrderInfo(HttpServletRequest request,JsonObject jsonObject) throws Exception;
    
+    /**
+     * 支付逻辑,维护相关信息
+     */
+    public void updateOrderInfo(JsonObject jsonObject);
 }

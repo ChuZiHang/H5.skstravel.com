@@ -188,7 +188,7 @@
         }else{
 	        obj['invoice']=invoiceVal;
 	        var invoiceType = $('#invoiceType option:selected').val();
-	        obj['invoice'] = invoiceType;
+	        obj['invoiceType'] = invoiceType;
 	        obj['unit'] = $('#unit').val();
 	        obj['fee'] = $('#fee').val();
         }
@@ -203,12 +203,12 @@
         
         
         $('.orderTatalBtns').click(function(){
-        	var orderId = $('#entityId').val();
-        	var totleprice = $('.orderTatalPrice').text();
+        	obj['entityId'] = $('#entityId').val();
+        	obj['orderTotal'] = $('.orderTatalPrice').text();
         	$.ajax({
                 type: 'POST',
                 url: "/h5/zhaohang/payOrder.controller ",
-                data: {"orderId":orderId,"total":totleprice},
+                data: obj,
                 dataType: 'json',
                 success: function (res) {
                     console.log(res.str);

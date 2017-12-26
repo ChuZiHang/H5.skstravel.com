@@ -23,6 +23,7 @@ import com.skstravel.common.model.sksports2.SkOrderGoods;
 import com.skstravel.common.model.sksports2.SkOrderInfo;
 import com.skstravel.common.model.sksports2.SkOrderInfoExample;
 import com.skstravel.common.model.sksports2.SkOrderPlane;
+import com.skstravel.common.model.sksports2.SkUserAddress;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.utils.CookieUtils;
 import com.skstravel.pojo.MatcheInfo;
@@ -196,5 +197,23 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         String orderCode = str + String.valueOf(rannum);
     }
 	
-
+    public void updateOrderInfo(JsonObject jsonObject){
+        //保存地址
+        String payType = jsonObject.get("payType").toString();
+        String invoice = jsonObject.get("invoice").toString();
+        String invoiceType = jsonObject.get("invoiceType").toString();
+        String unit = jsonObject.get("unit").toString();
+        String fee = jsonObject.get("fee").toString();
+        
+        String linkMan = jsonObject.get("linkMan").toString();
+        String email = jsonObject.get("email").toString();
+        String phone = jsonObject.get("phone").toString();
+        String type = jsonObject.get("type").toString();
+        String typeCode = jsonObject.get("typeCode").toString();
+        
+        String entityId = jsonObject.get("entityId").toString();
+        SkOrderInfo orderInfo = this.selectByPrimaryKey(Integer.parseInt(entityId));
+        //维护订单信息
+        
+    }
 }

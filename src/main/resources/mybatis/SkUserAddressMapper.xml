@@ -128,7 +128,7 @@
       #{mobile,jdbcType=VARCHAR}, #{signBuilding,jdbcType=VARCHAR}, #{bestTime,jdbcType=VARCHAR}, 
       #{cardType,jdbcType=INTEGER}, #{cardNum,jdbcType=VARCHAR})
   </insert>
-  <insert id="insertSelective" parameterType="com.skstravel.common.model.sksports2.SkUserAddress">
+  <insert id="insertSelective" useGeneratedKeys="true" keyProperty="addressId" parameterType="com.skstravel.common.model.sksports2.SkUserAddress">
     insert into sk_user_address
     <trim prefix="(" suffix=")" suffixOverrides=",">
       <if test="addressId != null">
