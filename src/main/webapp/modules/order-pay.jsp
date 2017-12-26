@@ -5,7 +5,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <c:set var="prc" value="${pageContext.request.contextPath }"></c:set>
+     <c:set var="prc" value="${pageContext.request.contextPath }"></c:set>
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <link rel="stylesheet" href="${prc }/assets/css/public.css"/>
     <link rel="stylesheet" href="${prc }/assets/css/style.css"/>

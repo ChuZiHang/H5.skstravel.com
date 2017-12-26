@@ -7,7 +7,7 @@
     <meta charset="UTF-8">
     <title></title>
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
-     <c:set var="prc" value="${pageContext.request.contextPath }"></c:set>
+      <c:set var="prc" value="${pageContext.request.contextPath }"></c:set>
     <link rel="stylesheet" href="${prc }/assets/css/public.css"/>
     <link rel="stylesheet" href="${prc }/assets/css/style.css"/>
     <link rel="stylesheet" href="${prc }/assets/css/font-awesome.css"/>

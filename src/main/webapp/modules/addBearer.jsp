@@ -7,7 +7,8 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <c:set var="prc" value="${pageContext.request.contextPath }"></c:set><!--
+    <c:set var="prc" value="${pageContext.request.contextPath }"></c:set>
+    <!--
     这是我设置的一个别名  ,主要是用来简化写    ${prc } 这样获取 -->
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- 这个就 相当与 ${prc }   == ${pageContext.request.contextPath }  就是项目名称  -->
