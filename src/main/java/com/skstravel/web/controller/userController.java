@@ -46,8 +46,8 @@ public class userController {
      */
     @RequestMapping("/center")
     public String userCenter(HttpServletRequest request,HttpServletResponse response,Model model) throws Exception {
-//        String memberId = CookieUtils.getCookie(request, "memberId");
-        String memberId = "4129";
+        String memberId = CookieUtils.getCookie(request, "memberId");
+//        String memberId = "4129";
         CookieUtils.setCookie("memberId", memberId+"", -1, response, Constants.domain);
         String sql = "SELECT user_name userName FROM sk_users WHERE user_id = ? ";
         List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{memberId});
