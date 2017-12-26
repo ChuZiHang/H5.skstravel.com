@@ -63,16 +63,16 @@
         <div class="orderAccessory airInfo">
             <ul>
          <c:choose>
-         	<c:when test="${plane.flag=="8" }">
+         	<c:when test="${plane.flag eq '8' }">
                 <li><em class="colorGary">北京-莫斯科 往返 7月8日-16日 </em><span class="colorCca">${plane.goodsNumber }</span></li>
                 <li>去程 <span>CA909 北京 - 莫斯科卢日尼基</span></li>
                 <li>返程 <span>CA910 莫斯科卢日尼基 - 北京</span></li>
             </c:when>
-            <c:when test="${plane.flag=="9" }">
+            <c:otherwise>
                 <li><em class="colorGary">北京-莫斯科 往返 7月9日-17日 </em><span class="colorCca">${plane.goodsNumber }</span></li>
                 <li>去程 <span>CA909 北京 - 莫斯科卢日尼基</span></li>
                 <li>返程 <span>CA910 莫斯科卢日尼基 - 北京</span></li>
-            </c:when>
+            </c:otherwise>
         </c:choose>
             </ul>
             <div class="airPirce">价格：<span class="orderPriceColor">¥<em id="planePrice">${plane.goodsPrice }</em></span></div>
@@ -97,13 +97,13 @@
         <div class="orderAccessory airInfo">
             <div class="contactAddress">
                 <ul>
-                    <li><span class="addItem">联系人：</span>嘉定番</li>
-                    <li><span class="addItem">常用邮箱：</span>jiadingfan@gmail.com</li>
-                    <li><span class="addItem">手机号码：</span>13723459876</li>
-                    <li><span class="addItem">证件类型：</span>身份证</li>
-                    <li><span class="addItem">证件号码：</span>12345678900987654X</li>
+                    <li><span class="addItem">联系人：</span><input type="text" name="linkMan" id="linkMan"></li>
+                    <li><span class="addItem">常用邮箱：</span><input type="text" name="email" id="email"></li>
+                    <li><span class="addItem">手机号码：</span><input type="text" name="phone" id="phone"></li>
+                    <li><span class="addItem">证件类型：</span><input type="text" name="type" id="type"></li>
+                    <li><span class="addItem">证件号码：</span><input type="text" name="typeCode" id="typeCode"></li>
                 </ul>
-                <div class="addContact"><a href="#">+ 添加联系人信息</a></div>
+                <div class="addContact"><a href="#"> 保存联系人信息</a></div>
             </div>
         </div>
         <div class="orderProductItem">
@@ -140,13 +140,13 @@
             </div>
             <div class="isinvoice">
                 <div>
-                    <select name="" id="" class="invoiceInput">
+                    <select name="" id="invoiceType" class="invoiceInput">
                         <option value="1">普通发票</option>
                         <option value="2">普通发票</option>
                     </select>
                 </div>
-                <div><input type="text" placeholder="个人/单位名称" class="invoiceInput"/></div>
-                <div><input type="text" placeholder="服务费" class="invoiceInput"/></div>
+                <div><input type="text" placeholder="个人/单位名称" class="invoiceInput" id="unit"/></div>
+                <div><input type="text" placeholder="服务费" class="invoiceInput" id="fee"/></div>
             </div>
         </div>
     </div>
@@ -179,10 +179,28 @@
         })
         
         //初始化总价格
-        var priductPrice = parseFloat($('#priductPrice').text());
-        var planePrice = parseFloat($('#planePrice').text());
-        var jnpprice = parseFloat($('#jnpprice').text());
-        $('.orderTatalPrice').text(priductPrice+planePrice+jnpprice);
+        //发票
+        var invoiceVal = $('input[name="invoice"]:checked').val()
+        var obj = {};
+        obj['payType']=1;
+        if("1"==invoiceVal){
+	        obj['invoice']=invoiceVal;
+        }else{
+	        obj['invoice']=invoiceVal;
+	        var invoiceType = $('#invoiceType option:selected').val();
+	        obj['invoice'] = invoiceType;
+	        obj['unit'] = $('#unit').val();
+	        obj['fee'] = $('#fee').val();
+        }
+        //联系人信息
+        obj['linkMan'] = $('#linkMan').val();
+        obj['email'] = $('#email').val();
+        obj['phone'] = $('#phone').val();
+        obj['type'] = $('#type').val();
+        obj['typeCode'] = $('#typeCode').val();
+        
+        
+        
         
         $('.orderTatalBtns').click(function(){
         	var orderId = $('#entityId').val();
