@@ -214,6 +214,8 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         String entityId = jsonObject.get("entityId").toString();
         SkOrderInfo orderInfo = this.selectByPrimaryKey(Integer.parseInt(entityId));
         //维护订单信息
+        //TODO
         
+        this.updateByPrimaryKey(orderInfo);
     }
 }
