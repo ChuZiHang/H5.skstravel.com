@@ -215,6 +215,16 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         SkOrderInfo orderInfo = this.selectByPrimaryKey(Integer.parseInt(entityId));
         //维护订单信息
         //TODO
+        orderInfo.setInvoiceNo(invoice);
+        orderInfo.setInvType(invoiceType);
+        orderInfo.setInvPayee(unit);
+        orderInfo.setPayFee(new BigDecimal(fee));
+        //练习人信息
+        orderInfo.setConsignee(linkMan);
+        orderInfo.setEmail(email);
+        orderInfo.setMobile(phone);
+        orderInfo.setCardType(Integer.parseInt(type));
+        orderInfo.setCardNum(typeCode);
         
         this.updateByPrimaryKey(orderInfo);
     }
