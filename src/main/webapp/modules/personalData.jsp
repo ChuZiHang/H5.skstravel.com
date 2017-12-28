@@ -18,6 +18,7 @@
     <script src="${prc }/assets/js/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="${prc }/assets/css/n-date.css"/>
     <script src="${prc }/assets/js/n-date.js"></script>
+    <script src="${prc }/assets/js/iscroll.js"></script>
     <script type = "text/javascript" src = "${prc }/assets/js/cmblifeSDK.js"></script>
 </head>
 <body class="gary-bg">
@@ -44,7 +45,17 @@
             </li>
             <li>
                 <span>性别</span>
-                <input type="text" class="linkInput" placeholder="" id="sex" name="sex" value="${bean.sex}"/>
+                <c:choose>
+                    <c:when test="${bean.sex eq 'fasle'}">
+                        <input type="text" class="linkInput" placeholder="" id="sex" name="sex" value="男"/>
+                    </c:when>
+                    <c:when test="${bean.sex eq 'true'}">
+                        <input type="text" class="linkInput" placeholder="" id="sex" name="sex" value="女"/>
+                    </c:when>
+                    <c:otherwise>
+                        <input type="text" class="linkInput" placeholder="" id="sex" name="sex" value=""/>
+                    </c:otherwise>
+                </c:choose>
             </li>
             <li>
                 <span>出生日期</span>
@@ -111,9 +122,9 @@
                 type: 'POST',
                 url: "/user/updateUser.controller",
                 data: $("#f1").serialize(),
-                dataType: JSON,
+                dataType: "json",
                 success: function (res) {
-                    if(res.code == 1){
+                    if(res.code == 0){
                         window.location.reload();
                     }
                 },

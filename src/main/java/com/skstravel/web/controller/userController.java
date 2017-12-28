@@ -5,6 +5,7 @@ import com.skstravel.common.api.Constants;
 import com.skstravel.common.model.sksports2.*;
 import com.skstravel.common.service.ISkBearerInfoService;
 import com.skstravel.common.service.ISkUserAddressService;
+import com.skstravel.common.service.SkUsersService;
 import com.skstravel.common.utils.CookieUtils;
 import com.skstravel.common.utils.ParamUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,9 @@ public class userController {
     @Autowired
     private ISkUserAddressService skUserAddressService;
 
+    @Autowired
+    private SkUsersService skUsersService;
+
 
     /**
      * 跳转用户中心
@@ -68,7 +72,7 @@ public class userController {
 //        String memberId = CookieUtils.getCookie(request, "memberId");
         String memberId = "4129";
         String userName = ParamUtils.getParameter(request,"userName");
-        int sex = ParamUtils.getIntParameter(request,"sex");
+        String sex = ParamUtils.getParameter(request,"sex");
         String birthday = ParamUtils.getParameter(request,"birthday");
         String email = ParamUtils.getParameter(request,"email");
         String companyName = ParamUtils.getParameter(request,"companyName");
@@ -76,8 +80,13 @@ public class userController {
         String officePhone = ParamUtils.getParameter(request,"officePhone");
         String emergencyPhone = ParamUtils.getParameter(request,"emergencyPhone");
 
+        int type = 1;
+        if(sex.equals("男")){
+            type = 0;
+        }
+
         String sql = "UPDATE sk_users u SET u.`user_name`=?,u.`sex`=?,u.`birthday`=?,u.`email`=?,u.`company_name`=?,u.`mobile_phone`=?,u.`office_phone`=?,u.`emergency_phone`=? WHERE u.`user_id` = ? ";
-        int i = jdbcTemplateForSksports2.update(sql, new Object[]{userName, sex, birthday, email, companyName, mobilePhone, officePhone, emergencyPhone, memberId});
+        int i = jdbcTemplateForSksports2.update(sql, new Object[]{userName, type, birthday, email, companyName, mobilePhone, officePhone, emergencyPhone, memberId});
 
         JsonObject jsonObject = new JsonObject();
         jsonObject.addProperty("code",0);
@@ -96,9 +105,11 @@ public class userController {
     public String todetail(HttpServletRequest request,Model model) throws Exception {
 //        String memberId = CookieUtils.getCookie(request, "memberId");
         String memberId = "4129";
-        String sql = "SELECT user_name userName,sex,birthday,email,company_name companyName,mobile_phone mobilePhone,office_phone officePhone,emergency_phone emergencyPhone,adress FROM sk_users WHERE user_id =？";
-        List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{memberId});
+//        SkUsers skUsers = skUsersService.selectByPrimaryKey(Integer.parseInt(memberId));
+        String sql = "SELECT user_name userName,sex,birthday,email,company_name companyName,mobile_phone mobilePhone,office_phone officePhone,emergency_phone emergencyPhone,adress FROM sk_users WHERE user_id =?";
+        List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{Integer.parseInt(memberId)});
         model.addAttribute("beanList",maps);
+//        model.addAttribute("bean",skUsers);
 
         return "personalData";
     }

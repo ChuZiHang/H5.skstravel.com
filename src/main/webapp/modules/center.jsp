@@ -41,7 +41,7 @@
     </div>
     <div class="myWrap">
         <ul>
-            <li><a href="/orderinfo/{myorder}.controller"><span><img src="/assets/images/order04.png" alt=""/></span>我的订单</a></li>
+            <li><a href="/orderinfo/myorder"><span><img src="/assets/images/order04.png" alt=""/></span>我的订单</a></li>
             <li><a href="/user/addresslist.controller"><span><img src="/assets/images/order05.png" alt=""/></span>联系地址管理</a></li>
             <li><a href="voucher.html"><span><img src="/assets/images/order06.png" alt=""/></span>付款凭证</a></li>
             <li><a href="/user/beare.controller"><span><img src="/assets/images/order07.png" alt=""/></span>持票人信息</a></li>
