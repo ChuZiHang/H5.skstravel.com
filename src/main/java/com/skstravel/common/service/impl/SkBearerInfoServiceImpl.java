@@ -28,6 +28,11 @@ public class SkBearerInfoServiceImpl implements ISkBearerInfoService {
     }
 
     @Override
+    public int deleteByPrimaryKey(Integer orderId) {
+        return skBearerInfoMapper.deleteByPrimaryKey(orderId);
+    }
+
+    @Override
     public List<SkBearerInfo> selectByExample(SkBearerInfoExample example) {
         // TODO Auto-generated method stub
         return skBearerInfoMapper.selectByExample(example);

@@ -37,11 +37,11 @@
     <%--</header>--%>
     <c:forEach items="${beanList}" var="bean">
     <div class="addList">
-        <div class="nickname"><span>nickName</span><span>${userName}</span></div>
+        <div class="nickname"><span>nickName</span><span>${bean.consignee}</span></div>
         <div class="e-mail">电子邮件：${bean.email}</div>
         <div class="opt">
             <span><i class="fa fa-edit"></i><a href="/user/toModifyAddress.controller?id=${bean.addressId}">编辑</a> </span>
-            <span><i class="fa fa-trash"></i> 删除</span>
+            <span onclick="del(${bean.addressId});"><i class="fa fa-trash"></i> 删除</span>
         </div>
     </div>
     </c:forEach>
@@ -52,14 +52,14 @@
 
 </body>
 <script>
-    $("#del").click(function () {
+    function del(id) {
         $.ajax({
             type: 'POST',
-            url: "/user/updateUser.controller",
-            data: $("#f1").serialize(),
-            dataType: JSON,
+            url: "/user/delAddress.controller",
+            data: {"id":id},
+            dataType: "json",
             success: function (res) {
-                if(res.code == 1){
+                if(res.code == 0){
                     window.location.reload();
                 }
             },
@@ -67,6 +67,6 @@
                 cmblife.showToast("系统异常，请稍后重试");
             }
         });
-    })
+    }
 </script>
 </html>

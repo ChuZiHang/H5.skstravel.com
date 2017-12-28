@@ -20,6 +20,7 @@
     <script src="${prc }/assets/js/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="${prc }/assets/css/n-date.css"/>
     <script src="${prc }/assets/js/n-date.js"></script>
+    <script src="${prc }/assets/js/iscroll.js"></script>
     <script type = "text/javascript" src = "${prc }/assets/js/cmblifeSDK.js"></script>
 </head>
 <body class="gary-bg">
@@ -50,15 +51,20 @@
             </li>
             <li>
                 <span>证件类型</span>
-                <c:if test="${bean.cardTyp eq 0}">
-                    <input type="text" class="linkInput" id="CardType" name="cardType" value="身份证"/>
-               </c:if>
-               <c:if test="${bean.cardTyp eq 1}">
-                    <input type="text" class="linkInput" id="CardType" name="cardType" value="护照:"/>
-                </c:if>
-                <c:if test="${bean.cardTyp eq 2}">
-                    <input type="text" class="linkInput" id="CardType" name="cardType" value="驾驶证"/>
-               </c:if>
+                <c:choose>
+                    <c:when test="${bean.cardType eq 0}">
+                        <input type="text" class="linkInput" id="CardType" name="cardType" value="身份证"/>
+                    </c:when>
+                    <c:when test="${bean.cardType eq 1}">
+                        <input type="text" class="linkInput" id="CardType" name="cardType" value="护照:"/>
+                    </c:when>
+                    <c:when test="${bean.cardType eq 2}">
+                        <input type="text" class="linkInput" id="CardType" name="cardType" value="驾驶证"/>
+                    </c:when>
+                    <c:otherwise>
+                        <input type="text" class="linkInput" id="CardType" name="cardType" value=""/>
+                    </c:otherwise>
+                </c:choose>
             </li>
             <li>
                 <span>证件号码</span>
@@ -75,7 +81,7 @@
         手机号码前加国家区号（如：加86）
     </div>
     <div id="datePlugin"></div>
-    <div class="addLinkbtns">
+    <div class="addLinkbtns" id="addLinkbtns">
         <a href="javascript:void(0);">确 定</a>
     </div>
 </div>
@@ -93,9 +99,9 @@
                 type: 'POST',
                 url: "/user/updateAddress.controller",
                 data: $("#f1").serialize(),
-                dataType: JSON,
+                dataType: "json",
                 success: function (res) {
-                    if(res.code == 1){
+                    if(res.code == 0){
                         location.href = "/user/addresslist.controller";
                     }
                 },

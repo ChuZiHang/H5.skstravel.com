@@ -75,7 +75,7 @@ public class ZhaoHangController {
             params.put("random", CmblifeUtils.genRandom());
             params.put("clientType", "h5");
             params.put("responseType", "code");
-            params.put("callback", "http://域名/h5/zhaohang/getCode.controller"); // 成功授权后的回调地址，App跳转方式不传此字段。目前支持http(s)回调和JS回调，若使用http(s)回调，则回调地址必须是申请应用时填写的主域名下的地址；
+            params.put("callback", "https://cmb-h5.skstravel.com/h5/zhaohang/getCode.controller"); // 成功授权后的回调地址，App跳转方式不传此字段。目前支持http(s)回调和JS回调，若使用http(s)回调，则回调地址必须是申请应用时填写的主域名下的地址；
             params.put("scope", "defaultScope");
             params.put("state", "1234567890");
             String sign = CmblifeUtils.sign(funcName, params, Constants.MERCHANT_PRI_KEY);
@@ -83,6 +83,7 @@ public class ZhaoHangController {
             String protocol = CmblifeUtils.genProtocol(funcName, params, Constants.MERCHANT_PRI_KEY);
             JsonObject jsonObject = new JsonObject();
             jsonObject.addProperty("str",protocol);
+            LOGGER.debug("============授权协议答应====================protocol"+protocol);
             response.getWriter().write(jsonObject.toString());
             response.getWriter().flush();
         } else{
@@ -94,7 +95,7 @@ public class ZhaoHangController {
             // 放进cookie
             CookieUtils.setCookie("memberId", skUsersZhaohang.getUserId()+"", -1, response, Constants.domain);
             // 重定向到首页
-            response.sendRedirect("域名地址/index/index.controller");
+            response.sendRedirect("https://cmb-h5.skstravel.com/index/index.controller");
         }
 
     }
@@ -151,6 +152,9 @@ public class ZhaoHangController {
      */
     @RequestMapping("/getCode")
     public void getCode(HttpServletRequest request, HttpServletResponse response) throws GeneralSecurityException, IOException {
+
+        LOGGER.debug("获取授权码======================="+request.getParameterMap().toString());
+
         String respCode = ParamUtils.getParameter(request, "respCode");
         String respMsg = ParamUtils.getParameter(request, "respMsg");
         String mid = ParamUtils.getParameter(request, "mid");
@@ -177,6 +181,9 @@ public class ZhaoHangController {
         params.put("sign", mysign);
 
         String result = httpClient.post("https://open.cmbchina.com/AccessGateway/transIn/accessToken.json", "UTF-8", params);
+
+        LOGGER.debug("获取openId===================================result"+result);
+
         JsonElement jsonElement = new JsonParser().parse(result);
         JsonObject asJsonObject = jsonElement.getAsJsonObject();
         String respCode1 = asJsonObject.get("respCode").getAsString();
@@ -207,12 +214,13 @@ public class ZhaoHangController {
             skUsersZhaohangService.insertSelective(skUsersZhaohang);
 
             CookieUtils.setCookie("memberId", i+"", -1, response, Constants.domain);
-
+            LOGGER.debug("注册用户成功直接跳转项目首页");
             // 跳转项目首页
-            response.sendRedirect("域名地址/index/index.controller");
+            response.sendRedirect("https://cmb-h5.skstravel.com/index/index.controller");
         }else{
+            LOGGER.debug("失败了,,,跳转授权页====================");
             // 跳转授权页
-            response.sendRedirect("域名地址/modules/approval.jsp");
+            response.sendRedirect("https://cmb-h5.skstravel.com/modules/index.jsp");
         }
 
     }
@@ -226,9 +234,9 @@ public class ZhaoHangController {
      */
     @RequestMapping("/payOrder")
     public void payOrder(HttpServletRequest request, HttpServletResponse response) throws GeneralSecurityException, IOException {
-
-        String orderId = ParamUtils.getParameter(request, "orderId");
-        SkOrderInfo skOrderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(orderId));
+        LOGGER.debug("拼接支付报文====================");
+//        String orderId = ParamUtils.getParameter(request, "orderId");
+//        SkOrderInfo skOrderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(orderId));
 
         String funcName = "pay";
 
@@ -239,18 +247,24 @@ public class ZhaoHangController {
         params.put("random", CmblifeUtils.genRandom());
         // params.put("merchantName", "authorizationCode"); //商户名称，App支付时必传
         // params.put("storeNo", code); // 门店号
-        params.put("billNo",orderId);
+//        params.put("billNo",orderId);
+        params.put("billNo","123456");
         // FIXME
-        params.put("productName","");
-        params.put("amount",skOrderInfo.getOrderAmount().multiply(BigDecimal.valueOf(100))+""); // 订单金额（单位为分）
+        params.put("productName","测试啊测试");
+//        params.put("amount",skOrderInfo.getOrderAmount().multiply(BigDecimal.valueOf(100))+""); // 订单金额（单位为分）
+        params.put("amount","100"); // 订单金额（单位为分）
         params.put("bonus","0"); // 订单积分，无积分则传0
         // params.put("returnUrl","0"); // 掌上生活客户端支付成功重定向页面地址，默认为掌上生活支付成功页；App支付时不需要传入
-        params.put("notifyUrl","域名/h5/zhaohang/getNotify"); // 后台通知接口地址
+        params.put("notifyUrl","https://cmb-h5.skstravel.com/h5/zhaohang/getNotify"); // 后台通知接口地址
         params.put("payPeriod",60*60*10+""); // 距离商户订单创建时间，剩余的可支付时间间隔（秒）
         String sign = CmblifeUtils.sign(funcName, params, Constants.MERCHANT_PRI_KEY);
         params.put("sign",sign);
         String protocol = CmblifeUtils.genProtocol(funcName, params, Constants.MERCHANT_PRI_KEY);
-        response.getWriter().print(protocol);
+        LOGGER.debug("拼接支付报文====================protocol:"+protocol);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("str",protocol);
+        response.getWriter().print(jsonObject.toString());
+        response.getWriter().flush();
     }
 
     /**
@@ -280,6 +294,7 @@ public class ZhaoHangController {
         LOGGER.debug("支付接收通知======================================"+map.toString());
         // 验签
         boolean flag = CmblifeUtils.verify(map, Constants.CMBLIFE_PUB_KEY);
+        LOGGER.debug("支付接收通知====================flag:"+flag);
         if(flag){
             // 解密(微信说的是铭文，所以直接gson)
             // String[] split = encryptBody.split("|");

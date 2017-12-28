@@ -7,7 +7,7 @@
 <head lang="en">
     <meta charset="UTF-8">
     <title></title>
-    <c:set var="prc" value="${pageContext.request.contextPath }"></c:set></c:set><!--
+    <c:set var="prc" value="${pageContext.request.contextPath }"></c:set><!--
     这是我设置的一个别名  ,主要是用来简化写    ${prc } 这样获取 -->
     <meta name="viewport" content="initial-scale=1.0, maximum-scale=1.0, user-scalable=0">
     <!-- 这个就 相当与 ${prc }   == ${pageContext.request.contextPath }  就是项目名称  -->
@@ -18,6 +18,7 @@
     <script src="${prc }/assets/js/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="${prc }/assets/css/n-date.css"/>
     <script src="${prc }/assets/js/n-date.js"></script>
+    <script src="${prc }/assets/js/iscroll.js"></script>
     <script type = "text/javascript" src = "${prc }/assets/js/cmblifeSDK.js"></script>
 </head>
 <body class="gary-bg">
@@ -42,7 +43,7 @@
             <div class="e-mail">电子邮件：${bean.mail}</div>
             <div class="e-mail">手机：${bean.mobile}</div>
             <div class="opt">
-                <span><i class="fa fa-edit"></i><a href="/user/tomodiy.contrpller?id=${bean.id}"></a> 编辑</span>
+                <span><i class="fa fa-edit"></i><a href="/user/tomodify.controller?id=${bean.id}" style="color: #cca152">编辑</a> </span>
                 <span id="del" data-id="${bean.id}"><i class="fa fa-trash"></i> 删除</span>
             </div>
         </div>
@@ -59,9 +60,9 @@
             type: 'POST',
             url: "/user/delbeare.controller",
             data: {'id':id},
-            dataType: JSON,
+            dataType: "json",
             success: function (res) {
-                if(res.code == 1){
+                if(res.code == 0){
                     window.location.reload();
                 }
             },

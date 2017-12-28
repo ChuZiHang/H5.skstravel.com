@@ -19,6 +19,7 @@
     <script src="${prc }/assets/js/jquery-3.2.1.min.js"></script>
     <link rel="stylesheet" href="${prc }/assets/css/n-date.css"/>
     <script src="${prc }/assets/js/n-date.js"></script>
+    <script src="${prc }/assets/js/iscroll.js"></script>
     <script type = "text/javascript" src = "${prc }/assets/js/cmblifeSDK.js"></script>
 </head>
 <body class="gary-bg">
@@ -108,44 +109,44 @@
 <script>
 
     $("#add").click(function () {
-
+        alert("999999");
         var cnCustomerName = $("input[name='cnCustomerName']").val();
         if($.trim(cnCustomerName).length == 0){
-            cmblife://web/widget/showtoast?msg=请填写客人姓名；
+//            cmblife://web/widget/showtoast?msg=请填写客人姓名；
             return;
         }
         var passportNumber = $("input[name='passportNumber']").val();
         if($.trim(passportNumber).length == 0){
-            cmblife://web/widget/showtoast?msg=请填写护照号码；
+//            cmblife://web/widget/showtoast?msg=请填写护照号码；
             return;
         }
         var expireDate = $("input[name='expireDate']").val();
         if($.trim(expireDate).length == 0){
-            cmblife://web/widget/showtoast?msg=请填写护照有效期；
+//            cmblife://web/widget/showtoast?msg=请填写护照有效期；
             return;
         }
         var cnNameStreet = $("input[name='cnNameStreet']").val();
         if($.trim(cnNameStreet).length == 0){
-            cmblife://web/widget/showtoast?msg=请填写街道门牌；
+//            cmblife://web/widget/showtoast?msg=请填写街道门牌；
                 return;
         }
         var mobile = $("input[name='mobile']").val();
         if($.trim(mobile).length == 0){
-            cmblife://web/widget/showtoast?msg=请填写手机电话；
+//            cmblife://web/widget/showtoast?msg=请填写手机电话；
             return;
         }
         var mail = $("input[name='mail']").val();
         if($.trim(mail).length == 0){
-            cmblife://web/widget/showtoast?msg=请填写电子邮件；
+//            cmblife://web/widget/showtoast?msg=请填写电子邮件；
             return;
         }
         $.ajax({
             type: 'POST',
             url: "/user/addbeare.controller",
-            data: {},
-            dataType: JSON,
+            data: $("#f1").serialize(),
+            dataType: "json",
             success: function (res) {
-                if(res.code == 1){
+                if(res.code == 0){
                     location.href= "/user/beare.controller";
                 }
             },

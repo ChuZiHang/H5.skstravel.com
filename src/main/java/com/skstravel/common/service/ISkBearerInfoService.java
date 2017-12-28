@@ -12,6 +12,8 @@ public interface ISkBearerInfoService {
 
     int insertSelective(SkBearerInfo record);
 
+    int deleteByPrimaryKey(Integer orderId);
+
     List<SkBearerInfo> selectByExampleWithBLOBs(SkBearerInfoExample example);
 
     List<SkBearerInfo> selectByExample(SkBearerInfoExample example);

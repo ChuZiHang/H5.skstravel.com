@@ -1,5 +1,6 @@
 package com.skstravel.web.controller;
 
+import com.google.gson.JsonObject;
 import com.skstravel.common.api.Constants;
 import com.skstravel.common.model.sksports2.*;
 import com.skstravel.common.service.ISkBearerInfoService;
@@ -64,8 +65,8 @@ public class userController {
      */
     @RequestMapping("/updateUser")
     public void updateUser(HttpServletRequest request,HttpServletResponse response) throws Exception {
-        String memberId = CookieUtils.getCookie(request, "memberId");
-
+//        String memberId = CookieUtils.getCookie(request, "memberId");
+        String memberId = "4129";
         String userName = ParamUtils.getParameter(request,"userName");
         int sex = ParamUtils.getIntParameter(request,"sex");
         String birthday = ParamUtils.getParameter(request,"birthday");
@@ -78,9 +79,10 @@ public class userController {
         String sql = "UPDATE sk_users u SET u.`user_name`=?,u.`sex`=?,u.`birthday`=?,u.`email`=?,u.`company_name`=?,u.`mobile_phone`=?,u.`office_phone`=?,u.`emergency_phone`=? WHERE u.`user_id` = ? ";
         int i = jdbcTemplateForSksports2.update(sql, new Object[]{userName, sex, birthday, email, companyName, mobilePhone, officePhone, emergencyPhone, memberId});
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("code",1);
-        response.getWriter().print(map);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("code",0);
+
+        response.getWriter().print(jsonObject.toString());
     }
 
     /**
@@ -92,10 +94,9 @@ public class userController {
      */
     @RequestMapping("/todetail")
     public String todetail(HttpServletRequest request,Model model) throws Exception {
-        String memberId = CookieUtils.getCookie(request, "memberId");
-
+//        String memberId = CookieUtils.getCookie(request, "memberId");
+        String memberId = "4129";
         String sql = "SELECT user_name userName,sex,birthday,email,company_name companyName,mobile_phone mobilePhone,office_phone officePhone,emergency_phone emergencyPhone,adress FROM sk_users WHERE user_id =？";
-        int i = jdbcTemplateForSksports2.update(sql, new Object[]{ memberId});
         List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{memberId});
         model.addAttribute("beanList",maps);
 
@@ -110,8 +111,8 @@ public class userController {
      */
     @RequestMapping("/addbeare")
     public void addbeare(HttpServletRequest request,HttpServletResponse response) throws Exception {
-        String memberId = CookieUtils.getCookie(request, "memberId");
-
+//        String memberId = CookieUtils.getCookie(request, "memberId");
+        String memberId = "4129";
         String cnCustomerName = ParamUtils.getParameter(request, "cnCustomerName");
         String genderAppellation = ParamUtils.getParameter(request, "genderAppellation");
         String passportNumber = ParamUtils.getParameter(request, "passportNumber");
@@ -134,7 +135,7 @@ public class userController {
         skBearerInfo.setDateBirth(dateBirth);
         skBearerInfo.setIssueDate(issueDate);
         skBearerInfo.setExpireDate(expireDate);
-        skBearerInfo.setCnCity(cnCountry);
+        skBearerInfo.setCnCountry(cnCountry);
         skBearerInfo.setCnNameStreet(cnNameStreet);
         skBearerInfo.setPostCode(postCode);
         skBearerInfo.setTelephone(telephone);
@@ -151,9 +152,10 @@ public class userController {
             skBearerInfoService.insertSelective(skBearerInfo);
         }
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("code",1);
-        response.getWriter().print(map);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("code",0);
+
+        response.getWriter().print(jsonObject.toString());
     }
 
     /**
@@ -165,7 +167,8 @@ public class userController {
      */
     @RequestMapping("/beare")
     public String beareList(HttpServletRequest request, Model model) throws Exception {
-        String memberId = CookieUtils.getCookie(request, "memberId");
+//        String memberId = CookieUtils.getCookie(request, "memberId");
+        String memberId = "4129";
 
         SkBearerInfoExample skBearerInfoExample = new SkBearerInfoExample();
         skBearerInfoExample.createCriteria().andUserIdEqualTo(Integer.parseInt(memberId));
@@ -191,6 +194,23 @@ public class userController {
     }
 
     /**
+     * 删除地址
+     */
+    @RequestMapping("/delbeare")
+    public void delbeare(HttpServletRequest request,HttpServletResponse response) throws IOException {
+        int id = ParamUtils.getIntParameter(request,"id");
+        skBearerInfoService.deleteByPrimaryKey(id);
+
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("code",0);
+
+
+        response.getWriter().print(jsonObject.toString());
+
+    }
+
+
+    /**
      * 跳转修改
      * @param request
      * @param model
@@ -214,7 +234,8 @@ public class userController {
      */
     @RequestMapping("/addresslist")
     public String addresslist(HttpServletRequest request, Model model) throws Exception {
-        String memberId = CookieUtils.getCookie(request, "memberId");
+//        String memberId = CookieUtils.getCookie(request, "memberId");
+        String memberId = "4129";
         SkUserAddressExample skUserAddressExample = new SkUserAddressExample();
         skUserAddressExample.createCriteria().andUserIdEqualTo(Integer.parseInt(memberId));
         List<SkUserAddress> skUserAddresses = skUserAddressService.selectByExample(skUserAddressExample);
@@ -237,10 +258,12 @@ public class userController {
 
         int i = skUserAddressService.deleteByPrimaryKey(addressId);
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("code",0);
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("code",0);
 
-        response.getWriter().print(map);
+
+        response.getWriter().print(jsonObject.toString());
+
     }
 
     /**
@@ -276,7 +299,10 @@ public class userController {
      */
     @RequestMapping("/updateAddress")
     public void updateAddress(HttpServletRequest request,HttpServletResponse response) throws IOException {
-        int addressId = ParamUtils.getIntParameter(request,"id");
+        //        String memberId = CookieUtils.getCookie(request, "memberId");
+        String memberId = "4129";
+
+        int addressId = ParamUtils.getIntParameter(request,"addressId");
         String email = ParamUtils.getParameter(request,"email");
         String cardType = ParamUtils.getParameter(request,"cardType");
         String cardNum = ParamUtils.getParameter(request,"cardNum");
@@ -297,7 +323,7 @@ public class userController {
         }
 
         SkUserAddress skUserAddress = new SkUserAddress();
-
+        skUserAddress.setUserId(Integer.parseInt(memberId));
         skUserAddress.setEmail(email);
         skUserAddress.setCardNum(cardNum);
         skUserAddress.setMobile(mobile);
@@ -306,14 +332,14 @@ public class userController {
 
         if(addressId > 0){
             skUserAddress.setAddressId(addressId);
-            skUserAddressService.updateByPrimaryKey(skUserAddress);
+            skUserAddressService.updateByPrimaryKeySelective(skUserAddress);
         }else{
             skUserAddressService.insertSelective(skUserAddress);
         }
+        JsonObject jsonObject = new JsonObject();
+        jsonObject.addProperty("code",0);
 
-        Map<String,Object> map = new HashMap<>();
-        map.put("code",0);
 
-        response.getWriter().print(map);
+        response.getWriter().print(jsonObject.toString());
     }
 }
