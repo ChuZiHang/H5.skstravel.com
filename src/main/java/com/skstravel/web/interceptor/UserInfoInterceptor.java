@@ -68,6 +68,7 @@ public class UserInfoInterceptor implements HandlerInterceptor {
 				return false;
 			}
 		}
+		//拦截直接访问订单页面的数据
 		return true;
 	}
 

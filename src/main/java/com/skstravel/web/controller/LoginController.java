@@ -87,12 +87,11 @@ public class LoginController {
      * @throws Exception
      */
     @RequestMapping("/register")
-    public String register(HttpServletRequest request,HttpServletResponse response,Model model) throws Exception {
+    public void register(HttpServletRequest request,HttpServletResponse response,Model model) throws Exception {
        String mobilePhone = request.getParameter("mobilePhone");
        String password =MD5Utils.md5(request.getParameter("password")) ;
        String validateCode = request.getParameter("checkValidateCode");
        String mobileValidateCode = request.getParameter("mobileValidateCode");
-       String flag="center";
        if(StringUtils.isNoneBlank(validateCode)&&StringUtils.isNotBlank(mobileValidateCode)){
     	   Integer MobileCode1 = (Integer) request.getSession().getAttribute("MobileCode");
     	  String MobileCode = String.valueOf(MobileCode1);
@@ -102,16 +101,18 @@ public class LoginController {
     		   try {
 				userService.register(mobilePhone,password);
 				request.setAttribute("userName", mobilePhone);
-				 
+			 request.getRequestDispatcher("/modules/center.jsp").forward(request, response);
 			} catch (Exception e) {
-				flag="error";
 				e.printStackTrace();
-				
+				 request.getRequestDispatcher("/modules/error.jsp").forward(request, response);
 			}
     	   }
+       }else {
+    	   request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
+    	   
        }
        
-       return flag;
+      
        
     }
     
