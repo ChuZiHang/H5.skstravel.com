@@ -28,16 +28,17 @@
     <img src="${prc }/assets/images/logo.png" alt="" width="80"/>
 </header>
 
-<form action="${prc }/login/login"  method="post"   >
+<form action="${prc }/login/login"  method="post"  id="loginForm"  >
 <div class="loginWrap">
     <div class="loginLogo"><img src="${prc }/assets/images/logo01.png" alt=""/></div>
     <div class="loginList">
+    			<div>${msg }</div>
         <div class="loginInputWrap">
             <input type="text"  name="mobilePhone"   placeholder="在这里输入手机号"/>
         </div>
     </div>
     <div class="loginList">
-        <div class="loginInputWrap"><input type="text"  name="password"   placeholder="请输入密码"/></div>
+        <div class="loginInputWrap"><input type="password"  name="password"   placeholder="请输入密码"/></div>
     </div>
     <div class="min-login-a">
         <a href="setPassword.html" class="forget">忘记密码</a>
@@ -45,9 +46,18 @@
     </div>
 </div>
 <div class="addLinkbtns">
-    <%-- <a href="${prc }/login/login">登 录</a> --%>
-   <button type="submit" value="登录"></button>
+    <a  href="javascript:subm()"       >登 录</a> 
+   <!-- <button type="submit" value="登录" class="login">登录</button> -->
 </div>
+<script type="text/javascript">
+	function subm(){
+		//alert("aaa");
+		$("#loginForm").submit();
+	}
+	
+
+
+</script>
 <div class="min-login-a">
     <!--<a></a>-->
     <input type="checkbox" name="remember">自动登录

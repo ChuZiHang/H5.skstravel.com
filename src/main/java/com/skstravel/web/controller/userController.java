@@ -58,6 +58,8 @@ public class userController {
         List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{memberId});
         String userName = (String)maps.get(0).get("userName");
         model.addAttribute("userName",userName);
+        
+        
         return "center";
     }
 

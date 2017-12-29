@@ -56,19 +56,29 @@ public class LoginController {
        String phone = request.getParameter("mobilePhone");
        String password =MD5Utils.md5(request.getParameter("password"));   
        
-       
+       String flag="login";
     	//String memberId = "4129";
        // CookieUtils.setCookie("memberId", memberId+"", -1, response, Constants.domain);
+       if(StringUtils.isBlank(password)||StringUtils.isBlank(phone)) {
+    	   return flag;
+       }
         String sql = "SELECT user_name userName FROM sk_users WHERE mobile_phone = ? and password =?  ";
        // List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{memberId});
         List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql,phone,password);
         String userName=null;
         if(list.size()>0){
+        	flag="center";
          userName=(String) list.get(0).get("userName");
+         request.setAttribute("userName", userName);
+         return flag;
+        }else {
+        	String msg="<font color='red'>用户名或者密码错误，请重新输入！！</font>";
+        	 request.setAttribute("msg", msg);
+        	return flag;
         }
        
-       request.setAttribute("userName", userName);
-        return "center";
+       
+       
     }
     
     @RequestMapping("/loginOut")
@@ -106,6 +116,8 @@ public class LoginController {
 				e.printStackTrace();
 				 request.getRequestDispatcher("/modules/error.jsp").forward(request, response);
 			}
+    	   }else {
+    		   request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
     	   }
        }else {
     	   request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
