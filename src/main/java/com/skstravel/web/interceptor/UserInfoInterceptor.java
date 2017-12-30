@@ -10,6 +10,9 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
+import com.skstravel.common.model.sksports2.SkUsers;
+import com.skstravel.common.model.sksports2.SkUsersExample;
+import com.skstravel.common.model.sksports2.SkUsersExample.Criteria;
 import com.skstravel.common.model.sksports2.SkUsersZhaohang;
 import com.skstravel.common.model.sksports2.SkUsersZhaohangExample;
 import com.skstravel.common.service.SkUsersService;
@@ -47,17 +50,25 @@ public class UserInfoInterceptor implements HandlerInterceptor {
 		}
 		if(request.getRequestURI().indexOf("/user")>0){
 			if(CookieUtils.getCookie(request, "memberId") !=null){
+				
 				String value = CookieUtils.getCookie(request, "memberId");
-				 SkUsersZhaohangExample skUsersZhaohangExample = new SkUsersZhaohangExample();
+				
+				//判断招行用户条件
+				SkUsersZhaohangExample skUsersZhaohangExample = new SkUsersZhaohangExample();
 		         skUsersZhaohangExample.createCriteria().andOpenIdEqualTo(value);
 				 List<SkUsersZhaohang> skUsersZhaohangs = skUsersZhaohangService.selectByExample(skUsersZhaohangExample);
-		        
+				 //判断本站用户条件
+				SkUsersExample skUsersExample=new SkUsersExample();
+				Criteria criteria= skUsersExample.createCriteria().andUserNameEqualTo(value);
+				List<SkUsers> list = skUsersService.selectByExample(skUsersExample);
 				 SkUsersZhaohang skUsersZhaohang=null;
-				 if(skUsersZhaohangs.size()>0){
+				 SkUsers skUsers=null;
+				 if(skUsersZhaohangs.size()>0||list.size()>0){
 					 skUsersZhaohang = skUsersZhaohangs.get(0);
+					 skUsers = list.get(0);
 				 }
 				 
-				if(skUsersZhaohang!=null){
+				if(skUsersZhaohang!=null||skUsers!=null){
 					return true;
 				}else{
 					request.getRequestDispatcher("/modules/login.jsp").forward(request, response);

@@ -9,6 +9,7 @@ import java.util.Map;
 import java.util.Random;
 
 import javax.imageio.ImageIO;
+import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -70,6 +71,16 @@ public class LoginController {
         	flag="center";
          userName=(String) list.get(0).get("userName");
          request.setAttribute("userName", userName);
+      // CookieUtils.setCookie("memberId", userName, 3600, response, Constants.domain);
+       
+      
+        Cookie cookie = new Cookie("memberId", userName);
+         cookie.setPath("/");
+         cookie.setMaxAge(3600);
+         response.addCookie(cookie);
+         String cookie1 = CookieUtils.getCookie(request, "memberId");
+         System.out.println(cookie1);
+         
          return flag;
         }else {
         	String msg="<font color='red'>用户名或者密码错误，请重新输入！！</font>";
