@@ -20,7 +20,6 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.skstravel.common.api.Constants;
 import com.skstravel.common.service.ISkBearerInfoService;
 import com.skstravel.common.service.ISkUserAddressService;
 import com.skstravel.common.utils.CookieUtils;

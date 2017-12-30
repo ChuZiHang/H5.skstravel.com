@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.skstravel.common.mapper.sksports2.SkBearerInfoMapper;
 import com.skstravel.common.model.sksports2.SkBearerInfo;
 import com.skstravel.common.model.sksports2.SkBearerInfoExample;
-import com.skstravel.common.model.sksports2.SkHotel;
 import com.skstravel.common.service.ISkBearerInfoService;
 @Service
 public class SkBearerInfoServiceImpl implements ISkBearerInfoService {
