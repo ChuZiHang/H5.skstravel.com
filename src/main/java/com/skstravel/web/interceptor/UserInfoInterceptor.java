@@ -5,6 +5,7 @@ import java.util.List;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
@@ -63,8 +64,11 @@ public class UserInfoInterceptor implements HandlerInterceptor {
 				List<SkUsers> list = skUsersService.selectByExample(skUsersExample);
 				 SkUsersZhaohang skUsersZhaohang=null;
 				 SkUsers skUsers=null;
-				 if(skUsersZhaohangs.size()>0||list.size()>0){
-					 skUsersZhaohang = skUsersZhaohangs.get(0);
+				 if(skUsersZhaohangs.size()>0){
+						 skUsersZhaohang = skUsersZhaohangs.get(0);
+				 }
+				 
+				 if(list.size()>0) {
 					 skUsers = list.get(0);
 				 }
 				 
