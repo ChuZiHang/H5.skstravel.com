@@ -42,7 +42,7 @@
         <span class="orderPriceColor">¥<em>${goods.shopPrice }</em></span>
         <div class="orderPriceOpera">
             <em id="sPlus" class="plusBig sum floatLeft aligncenter"><i class="fa fa-plus"></i></em>
-            <span id="totalNum" class="aligncenter sumNum floatLeft">1</span>
+            <span id="totalNum" class="aligncenter sumNum floatLeft">0</span>
             <em id="sMinus" class="plusSml sum floatLeft aligncenter"><i class="fa fa-minus"></i></em>
         </div>
     </div>
@@ -83,7 +83,7 @@
                     <span>¥<em id="jnpPrice">128</em></span>
                     <div class="soucenirNum">
                         <em class="soPlus soBtns"><i class="fa fa-plus" id="jnpa"></i></em>
-                        <em class="soNum jinianpin" id="jinianpin">1</em>
+                        <em class="soNum jinianpin" id="jinianpin">0</em>
                         <em class="soMinus soBtns"><i class="fa fa-minus" id="jnpj"></i></em>
                     </div>
                 </div>
@@ -149,7 +149,7 @@
                             <span>数量</span>
                             <div class="soucenirNum ticketNum">
                                 <em class="soPlus soBtns"><i class="fa fa-plus" id="jipiaoa"></i></em>
-                                <em class="soNum" id="jipiaov">1</em>
+                                <em class="soNum" id="jipiaov">0</em>
                                 <em class="soMinus soBtns"><i class="fa fa-minus" id="jipiaoj"></i></em>
                             </div>
                         </li>
@@ -186,7 +186,7 @@
     </div>
 </div>
 <div class="orderBtns">
-    <span class="orderTatalPrice"></span>
+    <span class="orderTatalPrice">0</span>
     <span class="orderTatalBtns"><a href="#">提交订单</a></span>
 </div>
 <script>
