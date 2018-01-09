@@ -28,28 +28,28 @@
             <span></span>
             <span></span>
         </div>
-        <img src="/assets/images/logo.png" alt="" width="80"/>
+        <img src="${prc }/assets/images/logo01.png" alt="" width="80"/>
         <div class="center">
-            <a href="/user/center.controller"><img src="/assets/images/my.png " alt=""/></a>
+            <a href="${prc }/user/center.controller"><img src="${prc }/assets/images/my.png " alt=""/></a>
         </div>
     </header>
     <div class="user">
         <div class="userHeadImg">
-            <img src="/assets/images/userhead.png" alt=""/>
+            <img src="${prc }/assets/images/touxiang.jpg" alt=""/>
         </div>
         欢迎：用户${userName}
     </div>
     <div class="myWrap">
         <ul>
-            <li><a href="/orderinfo/myorder.controller"><span><img src="/assets/images/order04.png" alt=""/></span>我的订单</a></li>
-            <li><a href="/user/addresslist.controller"><span><img src="/assets/images/order05.png" alt=""/></span>联系地址管理</a></li>
-            <li><a href="voucher.html"><span><img src="/assets/images/order06.png" alt=""/></span>付款凭证</a></li>
-            <li><a href="/user/beare.controller"><span><img src="/assets/images/order07.png" alt=""/></span>持票人信息</a></li>
+            <li><a href="${prc }/orderinfo/myorder"><span><img src="${prc }/assets/images/order04.png" alt=""/></span>我的订单</a></li>
+            <li><a href="${prc }/user/addresslist.controller"><span><img src="${prc }/assets/images/order05.png" alt=""/></span>联系地址管理</a></li>
+            <%--<li><a href="voucher.html"><span><img src="${prc }/assets/images/order06.png" alt=""/></span>付款凭证</a></li>--%>
+            <li><a href="${prc }/user/beare.controller"><span><img src="${prc }/assets/images/order07.png" alt=""/></span>持票人信息</a></li>
         </ul>
     </div>
     <div class="myWrap">
         <ul>
-            <li><a href="/user/todetail.controller"><span><img src="/assets/images/order08.png" alt=""/></span>个人资料</a></li>
+            <li><a href="${prc }/user/todetail.controller"><span><img src="${prc }/assets/images/order08.png" alt=""/></span>个人资料</a></li>
             <%--<li><a href="password.html"><span><img src="/assets/images/order09.png" alt=""/></span>修改密码</a></li>--%>
         </ul>
     </div>

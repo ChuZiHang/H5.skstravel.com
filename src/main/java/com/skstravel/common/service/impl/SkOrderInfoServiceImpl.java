@@ -14,8 +14,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
 
 import com.google.gson.JsonObject;
-import com.mysql.jdbc.StringUtils;
-import com.skstravel.common.mapper.sksports2.MatcheMapper;
 import com.skstravel.common.mapper.sksports2.SkOrderGoodsMapper;
 import com.skstravel.common.mapper.sksports2.SkOrderInfoMapper;
 import com.skstravel.common.mapper.sksports2.SkOrderPlaneMapper;
@@ -23,11 +21,8 @@ import com.skstravel.common.model.sksports2.SkOrderGoods;
 import com.skstravel.common.model.sksports2.SkOrderInfo;
 import com.skstravel.common.model.sksports2.SkOrderInfoExample;
 import com.skstravel.common.model.sksports2.SkOrderPlane;
-import com.skstravel.common.model.sksports2.SkUserAddress;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.utils.CookieUtils;
-import com.skstravel.pojo.MatcheInfo;
-import com.skstravel.service.MatcheService;
 @Service
 public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
     

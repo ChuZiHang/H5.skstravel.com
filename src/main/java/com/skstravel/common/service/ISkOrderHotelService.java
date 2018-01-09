@@ -2,7 +2,6 @@ package com.skstravel.common.service;
 
 import java.util.List;
 
-import com.skstravel.common.model.sksports2.SkOrderCombo;
 import com.skstravel.common.model.sksports2.SkOrderHotel;
 import com.skstravel.common.model.sksports2.SkOrderHotelExample;
 

@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.skstravel.common.model.sksports2.SkBearerInfo;
 import com.skstravel.common.model.sksports2.SkBearerInfoExample;
-import com.skstravel.common.model.sksports2.SkHotel;
 
 public interface ISkBearerInfoService {
     

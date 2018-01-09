@@ -1,19 +1,14 @@
 package com.skstravel.web.controller;
 
-import org.apache.ibatis.annotations.Param;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.jdbc.core.ResultSetExtractor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 
-import com.alibaba.fastjson.JSONObject;
-import com.google.gson.Gson;
 import com.google.gson.JsonElement;
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
@@ -47,19 +42,13 @@ import com.skstravel.common.service.ISkOrderComboService;
 import com.skstravel.common.service.ISkOrderHotelService;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.service.ISkUserAddressService;
-import com.skstravel.common.utils.CookieUtils;
 import com.skstravel.common.utils.ParamUtils;
-import com.skstravel.pojo.MatcheInfo;
-import com.skstravel.service.MatcheService;
-
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.List;
 import java.util.Map;
 
-import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 

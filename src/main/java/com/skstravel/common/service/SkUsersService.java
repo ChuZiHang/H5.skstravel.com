@@ -2,8 +2,6 @@ package com.skstravel.common.service;
 
 import com.skstravel.common.model.sksports2.SkUsers;
 import com.skstravel.common.model.sksports2.SkUsersExample;
-import org.apache.ibatis.annotations.Param;
-
 import java.util.List;
 
 /**

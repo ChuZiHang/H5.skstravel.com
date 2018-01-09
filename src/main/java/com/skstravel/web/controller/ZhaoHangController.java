@@ -3,12 +3,9 @@ package com.skstravel.web.controller;
 import com.cmbchina.ccd.cmblife.sdk.CmblifeUtils;
 import com.google.gson.*;
 import com.skstravel.common.api.Constants;
-import com.skstravel.common.api.ZHClient;
 import com.skstravel.common.httpclient.HttpClient;
-import com.skstravel.common.model.sksports2.SkOrderInfo;
-import com.skstravel.common.model.sksports2.SkUsers;
-import com.skstravel.common.model.sksports2.SkUsersZhaohang;
-import com.skstravel.common.model.sksports2.SkUsersZhaohangExample;
+import com.skstravel.common.mapper.sksports2.SkOrderComboMapper;
+import com.skstravel.common.model.sksports2.*;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.service.SkUsersService;
 import com.skstravel.common.service.SkUsersZhaohangService;
@@ -26,7 +23,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.GeneralSecurityException;
-import java.security.interfaces.RSAKey;
 import java.util.*;
 
 
@@ -53,15 +49,19 @@ public class ZhaoHangController {
     @Autowired
     private SkUsersService skUsersService;
 
+    @Autowired
+    private SkOrderComboMapper skOrderComboMapper;
+
     /**
      * 获取授权登陆协议
+     *
      * @param request
      * @param response
      * @throws GeneralSecurityException
      * @throws IOException
      */
     @RequestMapping("/approval")
-    public void approval(HttpServletRequest request,HttpServletResponse response) throws GeneralSecurityException, IOException {
+    public void approval(HttpServletRequest request, HttpServletResponse response) throws GeneralSecurityException, IOException {
         LOGGER.debug("请求授权协议生成，如果存在openID，直接跳转项目首页");
         String openId = ParamUtils.getParameter(request, "open_id");
         LOGGER.debug("openId================================" + openId);
@@ -82,18 +82,18 @@ public class ZhaoHangController {
             params.put("sign", sign);
             String protocol = CmblifeUtils.genProtocol(funcName, params, Constants.MERCHANT_PRI_KEY);
             JsonObject jsonObject = new JsonObject();
-            jsonObject.addProperty("str",protocol);
-            LOGGER.debug("============授权协议答应====================protocol"+protocol);
+            jsonObject.addProperty("str", protocol);
+            LOGGER.debug("============授权协议答应====================protocol" + protocol);
             response.getWriter().write(jsonObject.toString());
             response.getWriter().flush();
-        } else{
+        } else {
             LOGGER.debug("============已经授权====================");
             SkUsersZhaohangExample skUsersZhaohangExample = new SkUsersZhaohangExample();
             skUsersZhaohangExample.createCriteria().andOpenIdEqualTo(openId);
             List<SkUsersZhaohang> skUsersZhaohangs = skUsersZhaohangService.selectByExample(skUsersZhaohangExample);
             SkUsersZhaohang skUsersZhaohang = skUsersZhaohangs.get(0);
             // 放进cookie
-            CookieUtils.setCookie("memberId", skUsersZhaohang.getUserId()+"", -1, response, Constants.domain);
+            CookieUtils.setCookie("memberId", skUsersZhaohang.getUserId() + "", -1, response, Constants.domain);
             // 重定向到首页
             response.sendRedirect("https://cmb-h5.skstravel.com/index/index.controller");
         }
@@ -102,6 +102,7 @@ public class ZhaoHangController {
 
     /**
      * 首页
+     *
      * @param request
      * @param response
      * @throws IOException
@@ -131,14 +132,14 @@ public class ZhaoHangController {
 
 //            String result = httpClient.post("https://open.cmbchina.com/AccessGateway/transIn/approval.json/", "UTF-8", params);
             LOGGER.debug("============招行获取授权====================");
-            response.sendRedirect(Constants.URL+protocol);
-        }else{ // 已授权直接登录
+            response.sendRedirect(Constants.URL + protocol);
+        } else { // 已授权直接登录
 
             LOGGER.debug("============已经授权====================");
             // 直接查自己的用户表
             long memberId = 0L;
             // 放进cookie
-            CookieUtils.setCookie("memberId", memberId+"", -1, response, "域名");
+            CookieUtils.setCookie("memberId", memberId + "", -1, response, "域名");
             // 重定向到首页
             response.sendRedirect("https://域名/app/home/index");
         }
@@ -146,6 +147,7 @@ public class ZhaoHangController {
 
     /**
      * 获取授权码
+     *
      * @param request
      * @param response
      * @throws GeneralSecurityException
@@ -153,7 +155,7 @@ public class ZhaoHangController {
     @RequestMapping("/getCode")
     public void getCode(HttpServletRequest request, HttpServletResponse response) throws GeneralSecurityException, IOException {
 
-        LOGGER.debug("获取授权码======================="+request.getParameterMap().toString());
+        LOGGER.debug("获取授权码=======================" + request.getParameterMap().toString());
 
         String respCode = ParamUtils.getParameter(request, "respCode");
         String respMsg = ParamUtils.getParameter(request, "respMsg");
@@ -182,12 +184,12 @@ public class ZhaoHangController {
 
         String result = httpClient.post("https://open.cmbchina.com/AccessGateway/transIn/accessToken.json", "UTF-8", params);
 
-        LOGGER.debug("获取openId===================================result"+result);
+        LOGGER.debug("获取openId===================================result" + result);
 
         JsonElement jsonElement = new JsonParser().parse(result);
         JsonObject asJsonObject = jsonElement.getAsJsonObject();
         String respCode1 = asJsonObject.get("respCode").getAsString();
-        if(respCode.equals("1000")){
+        if (respCode.equals("1000")) {
             String acccessToken = asJsonObject.get("acccessToken").getAsString();
             String openId = asJsonObject.get("openId").getAsString();
             String expiresIn = asJsonObject.get("expiresIn").getAsString();
@@ -195,7 +197,7 @@ public class ZhaoHangController {
             Date now = new Date();
             Calendar calendar = Calendar.getInstance();
             calendar.setTime(now);
-            calendar.add(Calendar.MILLISECOND,Integer.parseInt(expiresIn));
+            calendar.add(Calendar.MILLISECOND, Integer.parseInt(expiresIn));
 
             // 确定一下第一次需要填充的字段
             SkUsers skUsers = new SkUsers();
@@ -213,11 +215,11 @@ public class ZhaoHangController {
             skUsersZhaohang.setExpiresIn(calendar.getTime());
             skUsersZhaohangService.insertSelective(skUsersZhaohang);
 
-            CookieUtils.setCookie("memberId", i+"", -1, response, Constants.domain);
+            CookieUtils.setCookie("memberId", i + "", -1, response, Constants.domain);
             LOGGER.debug("注册用户成功直接跳转项目首页");
             // 跳转项目首页
             response.sendRedirect("https://cmb-h5.skstravel.com/index/index.controller");
-        }else{
+        } else {
             LOGGER.debug("失败了,,,跳转授权页====================");
             // 跳转授权页
             response.sendRedirect("https://cmb-h5.skstravel.com/modules/index.jsp");
@@ -227,6 +229,7 @@ public class ZhaoHangController {
 
     /**
      * 拼接支付报文
+     *
      * @param request
      * @param response
      * @throws GeneralSecurityException
@@ -235,8 +238,15 @@ public class ZhaoHangController {
     @RequestMapping("/payOrder")
     public void payOrder(HttpServletRequest request, HttpServletResponse response) throws GeneralSecurityException, IOException {
         LOGGER.debug("拼接支付报文====================");
-//        String orderId = ParamUtils.getParameter(request, "orderId");
-//        SkOrderInfo skOrderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(orderId));
+        String orderId = ParamUtils.getParameter(request, "entityId");
+        SkOrderInfo orderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(orderId));
+        SkOrderComboExample skOrderComboExample = new SkOrderComboExample();
+        skOrderComboExample.createCriteria().andOrderIdEqualTo(Integer.parseInt(orderId));
+        List<SkOrderCombo> skOrderCombos = skOrderComboMapper.selectByExample(skOrderComboExample);
+        String productName = "";
+        if(skOrderCombos != null && skOrderCombos.size() > 0){
+            productName = skOrderCombos.get(0).getGoodsName();
+        }
 
         String funcName = "pay";
 
@@ -248,27 +258,26 @@ public class ZhaoHangController {
         // params.put("merchantName", "authorizationCode"); //商户名称，App支付时必传
         // params.put("storeNo", code); // 门店号
 //        params.put("billNo",orderId);
-        params.put("billNo","123456");
+        params.put("billNo", orderId);
         // FIXME
-        params.put("productName","测试啊测试");
-//        params.put("amount",skOrderInfo.getOrderAmount().multiply(BigDecimal.valueOf(100))+""); // 订单金额（单位为分）
-        params.put("amount","100"); // 订单金额（单位为分）
-        params.put("bonus","0"); // 订单积分，无积分则传0
-        // params.put("returnUrl","0"); // 掌上生活客户端支付成功重定向页面地址，默认为掌上生活支付成功页；App支付时不需要传入
-        params.put("notifyUrl","https://cmb-h5.skstravel.com/h5/zhaohang/getNotify"); // 后台通知接口地址
-        params.put("payPeriod",60*60*10+""); // 距离商户订单创建时间，剩余的可支付时间间隔（秒）
-        String sign = CmblifeUtils.sign(funcName, params, Constants.MERCHANT_PRI_KEY);
-        params.put("sign",sign);
+        params.put("productName", productName);
+        params.put("amount", orderInfo.getOrderAmount().multiply(BigDecimal.valueOf(100)) + ""); // 订单金额（单位为分）
+//        params.put("amount","100"); // 订单金额（单位为分）
+        params.put("bonus", "0"); // 订单积分，无积分则传0
+        params.put("returnUrl", "https://cmb-h5.skstravel.com/orderinfo/myorder"); // 掌上生活客户端支付成功重定向页面地址，默认为掌上生活支付成功页；App支付时不需要传入
+        params.put("notifyUrl", "https://cmb-h5.skstravel.com/h5/zhaohang/getNotify"); // 后台通知接口地址
+        params.put("payPeriod", 60 * 60 * 10 + ""); // 距离商户订单创建时间，剩余的可支付时间间隔（秒）
         String protocol = CmblifeUtils.genProtocol(funcName, params, Constants.MERCHANT_PRI_KEY);
-        LOGGER.debug("拼接支付报文====================protocol:"+protocol);
+        LOGGER.debug("拼接支付报文====================protocol:" + protocol);
         JsonObject jsonObject = new JsonObject();
-        jsonObject.addProperty("str",protocol);
+        jsonObject.addProperty("str", protocol);
         response.getWriter().print(jsonObject.toString());
         response.getWriter().flush();
     }
 
     /**
      * 接收支付通知
+     *
      * @param request
      * @param response
      * @throws GeneralSecurityException
@@ -285,17 +294,17 @@ public class ZhaoHangController {
         String encryptBody = ParamUtils.getParameter(request, "encryptBody");
         String sign = ParamUtils.getParameter(request, "sign");
 
-        Map<String,String> map = new HashMap<>();
-        map.put("mid",mid);
-        map.put("aid",aid);
-        map.put("date",date);
-        map.put("encryptBody",encryptBody);
-        map.put("sign",sign);
-        LOGGER.debug("支付接收通知======================================"+map.toString());
+        Map<String, String> map = new HashMap<>();
+        map.put("mid", mid);
+        map.put("aid", aid);
+        map.put("date", date);
+        map.put("encryptBody", encryptBody);
+        map.put("sign", sign);
+        LOGGER.debug("支付接收通知======================================" + map.toString());
         // 验签
         boolean flag = CmblifeUtils.verify(map, Constants.CMBLIFE_PUB_KEY);
-        LOGGER.debug("支付接收通知====================flag:"+flag);
-        if(flag){
+        LOGGER.debug("支付接收通知====================flag:" + flag);
+        if (flag) {
             // 解密(微信说的是铭文，所以直接gson)
             // String[] split = encryptBody.split("|");
             JsonElement parse = new JsonParser().parse(encryptBody);
@@ -317,16 +326,16 @@ public class ZhaoHangController {
             SkOrderInfo skOrderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(billNo));
             // 订单状态 0 未确认 1 已确认 2 已取消 3 无效 4 退货 5 已分单  6 部分分单
             // 支付状态 0 未付款 1 付款中 2 已付款
-            String sql = "UPDATE sk_order_info SET STATUS = ? WHERE order_id = "+ billNo;
+            String sql = "UPDATE sk_order_info SET STATUS = ? WHERE order_id = " + billNo;
             Object[] objects = {};
-            switch (result){
+            switch (result) {
                 case "2":
-                    jdbcTemplateForSksports2.update(sql,new Object[]{2});
+                    jdbcTemplateForSksports2.update(sql, new Object[]{2});
                     break;
-                case  "3":
+                case "3":
                     break;
                 case "200":
-                    jdbcTemplateForSksports2.update(sql,new Object[]{2});
+                    jdbcTemplateForSksports2.update(sql, new Object[]{2});
                     break;
                 case "300":
                     break;
@@ -334,11 +343,11 @@ public class ZhaoHangController {
 
             params.put("respCode", "1000"); // 应答码，若处理成功则为1000，若失败为1001
 
-        }else{
+        } else {
             params.put("respCode", "1001"); // 应答码，若处理成功则为1000，若失败为1001
         }
         String respSign = CmblifeUtils.sign(params, Constants.MERCHANT_PRI_KEY);
-        params.put("sign",respSign);
+        params.put("sign", respSign);
         response.getWriter().print(gson.toJson(params));
     }
 }

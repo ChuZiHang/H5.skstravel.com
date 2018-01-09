@@ -29,7 +29,7 @@
         </div>
         <img src="${prc }/assets/images/logo.png" alt="" width="80"/>
         <div class="center">
-            <a href="center.html"><img src="${prc }/assets/images/my.png " alt=""/></a>
+            <a href="${prc }/user/center"><img src="${prc }/assets/images/my.png " alt=""/></a>
         </div>
     </header>
     <div class="top-wrap">

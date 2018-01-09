@@ -6,9 +6,9 @@
             <span></span>
             <span></span>
         </div>
-        <img src="/assets/images/logo.png" alt="" width="80"/>
+        <img src="${prc }/assets/images/logo01.png" alt="" width="80"/>
         <div class="center">
-            <img src="/assets/images/my.png " alt=""/>
+            <img src="${prc }/assets/images/my.png " alt=""/>
         </div>
     </header>
     <script>

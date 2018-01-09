@@ -4,7 +4,6 @@ import java.util.List;
 
 import com.skstravel.common.model.sksports2.SkHotel;
 import com.skstravel.common.model.sksports2.SkHotelExample;
-import com.skstravel.common.model.sksports2.SkOrderHotel;
 
 public interface ISkHotelService {
     

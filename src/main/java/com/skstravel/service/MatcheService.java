@@ -3,8 +3,6 @@ package com.skstravel.service;
 import java.util.List;
 import java.util.Map;
 
-import com.skstravel.pojo.MatcheInfo;
-
 public interface MatcheService {
 
 	List<Map<String, Object>>  findMatchListForIndex();

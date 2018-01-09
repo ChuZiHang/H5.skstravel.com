@@ -4,12 +4,9 @@ import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
-import org.apache.ibatis.annotations.Param;
-
 import com.google.gson.JsonObject;
 import com.skstravel.common.model.sksports2.SkOrderInfo;
 import com.skstravel.common.model.sksports2.SkOrderInfoExample;
-import com.skstravel.pojo.MatcheInfo;
 
 public interface ISkOrderInfoService {
     

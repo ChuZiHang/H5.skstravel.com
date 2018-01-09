@@ -2,7 +2,6 @@ package com.skstravel.common.service;
 
 import java.util.List;
 
-import com.skstravel.common.model.sksports2.SkHotel;
 import com.skstravel.common.model.sksports2.SkUserAddress;
 import com.skstravel.common.model.sksports2.SkUserAddressExample;
 

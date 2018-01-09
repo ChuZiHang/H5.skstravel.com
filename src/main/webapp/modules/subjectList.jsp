@@ -27,13 +27,13 @@
         
         <img src="${prc }/assets/images/logo.png" alt="" width="80"/>
         <div class="center">
-            <a href="/user/center.controller"><img src="${prc }/assets/images/my.png " alt=""/></a>
+            <a href="${prc}/user/center.controller"><img src="${prc }/assets/images/my.png " alt=""/></a>
         </div>
         
     </header>
     <script type="text/javascript">
     		$(".aaa").click(function(){
-    			alert("aaa");
+    			window.location.href="${prc}/index/index";
     		});
     
     
@@ -134,9 +134,9 @@
 
 
 </div>
-<div class="orderBtns">
+<!-- <div class="orderBtns">
     <span class="orderTatalPrice">¥45，0000</span>
     <span class="orderTatalBtns"><a href="order.html">提交订单</a></span>
-</div>
+</div> -->
 </body>
 </html>

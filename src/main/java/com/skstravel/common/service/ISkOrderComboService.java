@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.skstravel.common.model.sksports2.SkOrderCombo;
 import com.skstravel.common.model.sksports2.SkOrderComboExample;
-import com.skstravel.common.model.sksports2.SkOrderInfo;
 
 public interface ISkOrderComboService {
     

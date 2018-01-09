@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import com.skstravel.common.mapper.sksports2.SkHotelMapper;
 import com.skstravel.common.model.sksports2.SkHotel;
 import com.skstravel.common.model.sksports2.SkHotelExample;
-import com.skstravel.common.model.sksports2.SkOrderHotel;
 import com.skstravel.common.service.ISkHotelService;
 @Service
 public class SkHotelServiceImpl implements ISkHotelService {

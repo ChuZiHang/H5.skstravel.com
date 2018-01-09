@@ -17,6 +17,14 @@
         <context:include-filter type="annotation" expression="org.springframework.stereotype.Controller"/>
     </context:component-scan>
     <mvc:annotation-driven/>
+    
+      <!--拦截器  -->
+    <mvc:interceptors>
+    	<mvc:interceptor>
+    		<mvc:mapping path="/**/**"/>
+    		<bean class="com.skstravel.web.interceptor.UserInfoInterceptor"></bean>
+    	</mvc:interceptor>	
+    </mvc:interceptors>
 
 
     <!-- 视图解释器 -->
@@ -25,6 +33,8 @@
         <property name="prefix" value="/modules/"/>
         <property name="suffix" value=".jsp"/>
     </bean>
+
+
 
 
 

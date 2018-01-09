@@ -15,7 +15,7 @@
 </head>
 <body class="gary-bg">
 <div class="wrapper bot60">
-    <%@ include file="/modules/header.jsp"%>
+    <%@ include file="/modules/header.jsp"%> 
     <div class="order-top">
         <div class="order-top-txt">
             <div class="order-name">${goods.goodsName }</div>
