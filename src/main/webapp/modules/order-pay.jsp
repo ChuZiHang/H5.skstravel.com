@@ -93,7 +93,7 @@
                     <li><span class="addItem">证件类型：</span><input type="text" name="type" id="type"></li>
                     <li><span class="addItem">证件号码：</span><input type="text" name="typeCode" id="typeCode"></li>
                 </ul>
-                <div class="addContact"><a href="#"> 保存联系人信息</a></div>
+                <!-- <div class="addContact"><a href="#"> 保存联系人信息</a></div> -->
             </div>
         </div>
         <div class="orderProductItem">
