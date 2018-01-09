@@ -43,7 +43,7 @@
         <ul>
             <li><a href="${prc }/orderinfo/myorder"><span><img src="${prc }/assets/images/order04.png" alt=""/></span>我的订单</a></li>
             <li><a href="${prc }/user/addresslist.controller"><span><img src="${prc }/assets/images/order05.png" alt=""/></span>联系地址管理</a></li>
-            <li><a href="voucher.html"><span><img src="${prc }/assets/images/order06.png" alt=""/></span>付款凭证</a></li>
+            <%--<li><a href="voucher.html"><span><img src="${prc }/assets/images/order06.png" alt=""/></span>付款凭证</a></li>--%>
             <li><a href="${prc }/user/beare.controller"><span><img src="${prc }/assets/images/order07.png" alt=""/></span>持票人信息</a></li>
         </ul>
     </div>
