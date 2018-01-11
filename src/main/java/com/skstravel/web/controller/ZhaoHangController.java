@@ -222,7 +222,7 @@ public class ZhaoHangController {
         } else {
             LOGGER.debug("失败了,,,跳转授权页====================");
             // 跳转授权页
-            response.sendRedirect("https://cmb-h5.skstravel.com/modules/index.jsp");
+            response.sendRedirect("https://cmb-h5.skstravel.com/modules/index1.jsp");
         }
 
     }
@@ -238,15 +238,15 @@ public class ZhaoHangController {
     @RequestMapping("/payOrder")
     public void payOrder(HttpServletRequest request, HttpServletResponse response) throws GeneralSecurityException, IOException {
         LOGGER.debug("拼接支付报文====================");
-        String orderId = ParamUtils.getParameter(request, "entityId");
-        SkOrderInfo orderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(orderId));
-        SkOrderComboExample skOrderComboExample = new SkOrderComboExample();
-        skOrderComboExample.createCriteria().andOrderIdEqualTo(Integer.parseInt(orderId));
-        List<SkOrderCombo> skOrderCombos = skOrderComboMapper.selectByExample(skOrderComboExample);
-        String productName = "";
-        if(skOrderCombos != null && skOrderCombos.size() > 0){
-            productName = skOrderCombos.get(0).getGoodsName();
-        }
+//        String orderId = ParamUtils.getParameter(request, "entityId");
+//        SkOrderInfo orderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(orderId));
+//        SkOrderComboExample skOrderComboExample = new SkOrderComboExample();
+//        skOrderComboExample.createCriteria().andOrderIdEqualTo(Integer.parseInt(orderId));
+//        List<SkOrderCombo> skOrderCombos = skOrderComboMapper.selectByExample(skOrderComboExample);
+//        String productName = "";
+//        if(skOrderCombos != null && skOrderCombos.size() > 0){
+//            productName = skOrderCombos.get(0).getGoodsName();
+//        }
 
         String funcName = "pay";
 
@@ -258,11 +258,11 @@ public class ZhaoHangController {
         // params.put("merchantName", "authorizationCode"); //商户名称，App支付时必传
         // params.put("storeNo", code); // 门店号
 //        params.put("billNo",orderId);
-        params.put("billNo", orderId);
+        params.put("billNo", "1234567890");
         // FIXME
-        params.put("productName", productName);
-        params.put("amount", orderInfo.getOrderAmount().multiply(BigDecimal.valueOf(100)) + ""); // 订单金额（单位为分）
-//        params.put("amount","100"); // 订单金额（单位为分）
+        params.put("productName", "世界杯门票套餐");
+//        params.put("amount", orderInfo.getOrderAmount().multiply(BigDecimal.valueOf(100)) + ""); // 订单金额（单位为分）
+        params.put("amount","100"); // 订单金额（单位为分）
         params.put("bonus", "0"); // 订单积分，无积分则传0
         params.put("returnUrl", "https://cmb-h5.skstravel.com/orderinfo/myorder"); // 掌上生活客户端支付成功重定向页面地址，默认为掌上生活支付成功页；App支付时不需要传入
         params.put("notifyUrl", "https://cmb-h5.skstravel.com/h5/zhaohang/getNotify"); // 后台通知接口地址
@@ -291,42 +291,59 @@ public class ZhaoHangController {
         String mid = ParamUtils.getParameter(request, "mid");
         String aid = ParamUtils.getParameter(request, "aid");
         String date = ParamUtils.getParameter(request, "date");
-        String encryptBody = ParamUtils.getParameter(request, "encryptBody");
+        String billno = ParamUtils.getParameter(request, "billno"); // 商户订单号
+        String storeno = ParamUtils.getParameter(request, "storeno"); // 门店号
+        String result = ParamUtils.getParameter(request, "result"); // 支付结果，2：成功，3：失败，200：支付成功通知失败，300：支付失败通知失败
+        String message = ParamUtils.getParameter(request, "message");
+        String amount = ParamUtils.getParameter(request, "amount"); // 订单金额（单位分）
+        String bonus = ParamUtils.getParameter(request, "bonus"); // 订单积分
+        String paytype = ParamUtils.getParameter(request, "paytype"); // 支付方式，从左往右，第一位：招行贷记，第二位：招行借记，第三位：招行外贷记，第四位：招行外借记
+        String refnum = ParamUtils.getParameter(request, "refnum"); // 交易参考号
+        String ordernum = ParamUtils.getParameter(request, "ordernum"); // 主机订单号，招行信用卡与积分支付返回，其余支付方式不返回
+        String bankpayserial = ParamUtils.getParameter(request, "bankpayserial"); // 支付流水号
+        String cuprefno = ParamUtils.getParameter(request, "cuprefno"); // 银联参考号
+        String shieldcardno = ParamUtils.getParameter(request, "shieldcardno"); // 屏蔽卡号，积分支付时不存在
         String sign = ParamUtils.getParameter(request, "sign");
 
         Map<String, String> map = new HashMap<>();
         map.put("mid", mid);
         map.put("aid", aid);
         map.put("date", date);
-        map.put("encryptBody", encryptBody);
+        map.put("billno", billno);
+        if(!storeno.isEmpty()){
+            map.put("storeno", storeno);
+        }
+        map.put("result", result);
+        if(!message.isEmpty()){
+            map.put("message", message);
+        }
+        map.put("amount", amount);
+        map.put("bonus", bonus);
+        map.put("paytype", paytype);
+        map.put("refnum", refnum);
+        if(!ordernum.isEmpty()){
+            map.put("ordernum", ordernum);
+        }
+        map.put("bankpayserial", bankpayserial);
+        if(!cuprefno.isEmpty()){
+            map.put("cuprefno", cuprefno);
+        }
+        if(!shieldcardno.isEmpty()){
+            map.put("shieldcardno", shieldcardno);
+        }
         map.put("sign", sign);
         LOGGER.debug("支付接收通知======================================" + map.toString());
         // 验签
         boolean flag = CmblifeUtils.verify(map, Constants.CMBLIFE_PUB_KEY);
         LOGGER.debug("支付接收通知====================flag:" + flag);
         if (flag) {
-            // 解密(微信说的是铭文，所以直接gson)
-            // String[] split = encryptBody.split("|");
-            JsonElement parse = new JsonParser().parse(encryptBody);
-            JsonObject asJsonObject = parse.getAsJsonObject();
-
-            String billNo = asJsonObject.get("billNo").getAsString();// 商户订单号
-            String storeNo = asJsonObject.get("storeNo").getAsString();// 门店号
-            String payDate = asJsonObject.get("payDate").getAsString();// 支付时间 yyyyMMddHHmmss
-            String result = asJsonObject.get("result").getAsString();// 支付结果，2：成功，3：失败，200：支付成功通知失败，300：支付失败通知失败
-            String message = asJsonObject.get("message").getAsString();// 说明文字/错误信息
-            String amount = asJsonObject.get("amount").getAsString();// 订单金额（单位为分）
-            String bonus = asJsonObject.get("bonus").getAsString();// 订单积分
-            String payType = asJsonObject.get("payType").getAsString();// 支付方式，从左往右，第一位：招行贷记，第二位：招行借记，第三位：招行外贷记，第四位：招行外借记
-            String refNum = asJsonObject.get("refNum").getAsString();// 交易参考号，支付失败时不存在，对账相关
-            String orderNum = asJsonObject.get("orderNum").getAsString();// 主机订单号，分期或积分交易返回，支付失败时不存在，对账相关
-            String shieldCardNo = asJsonObject.get("shieldCardNo").getAsString();// 屏蔽卡号，积分支付时不存在
 
             // 修改订单状态 比对金额
-            SkOrderInfo skOrderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(billNo));
+            SkOrderInfo skOrderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(billno));
             // 订单状态 0 未确认 1 已确认 2 已取消 3 无效 4 退货 5 已分单  6 部分分单
             // 支付状态 0 未付款 1 付款中 2 已付款
-            String sql = "UPDATE sk_order_info SET STATUS = ? WHERE order_id = " + billNo;
+            // 订单的相应的字段进行修改
+            String sql = "UPDATE sk_order_info SET STATUS = ? WHERE order_id = " + billno;
             Object[] objects = {};
             switch (result) {
                 case "2":
