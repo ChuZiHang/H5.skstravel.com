@@ -49,7 +49,8 @@ public class UserInfoInterceptor implements HandlerInterceptor {
             System.out.println("访问的路径是:" + request.getRequestURI());
             return true;
         }
-        if (request.getRequestURI().indexOf("/user") > 0) {
+        System.out.println(request.getRequestURI().indexOf("/user") +"=========================");
+        if (request.getRequestURI().indexOf("/user") == 0 || request.getRequestURI().indexOf("/orderinfo") == 0) {
             if (CookieUtils.getCookie(request, "memberId") != null) {
 
                 String value = CookieUtils.getCookie(request, "memberId");
