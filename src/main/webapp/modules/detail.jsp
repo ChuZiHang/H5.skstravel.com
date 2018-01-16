@@ -60,7 +60,7 @@
         <span><a href="#p2">预订</a></span>
         <span><a href="#p3">费用</a></span>
         <span><a href="#p4">签证</a></span>
-        <div class="buy"><a href="order.html">立即预订</a></div>
+        <div class="buy"><a href="${prc }/queryOrderInfo?goodsId=${pageBean.str}">立即预订</a></div>
     </div>
     <div id="p1" class="venueDetail padB0">
     	<c:forEach  items="${pageBean.travelList}"  var ="travel">

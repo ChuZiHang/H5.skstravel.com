@@ -1,5 +1,6 @@
 package com.skstravel.web.controller;
 
+import com.skstravel.common.utils.CookieUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -92,8 +93,8 @@ public class SkOrderInfoController {
         SkOrderInfoExample.Criteria criteria = skOrderInfoExample.createCriteria();
         
         //取用户id
-//        String memberId = CookieUtils.getCookie(request, "memberId");
-//        skOrderInfoExample.createCriteria().andUserIdEqualTo(Integer.parseInt(memberId));
+        String memberId = CookieUtils.getCookie(request, "memberId");
+        skOrderInfoExample.createCriteria().andUserIdEqualTo(Integer.parseInt(memberId));
         
         long total = skOrderInfoService.countByExample(skOrderInfoExample);
         int pageSize = 10;
