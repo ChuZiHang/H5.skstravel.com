@@ -154,6 +154,7 @@
                             </div>
                         </li>
                     </ul>
+                    <input type="hidden" id="jipiaoqian"/>
                 </div>
                 
                 <div class="gap"><img src="${prc }/assets/images/gap2.png" alt=""/></div>
@@ -266,6 +267,7 @@
         	//机票
         	var jipiaov =$('#jipiaov').text();
         	var jipiao = 42000*jipiaov;
+        	
         	//总
         	$('.orderTatalPrice').text(price*sumNum1+sumNum*128+jipiao);
         });
@@ -281,6 +283,8 @@
         	//纪念品
         	var sumNum2 = $('#jnpj').parent().prev().text();
         	$('.orderTatalPrice').text(price*sumNum1+sumNum*42000+sumNum2*128);
+        	
+        	$("#jipiaoqian").val(sumNum*42000);
         });
         $('#jipiaoj').unbind('click').on('click',function(){
         	var sumNum = $(this).parent().prev().text();
@@ -296,6 +300,8 @@
         	//纪念品
         	var sumNum2 = $('#jnpj').parent().prev().text();
         	$('.orderTatalPrice').text(price*sumNum1+sumNum*42000+sumNum2*128);
+        	
+        	$("#jipiaoqian").val(sumNum*42000);
         });
         //选择航程
         $('#hcxz').change(function(){
@@ -328,6 +334,7 @@
         	//机票
         	data['hcxz'] = $('#hcxz').val();
         	data['jipiaonum'] = $('#jipiaov').text();
+        	data['jipiaoqian'] = $("#jipiaoqian").val();
         	//酒店
         	var tatal = $('.orderTatalPrice').text();
         	if(!tatal){

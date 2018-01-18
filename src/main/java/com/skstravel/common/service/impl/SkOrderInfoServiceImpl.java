@@ -176,9 +176,12 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         String jipiaonum = jsonObject.get("jipiaonum").toString();
         jipiaonum = jipiaonum.substring(1, jipiaonum.length()-1);
         orderPlane.setGoodsNumber(Integer.parseInt(jipiaonum));
+        
+        String jipiaoqian = jsonObject.get("jipiaoqian").toString();
+        jipiaoqian = jipiaoqian.substring(1, jipiaoqian.length()-1);
         //默认值
         orderPlane.setSpaceId(new Integer(1));
-        orderPlane.setGoodsPrice(BigDecimal.ZERO);
+        orderPlane.setGoodsPrice(new BigDecimal(jipiaoqian));
         orderPlane.setAirId(new Integer(1));
         this.orderPlaneMapper.insert(orderPlane);
         return orderId;

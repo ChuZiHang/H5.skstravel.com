@@ -143,7 +143,7 @@
     <div class="agreement">
         <div class="radioPosition payTarget checkAgreement">
             <em>
-                <input type="radio" id="isagreement" name="agreement"  value="2" class="regular-radio big-radio">
+                <input type="radio" id="isagreement" name="agreement" class="regular-radio big-radio">
                 <label for="isagreement"></label>
                 我已阅读并同意 <a href="#" style="color:#cca152;">购买协议书</a>
             </em>
@@ -193,6 +193,10 @@
         
         
         $('.orderTatalBtns').click(function(){
+        	var isAgree = document.getElementById('isagreement').checked;
+        	if(!isAgree){
+        		return;
+        	}
         	obj['entityId'] = $('#entityId').val();
         	obj['orderTotal'] = $('.orderTatalPrice').text();
         	$.ajax({
