@@ -13,6 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.skstravel.common.utils.sendMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -24,7 +25,6 @@ import com.skstravel.common.service.ISkBearerInfoService;
 import com.skstravel.common.service.ISkUserAddressService;
 import com.skstravel.common.utils.CookieUtils;
 import com.skstravel.common.utils.MD5Utils;
-import com.skstravel.common.utils.sendsms;
 import com.skstravel.service.UserService;
 
 
@@ -53,41 +53,40 @@ public class LoginController {
     @RequestMapping("/login")
     public String login(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
         String phone = request.getParameter("mobilePhone");
-        String password = MD5Utils.md5(request.getParameter("password"));
-
-        String flag = "login";
-        //String memberId = "4129";
-        // CookieUtils.setCookie("memberId", memberId+"", -1, response, Constants.domain);
-        if (StringUtils.isBlank(password) || StringUtils.isBlank(phone)) {
-            return flag;
+        String mobileValidateCode = request.getParameter("mobileValidateCode");
+        if (StringUtils.isBlank(phone) || StringUtils.isBlank(mobileValidateCode)) {
+            String msg = "<font color='red'>手机号或者手机短信验证码错误，请稍后重试！！</font>";
+            request.setAttribute("errorMsg", msg);
+            return "login";
         }
-        String sql = "SELECT user_name userName FROM sk_users WHERE mobile_phone = ? and password =?  ";
-        // List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{memberId});
-        List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql, phone, password);
-        String userName = null;
-        if (list.size() > 0) {
-            flag = "center";
-            userName = (String) list.get(0).get("userName");
-            request.setAttribute("userName", userName);
-            // CookieUtils.setCookie("memberId", userName, 3600, response, Constants.domain);
+        Integer MobileCode1 = (Integer) request.getSession().getAttribute("MobileCode");
+        //销毁session
+        if (mobileValidateCode.equals(MobileCode1.toString())) {
+            request.getSession().setAttribute("MobileCode", "");
+            String sql = "SELECT user_name userName FROM sk_users WHERE mobile_phone = ? ";
+            List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql, phone);
+            String userName = "";
+            if (list.size() > 0) {
+                userName = (String) list.get(0).get("userName");
+                request.setAttribute("userName", userName);
+                Cookie cookie = new Cookie("memberId", userName);
+                cookie.setPath("/");
+                cookie.setMaxAge(3600);
+                response.addCookie(cookie);
+                return "center";
+            } else {
+                String msg = "<font color='red'>您的手机号还没有注册，请先注册！</font>";
+                request.setAttribute("errorMsg", msg);
+                return "login";
+            }
 
-
-            Cookie cookie = new Cookie("memberId", userName);
-            cookie.setPath("/");
-            cookie.setMaxAge(3600);
-            response.addCookie(cookie);
-            String cookie1 = CookieUtils.getCookie(request, "memberId");
-            System.out.println(cookie1);
-
-            return flag;
-        } else {
-            String msg = "<font color='red'>用户名或者密码错误，请重新输入！！</font>";
-            request.setAttribute("msg", msg);
-            return flag;
+        }else{
+            String msg = "<font color='red'>系统异常，请稍后重试！！</font>";
+            request.setAttribute("errorMsg", msg);
+            return "login";
         }
-
-
     }
+
 
     @RequestMapping("/loginOut")
     public String loginOut(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
@@ -112,6 +111,7 @@ public class LoginController {
         String mobileValidateCode = request.getParameter("mobileValidateCode");
         if (StringUtils.isNoneBlank(validateCode) && StringUtils.isNotBlank(mobileValidateCode)) {
             Integer MobileCode1 = (Integer) request.getSession().getAttribute("MobileCode");
+            request.getSession().setAttribute("MobileCode", "");
             String MobileCode = String.valueOf(MobileCode1);
             String msg = (String) request.getSession().getAttribute("msg");
             if (MobileCode.equalsIgnoreCase(mobileValidateCode) && msg.equalsIgnoreCase(validateCode)) {
@@ -151,6 +151,11 @@ public class LoginController {
     }
 
 
+
+
+
+
+
     @RequestMapping("/getMobileCode")
     public void getMobileCode(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
         //1.获取手机号码
@@ -159,12 +164,14 @@ public class LoginController {
         System.out.println(mobileCode);
         request.getSession().setAttribute("MobileCode", mobileCode);
         //2.调用发送短信功能
-        String flag = "1";
+        String flag = "0";
         try {
-            sendsms.getMobileCode(mobilePhone, mobileCode);
+            String result = sendMessage.getMobileCode(mobilePhone, mobileCode);
+            if("success".equals(result)){
+                flag="1";
+            }
         } catch (Exception e) {
             flag = "0";
-            // TODO Auto-generated catch block
             e.printStackTrace();
         }
         response.getWriter().write(flag);
@@ -191,7 +198,7 @@ public class LoginController {
         g.setColor(Color.WHITE);
         g.fillRect(1, 1, width - 2, height - 2);
         // * 设置字体
-        g.setFont(new Font("宋体", Font.BOLD | Font.ITALIC, 25));
+        g.setFont(new Font("楷体", Font.BOLD | Font.ITALIC, 25));
 
         //正确验证码
         String msg = "";
@@ -213,7 +220,7 @@ public class LoginController {
         request.getSession().setAttribute("msg", msg);
 
         //6 干扰线
-        for (int i = 0; i < 3; i++) {
+        for (int i = 0; i < 2; i++) {
             // 设置颜色--随机数
             g.setColor(new Color(random.nextInt(255), random.nextInt(255), random.nextInt(255)));
             // 随机绘制先
