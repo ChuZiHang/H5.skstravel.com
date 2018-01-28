@@ -5,6 +5,7 @@ import com.skstravel.common.model.sksports2.SkUsersExample;
 import com.skstravel.common.model.sksports2.SkUsersExample.Criteria;
 import com.skstravel.common.model.sksports2.SkUsersZhaohang;
 import com.skstravel.common.service.SkUsersService;
+import com.skstravel.common.tools.CookieUtils2;
 import com.skstravel.common.utils.CookieUtils;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -58,7 +59,7 @@ public class UserInfoInterceptor implements HandlerInterceptor {
                 || request.getRequestURI().indexOf("/h5/zhaohang/payOrder") == 0) {
             if (CookieUtils.getCookie(request, "memberId") != null) {
 
-                String value = CookieUtils.getCookie(request, "memberId");
+                String value = CookieUtils2.getCookieValue(request, "memberId");
 
                 //判断招行用户条件
 //                SkUsersZhaohangExample skUsersZhaohangExample = new SkUsersZhaohangExample();
@@ -66,15 +67,19 @@ public class UserInfoInterceptor implements HandlerInterceptor {
 //                List<SkUsersZhaohang> skUsersZhaohangs = skUsersZhaohangService.selectByExample(skUsersZhaohangExample);
                 //判断本站用户条件
                 SkUsersExample skUsersExample = new SkUsersExample();
-                Criteria criteria = skUsersExample.createCriteria().andUserNameEqualTo(value);
-                List<SkUsers> list = skUsersService.selectByExample(skUsersExample);
+                List<SkUsers> list=null;
                 SkUsersZhaohang skUsersZhaohang = null;
                 SkUsers skUsers = null;
+                if(value!=null&&value!=""){
+                    Criteria criteria = skUsersExample.createCriteria().andUserIdEqualTo(Integer.valueOf(value));
+                     list = skUsersService.selectByExample(skUsersExample);
+                }
+
 //                if (skUsersZhaohangs.size() > 0) {
 //                    skUsersZhaohang = skUsersZhaohangs.get(0);
 //                }
 
-                if (list.size() > 0) {
+                if (list!=null&&list.size() > 0) {
                     skUsers = list.get(0);
                 }
 

@@ -170,7 +170,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkUsers">
+  <insert id="insert"   useGeneratedKeys="true"   keyProperty="userId"     parameterType="com.skstravel.common.model.sksports2.SkUsers">
     insert into sk_users (user_id, email, user_name, 
       password, question, answer, 
       sex, birthday, user_money, 

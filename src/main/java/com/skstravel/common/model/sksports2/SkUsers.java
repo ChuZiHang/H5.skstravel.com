@@ -1,5 +1,7 @@
 package com.skstravel.common.model.sksports2;
 
+import org.springframework.format.annotation.DateTimeFormat;
+
 import java.io.Serializable;
 import java.math.BigDecimal;
 import java.util.Date;
@@ -19,6 +21,7 @@ public class SkUsers implements Serializable {
 
     private Boolean sex;
 
+    //@JsonFormat(pattern="yyyy-MM-dd HH:mm:ss",timezone = "GMT+8")
     private Date birthday;
 
     private BigDecimal userMoney;
@@ -34,7 +37,7 @@ public class SkUsers implements Serializable {
     private Integer regTime;
 
     private Integer lastLogin;
-
+    //@DateTimeFormat(pattern="yyyy-MM-dd HH:mm:ss")
     private Date lastTime;
 
     private String lastIp;
@@ -150,7 +153,6 @@ public class SkUsers implements Serializable {
     public void setSex(Boolean sex) {
         this.sex = sex;
     }
-
     public Date getBirthday() {
         return birthday;
     }
@@ -214,7 +216,6 @@ public class SkUsers implements Serializable {
     public void setLastLogin(Integer lastLogin) {
         this.lastLogin = lastLogin;
     }
-
     public Date getLastTime() {
         return lastTime;
     }

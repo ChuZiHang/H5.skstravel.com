@@ -13,6 +13,7 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.skstravel.common.tools.CookieUtils2;
 import com.skstravel.common.utils.sendMessage;
 import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -121,15 +122,26 @@ public class LoginController {
         String mobileValidateCode = request.getParameter("mobileValidateCode");
         if (StringUtils.isNoneBlank(validateCode) && StringUtils.isNotBlank(mobileValidateCode)) {
             Integer MobileCode1 = (Integer) request.getSession().getAttribute("MobileCode");
+            //销毁session  短信验证码
             request.getSession().setAttribute("MobileCode", "");
             String MobileCode = String.valueOf(MobileCode1);
+            //验证码
             String msg = (String) request.getSession().getAttribute("msg");
             if (MobileCode.equalsIgnoreCase(mobileValidateCode) && msg.equalsIgnoreCase(validateCode)) {
-                request.getSession().invalidate();
+                //销毁验证码
+                request.getSession().setAttribute("msg", "");
                 try {
-                    userService.register(mobilePhone, password);
-                    request.setAttribute("userName", mobilePhone);
-                    request.getRequestDispatcher("/modules/center.jsp").forward(request, response);
+                    Integer id= userService.register(mobilePhone, password);
+                    if(id!=0){
+                        String userId=id.toString();
+                        CookieUtils2.setCookie(request,response,"memberId",userId,3600);
+                        request.setAttribute("userName", mobilePhone);
+                        request.getRequestDispatcher("/modules/center.jsp").forward(request, response);
+                    }else{
+                        request.setAttribute("errorMsg","对不起，您已经注册过，请直接登录！");
+                        request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
+                    }
+
                 } catch (Exception e) {
                     e.printStackTrace();
                     request.getRequestDispatcher("/modules/error.jsp").forward(request, response);
@@ -139,7 +151,6 @@ public class LoginController {
             }
         } else {
             request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
-
         }
 
 
