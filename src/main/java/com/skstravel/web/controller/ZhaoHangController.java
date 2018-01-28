@@ -5,10 +5,7 @@ import com.google.gson.*;
 import com.skstravel.common.api.Constants;
 import com.skstravel.common.httpclient.HttpClient;
 import com.skstravel.common.mapper.sksports2.SkOrderComboMapper;
-import com.skstravel.common.model.sksports2.SkOrderInfo;
-import com.skstravel.common.model.sksports2.SkUsers;
-import com.skstravel.common.model.sksports2.SkUsersZhaohang;
-import com.skstravel.common.model.sksports2.SkUsersZhaohangExample;
+import com.skstravel.common.model.sksports2.*;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.service.SkUsersService;
 import com.skstravel.common.utils.CookieUtils;
@@ -23,11 +20,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.security.GeneralSecurityException;
-import java.util.Calendar;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
 
 
 /**
@@ -242,15 +237,15 @@ public class ZhaoHangController {
     @RequestMapping("/payOrder")
     public void payOrder(HttpServletRequest request, HttpServletResponse response) throws GeneralSecurityException, IOException {
         LOGGER.debug("拼接支付报文====================");
-//        String orderId = ParamUtils.getParameter(request, "entityId");
-//        SkOrderInfo orderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(orderId));
-//        SkOrderComboExample skOrderComboExample = new SkOrderComboExample();
-//        skOrderComboExample.createCriteria().andOrderIdEqualTo(Integer.parseInt(orderId));
-//        List<SkOrderCombo> skOrderCombos = skOrderComboMapper.selectByExample(skOrderComboExample);
-//        String productName = "";
-//        if(skOrderCombos != null && skOrderCombos.size() > 0){
-//            productName = skOrderCombos.get(0).getGoodsName();
-//        }
+        String orderId = ParamUtils.getParameter(request, "entityId");
+        SkOrderInfo orderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(orderId));
+        SkOrderComboExample skOrderComboExample = new SkOrderComboExample();
+        skOrderComboExample.createCriteria().andOrderIdEqualTo(Integer.parseInt(orderId));
+        List<SkOrderCombo> skOrderCombos = skOrderComboMapper.selectByExample(skOrderComboExample);
+        String productName = "";
+        if (skOrderCombos != null && skOrderCombos.size() > 0) {
+            productName = skOrderCombos.get(0).getGoodsName();
+        }
 
         String funcName = "pay";
 
@@ -259,14 +254,15 @@ public class ZhaoHangController {
         params.put("aid", Constants.aid);
         params.put("date", CmblifeUtils.genDate());
         params.put("random", CmblifeUtils.genRandom());
-        // params.put("merchantName", "authorizationCode"); //商户名称，App支付时必传
-        // params.put("storeNo", code); // 门店号
-//        params.put("billNo",orderId);
-        params.put("billNo", "1234567890");
+        params.put("merchantName", "authorizationCode"); //商户名称，App支付时必传
+//         params.put("storeNo", code); // 门店号
+        params.put("billNo", orderId);
+//        params.put("billNo", "1234567890");
         // FIXME
-        params.put("productName", "世界杯门票套餐");
-//        params.put("amount", orderInfo.getOrderAmount().multiply(BigDecimal.valueOf(100)) + ""); // 订单金额（单位为分）
-        params.put("amount","100"); // 订单金额（单位为分）
+        params.put("productName", productName);
+//        params.put("productName", "世界杯门票套餐");
+        params.put("amount", orderInfo.getOrderAmount().multiply(BigDecimal.valueOf(100)) + ""); // 订单金额（单位为分）
+//        params.put("amount","100"); // 订单金额（单位为分）
         params.put("bonus", "0"); // 订单积分，无积分则传0
         params.put("returnUrl", "https://cmb-h5.skstravel.com/orderinfo/myorder"); // 掌上生活客户端支付成功重定向页面地址，默认为掌上生活支付成功页；App支付时不需要传入
         params.put("notifyUrl", "https://cmb-h5.skstravel.com/h5/zhaohang/getNotify"); // 后台通知接口地址
@@ -314,25 +310,25 @@ public class ZhaoHangController {
         map.put("aid", aid);
         map.put("date", date);
         map.put("billno", billno);
-        if(!storeno.isEmpty()){
+        if (!storeno.isEmpty()) {
             map.put("storeno", storeno);
         }
         map.put("result", result);
-        if(!message.isEmpty()){
+        if (!message.isEmpty()) {
             map.put("message", message);
         }
         map.put("amount", amount);
         map.put("bonus", bonus);
         map.put("paytype", paytype);
         map.put("refnum", refnum);
-        if(!ordernum.isEmpty()){
+        if (!ordernum.isEmpty()) {
             map.put("ordernum", ordernum);
         }
         map.put("bankpayserial", bankpayserial);
-        if(!cuprefno.isEmpty()){
+        if (!cuprefno.isEmpty()) {
             map.put("cuprefno", cuprefno);
         }
-        if(!shieldcardno.isEmpty()){
+        if (!shieldcardno.isEmpty()) {
             map.put("shieldcardno", shieldcardno);
         }
         map.put("sign", sign);
