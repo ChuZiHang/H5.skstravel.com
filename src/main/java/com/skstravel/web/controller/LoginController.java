@@ -54,6 +54,7 @@ public class LoginController {
     public String login(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
         String phone = request.getParameter("mobilePhone");
         String mobileValidateCode = request.getParameter("mobileValidateCode");
+        System.out.println("****************************************************");
         if (StringUtils.isBlank(phone) || StringUtils.isBlank(mobileValidateCode)) {
             String msg = "<font color='red'>手机号或者手机短信验证码错误，请稍后重试！！</font>";
             request.setAttribute("errorMsg", msg);
