@@ -212,7 +212,7 @@ public class SkOrderInfoController {
      * @return
      * @throws Exception 
      */
-    @RequestMapping("/createOrder")
+    @RequestMapping("/orderinfo/createOrder")
     public void createOrder(HttpServletRequest request, HttpServletResponse response ,Model model) throws Exception {
         String str1= "";
         try {

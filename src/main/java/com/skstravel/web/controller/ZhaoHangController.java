@@ -5,10 +5,12 @@ import com.google.gson.*;
 import com.skstravel.common.api.Constants;
 import com.skstravel.common.httpclient.HttpClient;
 import com.skstravel.common.mapper.sksports2.SkOrderComboMapper;
-import com.skstravel.common.model.sksports2.*;
+import com.skstravel.common.model.sksports2.SkOrderInfo;
+import com.skstravel.common.model.sksports2.SkUsers;
+import com.skstravel.common.model.sksports2.SkUsersZhaohang;
+import com.skstravel.common.model.sksports2.SkUsersZhaohangExample;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.service.SkUsersService;
-import com.skstravel.common.service.SkUsersZhaohangService;
 import com.skstravel.common.utils.CookieUtils;
 import com.skstravel.common.utils.ParamUtils;
 import org.slf4j.Logger;
@@ -21,9 +23,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.math.BigDecimal;
 import java.security.GeneralSecurityException;
-import java.util.*;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 
 /**
@@ -40,8 +44,8 @@ public class ZhaoHangController {
     @Autowired
     private ISkOrderInfoService iSkOrderInfoService;
 
-    @Autowired
-    private SkUsersZhaohangService skUsersZhaohangService;
+//    @Autowired
+//    private SkUsersZhaohangService skUsersZhaohangService;
 
     @Autowired
     private JdbcTemplate jdbcTemplateForSksports2;
@@ -90,10 +94,10 @@ public class ZhaoHangController {
             LOGGER.debug("============已经授权====================");
             SkUsersZhaohangExample skUsersZhaohangExample = new SkUsersZhaohangExample();
             skUsersZhaohangExample.createCriteria().andOpenIdEqualTo(openId);
-            List<SkUsersZhaohang> skUsersZhaohangs = skUsersZhaohangService.selectByExample(skUsersZhaohangExample);
-            SkUsersZhaohang skUsersZhaohang = skUsersZhaohangs.get(0);
+//            List<SkUsersZhaohang> skUsersZhaohangs = skUsersZhaohangService.selectByExample(skUsersZhaohangExample);
+//            SkUsersZhaohang skUsersZhaohang = skUsersZhaohangs.get(0);
             // 放进cookie
-            CookieUtils.setCookie("memberId", skUsersZhaohang.getUserId() + "", -1, response, Constants.domain);
+//            CookieUtils.setCookie("memberId", skUsersZhaohang.getUserId() + "", -1, response, Constants.domain);
             // 重定向到首页
             response.sendRedirect("https://cmb-h5.skstravel.com/index/index.controller");
         }
@@ -213,7 +217,7 @@ public class ZhaoHangController {
             skUsersZhaohang.setAcccessToken(acccessToken);
             skUsersZhaohang.setCreateDate(now);
             skUsersZhaohang.setExpiresIn(calendar.getTime());
-            skUsersZhaohangService.insertSelective(skUsersZhaohang);
+//            skUsersZhaohangService.insertSelective(skUsersZhaohang);
 
             CookieUtils.setCookie("memberId", i + "", -1, response, Constants.domain);
             LOGGER.debug("注册用户成功直接跳转项目首页");

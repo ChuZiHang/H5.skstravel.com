@@ -337,20 +337,24 @@
         	data['jipiaoqian'] = $("#jipiaoqian").val();
         	//酒店
         	var tatal = $('.orderTatalPrice').text();
-        	if(!tatal){
+        	if(Number(tatal) == 0){
         		alert("请选商品!");
         		return;
         	}
 	        $.ajax({
 				type : "POST",
-				url : "/createOrder.controller",
+				url : "/orderinfo/createOrder.controller",
 				data:JSON.stringify(data), 
 				async : false,
 				error : function(request) {
 					alert("错误!","网络异常", "error");
 				},
 				success : function(data) {
-					window.location.href="queryOrderInfoForPay.controller?orderId="+data;
+				    if(data == "REDIRECT"){
+                        window.location.href = "/modules/login.jsp";
+                    }else{
+                        window.location.href="queryOrderInfoForPay.controller?orderId="+data;
+                    }
 				}
 			 });
         });

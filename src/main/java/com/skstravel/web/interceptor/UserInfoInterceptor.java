@@ -1,23 +1,20 @@
 package com.skstravel.web.interceptor;
 
-import java.util.List;
-
-import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
-
+import com.skstravel.common.model.sksports2.SkUsers;
+import com.skstravel.common.model.sksports2.SkUsersExample;
+import com.skstravel.common.model.sksports2.SkUsersExample.Criteria;
+import com.skstravel.common.model.sksports2.SkUsersZhaohang;
+import com.skstravel.common.service.SkUsersService;
+import com.skstravel.common.utils.CookieUtils;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.web.servlet.HandlerInterceptor;
 import org.springframework.web.servlet.ModelAndView;
 
-import com.skstravel.common.model.sksports2.SkUsers;
-import com.skstravel.common.model.sksports2.SkUsersExample;
-import com.skstravel.common.model.sksports2.SkUsersExample.Criteria;
-import com.skstravel.common.model.sksports2.SkUsersZhaohang;
-import com.skstravel.common.model.sksports2.SkUsersZhaohangExample;
-import com.skstravel.common.service.SkUsersService;
-import com.skstravel.common.service.SkUsersZhaohangService;
-import com.skstravel.common.utils.CookieUtils;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import java.util.List;
 
 /**
  * 用户个人中心，订单url拦截
@@ -29,8 +26,8 @@ import com.skstravel.common.utils.CookieUtils;
 public class UserInfoInterceptor implements HandlerInterceptor {
 
 
-    @Autowired
-    private SkUsersZhaohangService skUsersZhaohangService;
+//    @Autowired
+//    private SkUsersZhaohangService skUsersZhaohangService;
 
     @Autowired
     private JdbcTemplate jdbcTemplateForSksports2;
@@ -49,26 +46,33 @@ public class UserInfoInterceptor implements HandlerInterceptor {
             System.out.println("访问的路径是:" + request.getRequestURI());
             return true;
         }
-        System.out.println(request.getRequestURI().indexOf("/h5/zhaohang/payOrder") +"=========================");
+
+        //判断是否为ajax请求，默认不是
+        boolean isAjaxRequest = false;
+        if (!StringUtils.isBlank(request.getHeader("x-requested-with")) && request.getHeader("x-requested-with").equals("XMLHttpRequest")) {
+            isAjaxRequest = true;
+        }
+
+        System.out.println(request.getRequestURI().indexOf("/h5/zhaohang/payOrder") + "=========================");
         if (request.getRequestURI().indexOf("/user") == 0 || request.getRequestURI().indexOf("/orderinfo") == 0
-                || request.getRequestURI().indexOf("/h5/zhaohang/payOrder") == 0 ) {
+                || request.getRequestURI().indexOf("/h5/zhaohang/payOrder") == 0) {
             if (CookieUtils.getCookie(request, "memberId") != null) {
 
                 String value = CookieUtils.getCookie(request, "memberId");
 
                 //判断招行用户条件
-                SkUsersZhaohangExample skUsersZhaohangExample = new SkUsersZhaohangExample();
-                skUsersZhaohangExample.createCriteria().andOpenIdEqualTo(value);
-                List<SkUsersZhaohang> skUsersZhaohangs = skUsersZhaohangService.selectByExample(skUsersZhaohangExample);
+//                SkUsersZhaohangExample skUsersZhaohangExample = new SkUsersZhaohangExample();
+//                skUsersZhaohangExample.createCriteria().andOpenIdEqualTo(value);
+//                List<SkUsersZhaohang> skUsersZhaohangs = skUsersZhaohangService.selectByExample(skUsersZhaohangExample);
                 //判断本站用户条件
                 SkUsersExample skUsersExample = new SkUsersExample();
                 Criteria criteria = skUsersExample.createCriteria().andUserNameEqualTo(value);
                 List<SkUsers> list = skUsersService.selectByExample(skUsersExample);
                 SkUsersZhaohang skUsersZhaohang = null;
                 SkUsers skUsers = null;
-                if (skUsersZhaohangs.size() > 0) {
-                    skUsersZhaohang = skUsersZhaohangs.get(0);
-                }
+//                if (skUsersZhaohangs.size() > 0) {
+//                    skUsersZhaohang = skUsersZhaohangs.get(0);
+//                }
 
                 if (list.size() > 0) {
                     skUsers = list.get(0);
@@ -77,11 +81,20 @@ public class UserInfoInterceptor implements HandlerInterceptor {
                 if (skUsersZhaohang != null || skUsers != null) {
                     return true;
                 } else {
-                    request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
+                    if (isAjaxRequest) {
+                        response.getWriter().write("REDIRECT");
+                    } else {
+                        request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
+
+                    }
                     return false;
                 }
             } else {
-                request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
+                if (isAjaxRequest) {
+                    response.getWriter().write("REDIRECT");
+                } else {
+                    request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
+                }
                 return false;
             }
         }

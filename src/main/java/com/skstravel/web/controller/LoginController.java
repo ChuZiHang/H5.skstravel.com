@@ -65,6 +65,7 @@ public class LoginController {
             request.getSession().setAttribute("MobileCode", "");
             String sql = "SELECT user_name userName FROM sk_users WHERE mobile_phone = ? ";
             List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql, phone);
+            List<Map<String, Object>> list1 = jdbcTemplateForSksports2.queryForList(sql, "86"+phone);
             String userName = "";
             if (list.size() > 0) {
                 userName = (String) list.get(0).get("userName");
@@ -74,7 +75,15 @@ public class LoginController {
                 cookie.setMaxAge(3600);
                 response.addCookie(cookie);
                 return "center";
-            } else {
+            } else if(list1.size() > 0){
+                userName = (String) list.get(0).get("userName");
+                request.setAttribute("userName", userName);
+                Cookie cookie = new Cookie("memberId", userName);
+                cookie.setPath("/");
+                cookie.setMaxAge(3600);
+                response.addCookie(cookie);
+                return "center";
+            }else{
                 String msg = "<font color='red'>您的手机号还没有注册，请先注册！</font>";
                 request.setAttribute("errorMsg", msg);
                 return "login";
