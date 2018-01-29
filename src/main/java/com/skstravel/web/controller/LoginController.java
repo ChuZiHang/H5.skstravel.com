@@ -65,22 +65,22 @@ public class LoginController {
         //销毁session
         if (mobileValidateCode.equals(MobileCode1.toString())) {
             request.getSession().setAttribute("MobileCode", "");
-            String sql = "SELECT user_name userName FROM sk_users WHERE mobile_phone = ? ";
+            String sql = "SELECT user_name userName,user_id userId FROM sk_users WHERE mobile_phone = ? ";
             List<Map<String, Object>> list = jdbcTemplateForSksports2.queryForList(sql, phone);
             List<Map<String, Object>> list1 = jdbcTemplateForSksports2.queryForList(sql, "86"+phone);
             String userName = "";
             if (list.size() > 0) {
                 userName = (String) list.get(0).get("userName");
                 request.setAttribute("userName", userName);
-                Cookie cookie = new Cookie("memberId", userName);
+                Cookie cookie = new Cookie("memberId", list.get(0).get("userId").toString());
                 cookie.setPath("/");
                 cookie.setMaxAge(3600);
                 response.addCookie(cookie);
                 return "center";
             } else if(list1.size() > 0){
-                userName = (String) list.get(0).get("userName");
+                userName = (String) list1.get(0).get("userName");
                 request.setAttribute("userName", userName);
-                Cookie cookie = new Cookie("memberId", userName);
+                Cookie cookie = new Cookie("memberId", list1.get(0).get("userId").toString());
                 cookie.setPath("/");
                 cookie.setMaxAge(3600);
                 response.addCookie(cookie);

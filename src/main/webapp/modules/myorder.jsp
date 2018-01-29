@@ -1,6 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
-    <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head lang="en">
@@ -33,7 +35,10 @@
 	                </li>
 	                <li>
 	                    <span>下单时间 :</span>
-	                    ${o.addTime }
+						<jsp:useBean id="dateObject" class="java.util.Date" scope="page"></jsp:useBean>
+						<jsp:setProperty property="time" name="dateObject" value="${o.addTime * 1000}"/>
+						<fmt:formatDate value="${dateObject}" pattern="yyyy-MM-dd HH:mm:ss" />
+					<%--${o.addTime }--%>
 	                </li>
 	                <li>
 	                    <span>订单金额 :</span>
