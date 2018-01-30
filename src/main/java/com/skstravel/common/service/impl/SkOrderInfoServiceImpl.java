@@ -23,6 +23,8 @@ import com.skstravel.common.model.sksports2.SkOrderInfoExample;
 import com.skstravel.common.model.sksports2.SkOrderPlane;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.utils.CookieUtils;
+import org.springframework.transaction.annotation.Transactional;
+
 @Service
 public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
     
@@ -83,6 +85,7 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
     }
 
     @Override
+    @Transactional(value = "transactionManagerSksports2", rollbackFor = Exception.class)
     public int createOrderInfo(HttpServletRequest request,JsonObject jsonObject) throws Exception {
         String memberId = CookieUtils.getCookie(request, "memberId");
         if(org.apache.commons.lang3.StringUtils.isBlank(memberId)){

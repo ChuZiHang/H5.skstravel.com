@@ -211,7 +211,7 @@
       <include refid="Example_Where_Clause" />
     </if>
   </delete>
-  <insert id="insert" parameterType="com.skstravel.common.model.sksports2.SkOrderInfo">
+  <insert id="insert"   useGeneratedKeys="true"   keyProperty="orderId"  parameterType="com.skstravel.common.model.sksports2.SkOrderInfo">
     insert into sk_order_info (order_id, order_sn, user_id, 
       source, order_status, shipping_status, 
       pay_status, consignee, country, 
