@@ -24,6 +24,7 @@
         </div>
         <div class="order-tips">
             价格：<span class="orderPriceColor">¥ <em id="priductPrice">${orderInfo.goodsAmount }</em></span>
+            &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;数量：<span class="ariNum">${goods.goodsNumber }</span>
         </div>
     </div>
     <div class="orderProduct">
@@ -41,7 +42,7 @@
                     <span>25CM</span>
                     <span>¥<em id="jnpprice">128</em></span>
                     <div class="soucenirNum">
-                        <span class="ariNum">${goods.goodsNumber }</span>
+                        <span class="ariNum">${goods.productId }</span>
                     </div>
                 </div>
             </div>
@@ -51,20 +52,23 @@
             订机票
         </div>
         <div class="orderAccessory airInfo">
-            <ul>
          <c:choose>
          	<c:when test="${plane.flag eq '8' }">
+         	<c:out ${plane.flag eq '8' }>
+            <ul>
                 <li><em class="colorGary">北京-莫斯科 往返 7月8日-16日 </em><span class="colorCca">${plane.goodsNumber }</span></li>
                 <li>去程 <span>CA909 北京 - 莫斯科卢日尼基</span></li>
                 <li>返程 <span>CA910 莫斯科卢日尼基 - 北京</span></li>
+            </ul>
             </c:when>
             <c:otherwise>
+            <ul>
                 <li><em class="colorGary">北京-莫斯科 往返 7月9日-17日 </em><span class="colorCca">${plane.goodsNumber }</span></li>
                 <li>去程 <span>CA909 北京 - 莫斯科卢日尼基</span></li>
                 <li>返程 <span>CA910 莫斯科卢日尼基 - 北京</span></li>
+            </ul>
             </c:otherwise>
         </c:choose>
-            </ul>
             <div class="airPirce">价格：<span class="orderPriceColor">¥<em id="planePrice">${plane.goodsPrice }</em></span></div>
         </div>
         <div class="orderProductItem">

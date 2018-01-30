@@ -9,6 +9,7 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -23,6 +24,7 @@ import com.skstravel.common.model.sksports2.SkOrderInfoExample;
 import com.skstravel.common.model.sksports2.SkOrderPlane;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.utils.CookieUtils;
+
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
@@ -149,9 +151,10 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         sumNum = sumNum.substring(1, sumNum.length()-1);
         orderGoods.setGoodsNumber(Short.parseShort(sumNum));
         //纪念品数量
-        
+        String jinianpinum = jsonObject.get("jinianpinum").toString();
+        jinianpinum = jinianpinum.substring(1, jinianpinum.length()-1);
+        orderGoods.setProductId(Integer.parseInt(jinianpinum));//  当纪念品数量
         //默认值
-        orderGoods.setProductId(new Integer(1));
         orderGoods.setMarketPrice(new BigDecimal(22));
         orderGoods.setSendNumber(Short.parseShort("1"));
         orderGoods.setIsReal(false);
@@ -184,7 +187,11 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         jipiaoqian = jipiaoqian.substring(1, jipiaoqian.length()-1);
         //默认值
         orderPlane.setSpaceId(new Integer(1));
-        orderPlane.setGoodsPrice(new BigDecimal(jipiaoqian));
+        if(StringUtils.isNotBlank(jipiaoqian)){
+            orderPlane.setGoodsPrice(new BigDecimal(jipiaoqian));
+        }else{
+            orderPlane.setGoodsPrice(new BigDecimal(0));
+        }
         orderPlane.setAirId(new Integer(1));
         this.orderPlaneMapper.insert(orderPlane);
         return orderId;
