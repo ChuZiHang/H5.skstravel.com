@@ -127,9 +127,13 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         //默认值
         orderInfo.setAgencyId(Short.parseShort("1"));
         orderInfo.setInvType("1");
-        orderInfo.setTax(new BigDecimal(17));
+        orderInfo.setTax(new BigDecimal(0.00));
         orderInfo.setDiscount(new BigDecimal(17));
         orderInfo.setAddressId(1L);
+        orderInfo.setAddTime((int)System.currentTimeMillis()/1000);
+        String goodsName = jsonObject.get("goodsName").toString();
+        goodsName = goodsName.substring(1, goodsName.length()-1);
+        orderInfo.setThirdInfo("来源：招商银行<br>商品："+goodsName+"<br>");
         this.insertSelective(orderInfo);
         int orderId = orderInfo.getOrderId();
         //维护订单商品信息
@@ -138,8 +142,6 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         String goodsId = jsonObject.get("goodsId").toString();
         goodsId = goodsId.substring(1, goodsId.length()-1);
         orderGoods.setGoodsId(Integer.parseInt(goodsId));
-        String goodsName = jsonObject.get("goodsName").toString();
-        goodsName = goodsName.substring(1, goodsName.length()-1);
         orderGoods.setGoodsName(goodsName);
         String goodsSn = jsonObject.get("goodsSn").toString();
         goodsSn = goodsSn.substring(1, goodsSn.length()-1);
