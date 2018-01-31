@@ -69,7 +69,6 @@ public class UserInfoInterceptor implements HandlerInterceptor {
                      list = skUsersService.selectByExample(skUsersExample);
                     if (list!=null&&list.size() > 0) {
                         skUsers = list.get(0);
-
                         if (skUsersZhaohang != null || skUsers != null) {
                             return true;
                         } else {
@@ -81,7 +80,20 @@ public class UserInfoInterceptor implements HandlerInterceptor {
                             return false;
                         }
                     }
+                }else{
+
+                    if (isAjaxRequest) {
+                        response.getWriter().write("REDIRECT");
+                    } else {
+                        request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
+                    }
+                    return false;
+
                 }
+
+
+
+
             } else {
                 if (isAjaxRequest) {
                     response.getWriter().write("REDIRECT");
