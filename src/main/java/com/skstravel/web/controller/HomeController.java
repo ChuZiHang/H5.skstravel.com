@@ -40,8 +40,6 @@ public class HomeController {
     public String index(HttpServletRequest request, Model model,@PathVariable String param ) {
     	List<Map<String, Object>>   list=matcherService.findMatchListForIndex();
     	PageBean  page =new PageBean();
-    	
-    	
     	if(param!="index"){
     	List<Map<String, Object>> gameStage   =matcherService.findGameStage();
     	List<Map<String, Object>> rankList   =matcherService.findRankList();
