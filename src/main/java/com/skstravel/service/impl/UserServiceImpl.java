@@ -31,18 +31,22 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private SkUsersMapper skUsersMapper;
 
-    public int register(String mobilePhone, String password) {
+    public Integer register(String mobilePhone, String password) {
         SkUsers skUsers = new SkUsers();
         skUsers.setPassword(password);
         skUsers.setMobilePhone(mobilePhone);
         skUsers.setBirthday(new Date());
+        skUsers.setLastTime(new Date());
+        skUsers.setUserName(mobilePhone);
         SkUsersExample example = new SkUsersExample();
         SkUsersExample.Criteria criteria = example.createCriteria();
         criteria.andMobilePhoneEqualTo(mobilePhone);
         List<SkUsers> list = skUsersMapper.selectByExample(example);
-        int i = 0;
+        Integer i = 0;
         if (list == null || list.size() == 0) {
-             i = skUsersMapper.insertSelective(skUsers);
+             skUsersMapper.insertSelective(skUsers);
+            Integer userId = skUsers.getUserId();
+            i=userId;
         } else {
             return i;
         }

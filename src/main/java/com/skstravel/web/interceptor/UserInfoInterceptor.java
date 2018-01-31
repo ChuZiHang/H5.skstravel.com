@@ -37,30 +37,24 @@ public class UserInfoInterceptor implements HandlerInterceptor {
     private SkUsersService skUsersService;
 
 
-    @Override
     public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
             throws Exception {
-        //if(request.getRequestURI().index){}
-
         System.out.println("访问的路径是:" + request.getRequestURI());
         if (request.getRequestURI().indexOf("/index/index") > 0) {
             System.out.println("访问的路径是:" + request.getRequestURI());
             return true;
         }
-
         //判断是否为ajax请求，默认不是
         boolean isAjaxRequest = false;
         if (!StringUtils.isBlank(request.getHeader("x-requested-with")) && request.getHeader("x-requested-with").equals("XMLHttpRequest")) {
             isAjaxRequest = true;
         }
-
         System.out.println(request.getRequestURI().indexOf("/h5/zhaohang/payOrder") + "=========================");
         if (request.getRequestURI().indexOf("/user") == 0 || request.getRequestURI().indexOf("/orderinfo") == 0
                 || request.getRequestURI().indexOf("/h5/zhaohang/payOrder") == 0) {
+            System.out.println(request.getRequestURI());
             if (CookieUtils.getCookie(request, "memberId") != null) {
-
                 String value = CookieUtils2.getCookieValue(request, "memberId");
-
                 //判断招行用户条件
 //                SkUsersZhaohangExample skUsersZhaohangExample = new SkUsersZhaohangExample();
 //                skUsersZhaohangExample.createCriteria().andOpenIdEqualTo(value);
@@ -73,26 +67,20 @@ public class UserInfoInterceptor implements HandlerInterceptor {
                 if(value!=null&&value!=""){
                     Criteria criteria = skUsersExample.createCriteria().andUserIdEqualTo(Integer.valueOf(value));
                      list = skUsersService.selectByExample(skUsersExample);
-                }
+                    if (list!=null&&list.size() > 0) {
+                        skUsers = list.get(0);
 
-//                if (skUsersZhaohangs.size() > 0) {
-//                    skUsersZhaohang = skUsersZhaohangs.get(0);
-//                }
-
-                if (list!=null&&list.size() > 0) {
-                    skUsers = list.get(0);
-                }
-
-                if (skUsersZhaohang != null || skUsers != null) {
-                    return true;
-                } else {
-                    if (isAjaxRequest) {
-                        response.getWriter().write("REDIRECT");
-                    } else {
-                        request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
-
+                        if (skUsersZhaohang != null || skUsers != null) {
+                            return true;
+                        } else {
+                            if (isAjaxRequest) {
+                                response.getWriter().write("REDIRECT");
+                            } else {
+                                request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
+                            }
+                            return false;
+                        }
                     }
-                    return false;
                 }
             } else {
                 if (isAjaxRequest) {
@@ -106,7 +94,6 @@ public class UserInfoInterceptor implements HandlerInterceptor {
         //拦截直接访问订单页面的数据
         return true;
     }
-
     @Override
     public void postHandle(HttpServletRequest request, HttpServletResponse response, Object handler,
                            ModelAndView modelAndView) throws Exception {
