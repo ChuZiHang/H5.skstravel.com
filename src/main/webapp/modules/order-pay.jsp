@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%> 
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head lang="en">
@@ -54,7 +55,7 @@
         <div class="orderAccessory airInfo">
          <c:choose>
          	<c:when test="${plane.flag eq '8' }">
-         	<c:out ${plane.flag eq '8' }>
+         	<%-- <c:out value="${plane.flag }"/></br> --%>
             <ul>
                 <li><em class="colorGary">北京-莫斯科 往返 7月8日-16日 </em><span class="colorCca">${plane.goodsNumber }</span></li>
                 <li>去程 <span>CA909 北京 - 莫斯科卢日尼基</span></li>
