@@ -13,9 +13,12 @@ import javax.servlet.http.Cookie;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
+import com.skstravel.common.api.Constants;
 import com.skstravel.common.tools.CookieUtils2;
 import com.skstravel.common.utils.sendMessage;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Controller;
@@ -38,6 +41,7 @@ import com.skstravel.service.UserService;
 @RequestMapping("/login")
 public class LoginController {
 
+    private static final Logger LOGGER = LoggerFactory.getLogger(LoginController.class);
     @Autowired
     private ISkBearerInfoService skBearerInfoService;
 
@@ -55,7 +59,7 @@ public class LoginController {
     public String login(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
         String phone = request.getParameter("mobilePhone");
         String mobileValidateCode = request.getParameter("mobileValidateCode");
-        System.out.println("****************************************************");
+        LOGGER.debug("****************************************************");
         if (StringUtils.isBlank(phone) || StringUtils.isBlank(mobileValidateCode)) {
             String msg = "<font color='red'>手机号或者手机短信验证码错误，请稍后重试！！</font>";
             request.setAttribute("errorMsg", msg);
@@ -70,20 +74,18 @@ public class LoginController {
             List<Map<String, Object>> list1 = jdbcTemplateForSksports2.queryForList(sql, "86"+phone);
             String userName = "";
             if (list.size() > 0) {
+
                 userName = (String) list.get(0).get("userName");
+                LOGGER.debug("userName============="+userName);
                 request.setAttribute("userName", userName);
-                Cookie cookie = new Cookie("memberId", list.get(0).get("userId").toString());
-                cookie.setPath("/");
-                cookie.setMaxAge(3600);
-                response.addCookie(cookie);
+                CookieUtils.setCookie("memberId", list.get(0).get("userId").toString(), -1, response, Constants.domain);
+
                 return "center";
             } else if(list1.size() > 0){
                 userName = (String) list1.get(0).get("userName");
                 request.setAttribute("userName", userName);
-                Cookie cookie = new Cookie("memberId", list1.get(0).get("userId").toString());
-                cookie.setPath("/");
-                cookie.setMaxAge(3600);
-                response.addCookie(cookie);
+                CookieUtils.setCookie("memberId", list1.get(0).get("userId").toString(), -1, response, Constants.domain);
+
                 return "center";
             }else{
                 String msg = "<font color='red'>您的手机号还没有注册，请先注册！</font>";
@@ -92,6 +94,7 @@ public class LoginController {
             }
 
         }else{
+            LOGGER.debug("************************99999****************************");
             String msg = "<font color='red'>系统异常，请稍后重试！！</font>";
             request.setAttribute("errorMsg", msg);
             return "login";

@@ -5,6 +5,7 @@ import com.google.gson.*;
 import com.skstravel.common.api.Constants;
 import com.skstravel.common.httpclient.HttpClient;
 import com.skstravel.common.mapper.sksports2.SkOrderComboMapper;
+import com.skstravel.common.mapper.sksports2.SkOrderPayLogMapper;
 import com.skstravel.common.model.sksports2.*;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.service.SkUsersService;
@@ -50,6 +51,9 @@ public class ZhaoHangController {
 
     @Autowired
     private SkOrderComboMapper skOrderComboMapper;
+
+    @Autowired
+    private SkOrderPayLogMapper skOrderPayLogMapper;
 
     /**
      * 获取授权登陆协议
@@ -261,7 +265,7 @@ public class ZhaoHangController {
         // FIXME
         params.put("productName", productName);
 //        params.put("productName", "世界杯门票套餐");
-        params.put("amount", orderInfo.getOrderAmount().multiply(BigDecimal.valueOf(100)) + ""); // 订单金额（单位为分）
+        params.put("amount", orderInfo.getGoodsAmount().multiply(BigDecimal.valueOf(100)) + ""); // 订单金额（单位为分）
 //        params.put("amount","100"); // 订单金额（单位为分）
         params.put("bonus", "0"); // 订单积分，无积分则传0
         params.put("returnUrl", "https://cmb-h5.skstravel.com/orderinfo/myorder"); // 掌上生活客户端支付成功重定向页面地址，默认为掌上生活支付成功页；App支付时不需要传入
@@ -285,6 +289,7 @@ public class ZhaoHangController {
      */
     @RequestMapping("/getNotify")
     public void notify(HttpServletRequest request, HttpServletResponse response) throws GeneralSecurityException, IOException {
+
         Map<String, String> params = new HashMap<>();
         Gson gson = new GsonBuilder().create();
 
@@ -358,6 +363,19 @@ public class ZhaoHangController {
                     break;
             }
 
+            SkOrderPayLog skOrderPayLog = new SkOrderPayLog();
+            skOrderPayLog.setOrderId(Integer.parseInt(billno));
+            skOrderPayLog.setTradeNo(refnum);
+            skOrderPayLog.setPayType(Short.parseShort("9"));
+            skOrderPayLog.setPayFee(Integer.parseInt(amount));
+            skOrderPayLog.setOutTradeNo(bankpayserial);
+            skOrderPayLog.setUserId(skOrderInfo.getUserId());
+            skOrderPayLog.setPayStatus(Byte.parseByte("1"));
+            skOrderPayLog.setReturnData(map.toString());
+            skOrderPayLog.setCreateTime(new Date());
+            skOrderPayLog.setUpdateTime(new Date());
+
+            skOrderPayLogMapper.insertSelective(skOrderPayLog);
             params.put("respCode", "1000"); // 应答码，若处理成功则为1000，若失败为1001
 
         } else {

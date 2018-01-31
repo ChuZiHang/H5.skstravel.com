@@ -54,7 +54,8 @@ public class UserInfoInterceptor implements HandlerInterceptor {
                 || request.getRequestURI().indexOf("/h5/zhaohang/payOrder") == 0) {
             System.out.println(request.getRequestURI());
             if (CookieUtils.getCookie(request, "memberId") != null) {
-                String value = CookieUtils2.getCookieValue(request, "memberId");
+                String value = CookieUtils.getCookie(request, "memberId");
+//                String value = CookieUtils2.getCookieValue(request, "memberId");
                 //判断招行用户条件
 //                SkUsersZhaohangExample skUsersZhaohangExample = new SkUsersZhaohangExample();
 //                skUsersZhaohangExample.createCriteria().andOpenIdEqualTo(value);
