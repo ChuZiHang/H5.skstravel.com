@@ -54,7 +54,7 @@ public class userController {
         String memberId = CookieUtils.getCookie(request, "memberId");
 //        String memberId = "4129";
         CookieUtils.setCookie("memberId", memberId + "", -1, response, Constants.domain);
-        String sql = "SELECT user_name userName FROM sk_users sk WHERE sk.mobile_phone = ?";
+        String sql = "SELECT user_name userName FROM sk_users sk WHERE sk.user_id = ?";
         List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{memberId});
         if(maps.size()>0){
             String userName = (String) maps.get(0).get("userName");

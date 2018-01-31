@@ -187,7 +187,10 @@ public class LoginController {
         //2.调用发送短信功能
         String flag = "0";
         try {
-            String result = sendMessage.getMobileCode(mobilePhone, mobileCode);
+           // String result = sendMessage.getMobileCode(mobilePhone, mobileCode);
+            //TODO
+          String  result="success";
+
             if("success".equals(result)){
                 flag="1";
             }
