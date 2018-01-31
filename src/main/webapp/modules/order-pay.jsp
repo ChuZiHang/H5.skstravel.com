@@ -200,8 +200,38 @@
         $('.orderTatalBtns').click(function(){
         	var isAgree = document.getElementById('isagreement').checked;
         	if(!isAgree){
+        		alert("请阅读购买协议!")
         		return;
         	}
+        	var linkMan = $('#linkMan').val();
+            var email = $('#email').val();
+            var phone = $('#phone').val();
+            var type = $('#type').val();
+            var typeCode = $('#typeCode').val();
+            if(!linkMan||!email||!phone||!type||!typeCode){
+            	alert("请填写联系人信息!")
+        		return;
+            }
+            
+            var invoiceVal = $('input[name="invoice"]:checked').val()
+            var obj = {};
+            obj['payType']=1;
+            if("1"==invoiceVal){
+    	        obj['invoice']=invoiceVal;
+            }else{
+    	        obj['invoice']=invoiceVal;
+    	        var invoiceType = $('#invoiceType option:selected').val();
+    	        obj['invoiceType'] = invoiceType;
+    	        obj['unit'] = $('#unit').val();
+    	        obj['fee'] = $('#fee').val();
+            }
+            //联系人信息
+            obj['linkMan'] = $('#linkMan').val();
+            obj['email'] = $('#email').val();
+            obj['phone'] = $('#phone').val();
+            obj['type'] = $('#type').val();
+            obj['typeCode'] = $('#typeCode').val();
+            
         	obj['entityId'] = $('#entityId').val();
         	obj['orderTotal'] = $('.orderTatalPrice').text();
         	$.ajax({
