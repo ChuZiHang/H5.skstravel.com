@@ -5,6 +5,7 @@ import com.google.gson.*;
 import com.skstravel.common.api.Constants;
 import com.skstravel.common.httpclient.HttpClient;
 import com.skstravel.common.mapper.sksports2.SkOrderComboMapper;
+import com.skstravel.common.mapper.sksports2.SkOrderGoodsMapper;
 import com.skstravel.common.mapper.sksports2.SkOrderPayLogMapper;
 import com.skstravel.common.model.sksports2.*;
 import com.skstravel.common.service.ISkOrderInfoService;
@@ -56,6 +57,9 @@ public class ZhaoHangController {
 
     @Autowired
     private SkOrderPayLogMapper skOrderPayLogMapper;
+
+    @Autowired
+    private SkOrderGoodsMapper skOrderGoodsMapper;
 
     /**
      * 获取授权登陆协议
@@ -248,16 +252,24 @@ public class ZhaoHangController {
         this.iSkOrderInfoService.updateOrderInfo(jsonObject1);
       
         LOGGER.debug("拼接支付报文====================");
-        String orderId = ParamUtils.getParameter(request, "entityId");
+        String orderId = jsonObject1.get("entityId").toString();
+        orderId = orderId.substring(1, orderId.length() - 1);
+//        String orderId = ParamUtils.getParameter(request, "entityId");
         SkOrderInfo orderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(orderId));
-        SkOrderComboExample skOrderComboExample = new SkOrderComboExample();
-        skOrderComboExample.createCriteria().andOrderIdEqualTo(Integer.parseInt(orderId));
-        List<SkOrderCombo> skOrderCombos = skOrderComboMapper.selectByExample(skOrderComboExample);
-        String productName = "";
-        if (skOrderCombos != null && skOrderCombos.size() > 0) {
-            productName = skOrderCombos.get(0).getGoodsName();
-        }
 
+        SkOrderGoodsExample skOrderGoodsExample = new SkOrderGoodsExample();
+        skOrderGoodsExample.createCriteria().andOrderIdEqualTo(Integer.parseInt(orderId));
+        List<SkOrderGoods> skOrderGoods = skOrderGoodsMapper.selectByExample(skOrderGoodsExample);
+//        SkOrderComboExample skOrderComboExample = new SkOrderComboExample();
+//        skOrderComboExample.createCriteria().andOrderIdEqualTo(Integer.parseInt(orderId));
+//        List<SkOrderCombo> skOrderCombos = skOrderComboMapper.selectByExample(skOrderComboExample);
+        String productName = "世界杯门票";
+//        if (skOrderCombos != null && skOrderCombos.size() > 0) {
+//            productName = skOrderCombos.get(0).getGoodsName();
+//        }
+        if(skOrderGoods != null && skOrderGoods.size() > 0){
+            productName = skOrderGoods.get(0).getGoodsName();
+        }
         String funcName = "pay";
 
         Map<String, String> params = new HashMap<>();
