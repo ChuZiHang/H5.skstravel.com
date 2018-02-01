@@ -337,7 +337,8 @@
         	data['jipiaoqian'] = $("#jipiaoqian").val();
         	//酒店
         	var tatal = $('.orderTatalPrice').text();
-        	if(Number(tatal) == 0){
+        	var sumNum = $('.orderPrice .sumNum').text();
+        	if(Number(tatal) == 0 || sumNum ==0){
         		alert("请选商品!");
         		return;
         	}

@@ -1,6 +1,7 @@
 package com.skstravel.web.controller;
 
 import com.skstravel.common.utils.CookieUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -87,100 +88,113 @@ public class SkOrderInfoController {
     private SkOrderPlaneMapper orderPlaneMapper;
 
     @RequestMapping("/orderinfo/{param}")
-    public String orderList(HttpServletRequest request, Model model, @PathVariable String param) throws Exception {
+    public String orderList(HttpServletRequest request, Model model, @PathVariable String param)  {
 
-        int pageNo = ParamUtils.getIntParameter(request, "pageNo", 1);
+        try {
+            int pageNo = ParamUtils.getIntParameter(request, "pageNo", 1);
 
-        SkOrderInfoExample skOrderInfoExample = new SkOrderInfoExample();
-        SkOrderInfoExample.Criteria criteria = skOrderInfoExample.createCriteria();
+            SkOrderInfoExample skOrderInfoExample = new SkOrderInfoExample();
+            SkOrderInfoExample.Criteria criteria = skOrderInfoExample.createCriteria();
 
-        //取用户id
-        String memberId = CookieUtils.getCookie(request, "memberId");
-        skOrderInfoExample.createCriteria().andUserIdEqualTo(Integer.parseInt(memberId));
+            //取用户id
+            String memberId = CookieUtils.getCookie(request, "memberId");
+            skOrderInfoExample.createCriteria().andUserIdEqualTo(Integer.parseInt(memberId));
 
-        long total = skOrderInfoService.countByExample(skOrderInfoExample);
-        int pageSize = 10;
-        Page page = new Page();
-        page.setTotal(total);
-        page.setLimit(pageSize);
-        page.setNo(pageNo);
-        skOrderInfoExample.setPage(page);
-        Pager pager = PagerService.getPager(pageNo, total, pageSize, 5);
+            long total = skOrderInfoService.countByExample(skOrderInfoExample);
+            int pageSize = 10;
+            Page page = new Page();
+            page.setTotal(total);
+            page.setLimit(pageSize);
+            page.setNo(pageNo);
+            skOrderInfoExample.setPage(page);
+            Pager pager = PagerService.getPager(pageNo, total, pageSize, 5);
 
 
-        List<SkOrderInfo> list = skOrderInfoService.selectByExample(skOrderInfoExample);
-        model.addAttribute("orderList", list);
-        return param;
+            List<SkOrderInfo> list = skOrderInfoService.selectByExample(skOrderInfoExample);
+            model.addAttribute("orderList", list);
+            return param;
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.debug("系统错误",e);
+            return "";
+        }
     }
 
     @RequestMapping("/getorderinfo")
     public String getorderinfo(HttpServletRequest request, Model model) throws  Exception {
 
-        int orderId = ParamUtils.getIntParameter(request, "orderId", 1);
+        try {
+            int orderId = ParamUtils.getIntParameter(request, "orderId", 1);
 
 
-        SkOrderInfoExample skOrderInfoExample = new SkOrderInfoExample();
-        skOrderInfoExample.createCriteria().andOrderIdEqualTo(orderId);
+            SkOrderInfoExample skOrderInfoExample = new SkOrderInfoExample();
+            skOrderInfoExample.createCriteria().andOrderIdEqualTo(orderId);
 
-        SkOrderInfo orderInfo = skOrderInfoService.selectByPrimaryKey(orderId);
-        //查票务信息
-        SkOrderComboExample skOrderComboExample = new SkOrderComboExample();
-        skOrderComboExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
-        List<SkOrderCombo> coList = this.skOrderComboService.selectByExample(skOrderComboExample);
-        SkOrderCombo skOrderCombo = new SkOrderCombo();
-        if (!coList.isEmpty()) {
-            skOrderCombo = coList.get(0);
-        }
-        //查酒店
-        SkOrderHotelExample skOrderHotelExample = new SkOrderHotelExample();
-        skOrderHotelExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
-        SkOrderHotel orderHotel = new SkOrderHotel();
-        List<SkOrderHotel> SkOrderHotelList = this.skOrderHotelService.selectByExample(skOrderHotelExample);
-        if (!SkOrderHotelList.isEmpty()) {
-            orderHotel = SkOrderHotelList.get(0);
-        }
-        SkHotel hotel = this.skHotelService.selectByPrimaryKey(orderHotel.getHotelId());
-        //查地址
-        SkUserAddressExample addressExample = new SkUserAddressExample();
-        addressExample.createCriteria().andUserIdEqualTo(orderInfo.getUserId());
-        SkUserAddress userAddress = new SkUserAddress();
-        List<SkUserAddress> SkUserAddressList = this.skUserAddressService.selectByExample(addressExample);
-        if (!SkUserAddressList.isEmpty()) {
-            userAddress = SkUserAddressList.get(0);
-        }
-        //查询护照信息
-        SkBearerInfoExample skBearerInfoExample = new SkBearerInfoExample();
-        skBearerInfoExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
-        List<SkBearerInfo> skBearerInfos = this.skBearerInfoService.selectByExample(skBearerInfoExample);
-        SkBearerInfo skBearerInfo = new SkBearerInfo();
-        if (!skBearerInfos.isEmpty()) {
-            skBearerInfo = skBearerInfos.get(0);
-        }
+            SkOrderInfo orderInfo = skOrderInfoService.selectByPrimaryKey(orderId);
+            //查票务信息
+            SkOrderComboExample skOrderComboExample = new SkOrderComboExample();
+            skOrderComboExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
+            List<SkOrderCombo> coList = this.skOrderComboService.selectByExample(skOrderComboExample);
+            SkOrderCombo skOrderCombo = new SkOrderCombo();
+            if (!coList.isEmpty()) {
+                skOrderCombo = coList.get(0);
+            }
+            //查酒店
+            SkOrderHotelExample skOrderHotelExample = new SkOrderHotelExample();
+            skOrderHotelExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
+            SkOrderHotel orderHotel = new SkOrderHotel();
+            List<SkOrderHotel> SkOrderHotelList = this.skOrderHotelService.selectByExample(skOrderHotelExample);
+            if (!SkOrderHotelList.isEmpty()) {
+                orderHotel = SkOrderHotelList.get(0);
+            }
+            SkHotel hotel = this.skHotelService.selectByPrimaryKey(orderHotel.getHotelId());
+            //查地址
+            SkUserAddressExample addressExample = new SkUserAddressExample();
+            addressExample.createCriteria().andUserIdEqualTo(orderInfo.getUserId());
+            SkUserAddress userAddress = new SkUserAddress();
+            List<SkUserAddress> SkUserAddressList = this.skUserAddressService.selectByExample(addressExample);
+            if (!SkUserAddressList.isEmpty()) {
+                userAddress = SkUserAddressList.get(0);
+            }
+            //查询护照信息
+            SkBearerInfoExample skBearerInfoExample = new SkBearerInfoExample();
+            skBearerInfoExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
+            List<SkBearerInfo> skBearerInfos = this.skBearerInfoService.selectByExample(skBearerInfoExample);
+            SkBearerInfo skBearerInfo = new SkBearerInfo();
+            if (!skBearerInfos.isEmpty()) {
+                skBearerInfo = skBearerInfos.get(0);
+            }
 
-        model.addAttribute("order", orderInfo);
-        model.addAttribute("orderCombo", skOrderCombo);
-        model.addAttribute("hotel", hotel);
-        model.addAttribute("userAddress", userAddress);
-        model.addAttribute("skBearerInfo", skBearerInfo);
-        return "myOrderDetail";
+            model.addAttribute("order", orderInfo);
+            model.addAttribute("orderCombo", skOrderCombo);
+            model.addAttribute("hotel", hotel);
+            model.addAttribute("userAddress", userAddress);
+            model.addAttribute("skBearerInfo", skBearerInfo);
+            return "myOrderDetail";
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.debug("系统错误",e);
+            return "";
+        }
     }
 
     @RequestMapping("/cancelOrder")
     public String cancelOrder(HttpServletRequest request, Model model) {
 
-        int orderId = ParamUtils.getIntParameter(request, "orderId", 1);
+        try {
+            int orderId = ParamUtils.getIntParameter(request, "orderId", 1);
 
-        SkOrderInfo orderInfo = skOrderInfoService.selectByPrimaryKey(orderId);
-        orderInfo.setOrderStatus(false);
-        this.skOrderInfoService.updateByPrimaryKey(orderInfo);
+            SkOrderInfo orderInfo = skOrderInfoService.selectByPrimaryKey(orderId);
+            orderInfo.setOrderStatus(false);
+            this.skOrderInfoService.updateByPrimaryKey(orderInfo);
 
 
-        int pageNo = ParamUtils.getIntParameter(request, "pageNo", 1);
+            int pageNo = ParamUtils.getIntParameter(request, "pageNo", 1);
 
-        SkOrderInfoExample skOrderInfoExample = new SkOrderInfoExample();
-        SkOrderInfoExample.Criteria criteria = skOrderInfoExample.createCriteria();
+            SkOrderInfoExample skOrderInfoExample = new SkOrderInfoExample();
+            SkOrderInfoExample.Criteria criteria = skOrderInfoExample.createCriteria();
 
-        //取用户id
+            //取用户id
 //        String userId = null;
 //        Cookie[] cookies = request.getCookies();
 //        for(Cookie cookie : cookies){
@@ -191,20 +205,25 @@ public class SkOrderInfoController {
 //        skOrderInfoExample.createCriteria().andUserIdEqualTo(Integer.parseInt(userId));
 
 
-        long total = skOrderInfoService.countByExample(skOrderInfoExample);
-        int pageSize = 10;
-        Page page = new Page();
-        page.setTotal(total);
-        page.setLimit(pageSize);
-        page.setNo(pageNo);
-        skOrderInfoExample.setPage(page);
-        Pager pager = PagerService.getPager(pageNo, total, pageSize, 5);
+            long total = skOrderInfoService.countByExample(skOrderInfoExample);
+            int pageSize = 10;
+            Page page = new Page();
+            page.setTotal(total);
+            page.setLimit(pageSize);
+            page.setNo(pageNo);
+            skOrderInfoExample.setPage(page);
+            Pager pager = PagerService.getPager(pageNo, total, pageSize, 5);
 
 
-        List<SkOrderInfo> list = skOrderInfoService.selectByExample(skOrderInfoExample);
-        model.addAttribute("orderList", list);
+            List<SkOrderInfo> list = skOrderInfoService.selectByExample(skOrderInfoExample);
+            model.addAttribute("orderList", list);
 
-        return "myorder";
+            return "myorder";
+        } catch (Exception e) {
+            e.printStackTrace();
+            LOGGER.debug("系统错误",e);
+            return "";
+        }
     }
 
     /**
