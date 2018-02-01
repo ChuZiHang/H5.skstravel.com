@@ -220,17 +220,30 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         //保存地址
         String payType = jsonObject.get("payType").toString();
         String invoice = jsonObject.get("invoice").toString();
+        invoice = invoice.substring(1, invoice.length() - 1);
         String invoiceType = jsonObject.get("invoiceType").toString();
+        invoiceType = invoiceType.substring(1, invoiceType.length() - 1);
         String unit = jsonObject.get("unit").toString();
+        unit = unit.substring(1, unit.length() - 1);
         String fee = jsonObject.get("fee").toString();
+        fee = fee.substring(1, fee.length() - 1);
+        if(StringUtils.isBlank(fee)){
+            fee="0";   
+        }
 
         String linkMan = jsonObject.get("linkMan").toString();
+        linkMan = linkMan.substring(1, linkMan.length() - 1);
         String email = jsonObject.get("email").toString();
+        email = email.substring(1, email.length() - 1);
         String phone = jsonObject.get("phone").toString();
+        phone = phone.substring(1, phone.length() - 1);
         String type = jsonObject.get("type").toString();
+        type = type.substring(1, type.length() - 1);
         String typeCode = jsonObject.get("typeCode").toString();
+        typeCode = typeCode.substring(1, typeCode.length() - 1);
 
         String entityId = jsonObject.get("entityId").toString();
+        entityId = entityId.substring(1, entityId.length() - 1);
         SkOrderInfo orderInfo = this.selectByPrimaryKey(Integer.parseInt(entityId));
         //维护订单信息
         //TODO
@@ -245,6 +258,6 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         orderInfo.setCardType(Integer.parseInt(type));
         orderInfo.setCardNum(typeCode);
 
-        this.updateByPrimaryKey(orderInfo);
+        this.updateByPrimaryKeySelective(orderInfo);
     }
 }

@@ -11,6 +11,7 @@ import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.service.SkUsersService;
 import com.skstravel.common.utils.CookieUtils;
 import com.skstravel.common.utils.ParamUtils;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -20,6 +21,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
+
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.security.GeneralSecurityException;
@@ -240,6 +242,11 @@ public class ZhaoHangController {
      */
     @RequestMapping("/payOrder")
     public void payOrder(HttpServletRequest request, HttpServletResponse response) throws GeneralSecurityException, IOException {
+        String str = getRequestPostStr(request);
+        JsonElement parse = new JsonParser().parse(str);
+        JsonObject jsonObject1 = parse.getAsJsonObject();
+        this.iSkOrderInfoService.updateOrderInfo(jsonObject1);
+      
         LOGGER.debug("拼接支付报文====================");
         String orderId = ParamUtils.getParameter(request, "entityId");
         SkOrderInfo orderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(orderId));
@@ -397,5 +404,34 @@ public class ZhaoHangController {
         BigDecimal dd = a.multiply(new BigDecimal(100));
         BigDecimal ddd = dd.setScale(0, BigDecimal.ROUND_HALF_UP);
         System.out.println(ddd);
+    }
+    
+    public static byte[] getRequestPostBytes(HttpServletRequest request)
+            throws IOException {
+        int contentLength = request.getContentLength();
+        if (contentLength < 0) {
+            return null;
+        }
+        byte buffer[] = new byte[contentLength];
+        for (int i = 0; i < contentLength; ) {
+
+            int readlen = request.getInputStream().read(buffer, i,
+                    contentLength - i);
+            if (readlen == -1) {
+                break;
+            }
+            i += readlen;
+        }
+        return buffer;
+    }
+
+    public static String getRequestPostStr(HttpServletRequest request)
+            throws IOException {
+        byte buffer[] = getRequestPostBytes(request);
+        String charEncoding = request.getCharacterEncoding();
+        if (charEncoding == null) {
+            charEncoding = "UTF-8";
+        }
+        return new String(buffer, charEncoding);
     }
 }

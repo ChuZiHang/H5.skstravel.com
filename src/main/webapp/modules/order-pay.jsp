@@ -237,7 +237,7 @@
         	$.ajax({
                 type: 'POST',
                 url: "/h5/zhaohang/payOrder.controller ",
-                data: obj,
+                data: JSON.stringify(obj),
                 dataType: 'json',
                 success: function (res) {
                     console.log(res.str);
