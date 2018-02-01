@@ -231,6 +231,9 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
             fee="0";   
         }
 
+        String isGet = jsonObject.get("isGet").toString();
+        isGet = isGet.substring(1, isGet.length() - 1);
+        
         String linkMan = jsonObject.get("linkMan").toString();
         linkMan = linkMan.substring(1, linkMan.length() - 1);
         String email = jsonObject.get("email").toString();
@@ -247,6 +250,7 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         SkOrderInfo orderInfo = this.selectByPrimaryKey(Integer.parseInt(entityId));
         //维护订单信息
         //TODO
+        orderInfo.setGetTicketType(isGet);
         orderInfo.setInvoiceNo(invoice);
         orderInfo.setInvType(invoiceType);
         orderInfo.setInvPayee(unit);

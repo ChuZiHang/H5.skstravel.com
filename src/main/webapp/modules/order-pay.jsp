@@ -79,7 +79,7 @@
         <div class="orderAccessory airInfo">
             <div class="radioPosition">
                 <em>
-                    <input type="radio" id="isGet" name="isGet" checked value="1" class="regular-radio big-radio">
+                    <input type="checkbox" id="isGet" name="isGet" value="1" class="regular-radio big-radio">
                     <label for="isGet"></label>
                     国外自取
                 </em>
@@ -228,6 +228,13 @@
     	        obj['unit'] = $('#unit').val();
     	        obj['fee'] = $('#fee').val();
             }
+            //取票方式
+            var isGet = document.getElementsByName("isGet")[0];
+			if(isGet.checked){
+				obj['isGet'] = '国外取票';
+			}else{
+				obj['isGet'] = '';
+			}
             //联系人信息
             obj['linkMan'] = $('#linkMan').val();
             obj['email'] = $('#email').val();
