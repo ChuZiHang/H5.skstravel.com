@@ -348,18 +348,22 @@ public class ZhaoHangController {
             // 订单状态 0 未确认 1 已确认 2 已取消 3 无效 4 退货 5 已分单  6 部分分单
             // 支付状态 0 未付款 1 付款中 2 已付款
             // 订单的相应的字段进行修改
-            String sql = "UPDATE sk_order_info SET STATUS = ? WHERE order_id = " + billno;
+
+            int payTime = (int) (System.currentTimeMillis()/1000);
+            String sql = "UPDATE sk_order_info SET STATUS = ? , pay_time = ?,pay_name = '招行支付'  WHERE order_id = " + billno;
             Object[] objects = {};
             switch (result) {
                 case "2":
-                    jdbcTemplateForSksports2.update(sql, new Object[]{2});
+                    jdbcTemplateForSksports2.update(sql, new Object[]{2,payTime});
                     break;
                 case "3":
                     break;
                 case "200":
-                    jdbcTemplateForSksports2.update(sql, new Object[]{2});
+                    jdbcTemplateForSksports2.update(sql, new Object[]{2,payTime});
                     break;
                 case "300":
+                    break;
+                default:
                     break;
             }
 

@@ -9,7 +9,10 @@ import java.util.Random;
 
 import javax.servlet.http.HttpServletRequest;
 
+import com.skstravel.web.controller.ZhaoHangController;
 import org.apache.commons.lang3.StringUtils;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.stereotype.Service;
@@ -27,13 +30,15 @@ import com.skstravel.common.utils.CookieUtils;
 
 import org.springframework.transaction.annotation.Transactional;
 
-@Service
+@Service("iSkOrderInfoService")
 public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
-    
+
+    private static final Logger LOGGER = LoggerFactory.getLogger(SkOrderInfoServiceImpl.class);
+
     @Autowired
     private SkOrderInfoMapper skOrderInfoMapper;
     @Autowired
-    private  JdbcTemplate jdbcTemplateForSksports2;
+    private JdbcTemplate jdbcTemplateForSksports2;
     @Autowired
     private SkOrderGoodsMapper orderGoodsMapper;
     @Autowired
@@ -88,24 +93,25 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
 
     @Override
     @Transactional(value = "transactionManagerSksports2", rollbackFor = Exception.class)
-    public int createOrderInfo(HttpServletRequest request,JsonObject jsonObject) throws Exception {
+    public int createOrderInfo(HttpServletRequest request, JsonObject jsonObject) throws Exception {
+        LOGGER.debug("开始下单=============================================================");
         String memberId = CookieUtils.getCookie(request, "memberId");
-        if(org.apache.commons.lang3.StringUtils.isBlank(memberId)){
+        if (org.apache.commons.lang3.StringUtils.isBlank(memberId)) {
             memberId = "1";
         }
         String sql = "SELECT * FROM sk_users WHERE user_id = ? ";
         List<Map<String, Object>> maps = jdbcTemplateForSksports2.queryForList(sql, new Object[]{memberId});
-        String userName=null;
-        String email=null;
-        String phone=null;
-        if(!maps.isEmpty()){
-            userName = (String)maps.get(0).get("user_name");
-            email = (String)maps.get(0).get("email");
-            phone = (String)maps.get(0).get("mobile_phone");
+        String userName = null;
+        String email = null;
+        String phone = null;
+        if (!maps.isEmpty()) {
+            userName = (String) maps.get(0).get("user_name");
+            email = (String) maps.get(0).get("email");
+            phone = (String) maps.get(0).get("mobile_phone");
         }
-        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyyMMdd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String str = sdf.format(new Date());
-        Random random = new Random();  
+        Random random = new Random();
         int rannum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;
         String orderCode = str + String.valueOf(rannum);
         //创建订单信息
@@ -118,43 +124,44 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         orderInfo.setEmail(email);
         orderInfo.setMobile(phone);
         String price = jsonObject.get("shopPrice").toString();
-        price = price.substring(1, price.length()-1);
+        price = price.substring(1, price.length() - 1);
         orderInfo.setGoodsAmount(new BigDecimal(price));
         String total = jsonObject.get("orderTatalPrice").toString();
-        total = total.substring(1, total.length()-1);
+        total = total.substring(1, total.length() - 1);
         orderInfo.setGoodsAmount(new BigDecimal(total));
-//        orderInfo.setAddTime(new Integer((int)System.currentTimeMillis()));
+        orderInfo.setAddTime(new Integer((int)System.currentTimeMillis()));
         //默认值
         orderInfo.setAgencyId(Short.parseShort("1"));
         orderInfo.setInvType("1");
         orderInfo.setTax(new BigDecimal(0.00));
         orderInfo.setDiscount(new BigDecimal(17));
         orderInfo.setAddressId(1L);
-        orderInfo.setAddTime((int)System.currentTimeMillis()/1000);
+        orderInfo.setAddTime((int) System.currentTimeMillis() / 1000);
         String goodsName = jsonObject.get("goodsName").toString();
-        goodsName = goodsName.substring(1, goodsName.length()-1);
-        orderInfo.setThirdInfo("来源：招商银行<br>商品："+goodsName+"<br>");
+        goodsName = goodsName.substring(1, goodsName.length() - 1);
+        orderInfo.setThirdInfo("来源：招商银行<br>商品：" + goodsName + "<br>");
         this.insertSelective(orderInfo);
         int orderId = orderInfo.getOrderId();
+        LOGGER.debug("开始下单orderId============================================================="+orderId);
         //维护订单商品信息
         SkOrderGoods orderGoods = new SkOrderGoods();
         orderGoods.setOrderId(orderId);
         String goodsId = jsonObject.get("goodsId").toString();
-        goodsId = goodsId.substring(1, goodsId.length()-1);
+        goodsId = goodsId.substring(1, goodsId.length() - 1);
         orderGoods.setGoodsId(Integer.parseInt(goodsId));
         orderGoods.setGoodsName(goodsName);
         String goodsSn = jsonObject.get("goodsSn").toString();
-        goodsSn = goodsSn.substring(1, goodsSn.length()-1);
+        goodsSn = goodsSn.substring(1, goodsSn.length() - 1);
         orderGoods.setGoodsSn(goodsSn);
         String shopPrice = jsonObject.get("shopPrice").toString();
-        shopPrice = shopPrice.substring(1, shopPrice.length()-1);
+        shopPrice = shopPrice.substring(1, shopPrice.length() - 1);
         orderGoods.setGoodsPrice(new BigDecimal(shopPrice));
         String sumNum = jsonObject.get("sumNum").toString();
-        sumNum = sumNum.substring(1, sumNum.length()-1);
+        sumNum = sumNum.substring(1, sumNum.length() - 1);
         orderGoods.setGoodsNumber(Short.parseShort(sumNum));
         //纪念品数量
         String jinianpinum = jsonObject.get("jinianpinum").toString();
-        jinianpinum = jinianpinum.substring(1, jinianpinum.length()-1);
+        jinianpinum = jinianpinum.substring(1, jinianpinum.length() - 1);
         orderGoods.setProductId(Integer.parseInt(jinianpinum));//  当纪念品数量
         //默认值
         orderGoods.setMarketPrice(new BigDecimal(22));
@@ -170,57 +177,59 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         SkOrderPlane orderPlane = new SkOrderPlane();
         orderPlane.setOrderId(orderId);
         String hcxz = jsonObject.get("hcxz").toString();
-        if("2018-07-08".equals(hcxz)){
+        if ("2018-07-08".equals(hcxz)) {
             orderPlane.setFromCity(52);
             orderPlane.setToCity(3507);
             orderPlane.setFlyDate(sdf.parse("2018-07-08"));
             orderPlane.setReturnFlyDate(sdf.parse("2018-07-16"));
-        }else{
+        } else {
             orderPlane.setFromCity(52);
             orderPlane.setToCity(3507);
             orderPlane.setFlyDate(sdf.parse("2018-07-09"));
             orderPlane.setReturnFlyDate(sdf.parse("2018-07-17"));
         }
         String jipiaonum = jsonObject.get("jipiaonum").toString();
-        jipiaonum = jipiaonum.substring(1, jipiaonum.length()-1);
+        jipiaonum = jipiaonum.substring(1, jipiaonum.length() - 1);
         orderPlane.setGoodsNumber(Integer.parseInt(jipiaonum));
-        
+
         String jipiaoqian = jsonObject.get("jipiaoqian").toString();
-        jipiaoqian = jipiaoqian.substring(1, jipiaoqian.length()-1);
+        jipiaoqian = jipiaoqian.substring(1, jipiaoqian.length() - 1);
         //默认值
         orderPlane.setSpaceId(new Integer(1));
-        if(StringUtils.isNotBlank(jipiaoqian)){
+        if (StringUtils.isNotBlank(jipiaoqian)) {
             orderPlane.setGoodsPrice(new BigDecimal(jipiaoqian));
-        }else{
+        } else {
             orderPlane.setGoodsPrice(new BigDecimal(0));
         }
         orderPlane.setAirId(new Integer(1));
         this.orderPlaneMapper.insert(orderPlane);
+
+        LOGGER.debug("下单结束orderId============================================================="+orderId);
         return orderId;
     }
 
     public static void main(String[] args) {
-        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyyMMdd");
+        SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
         String str = sdf.format(new Date());
-        Random random = new Random();  
+        Random random = new Random();
         int rannum = (int) (random.nextDouble() * (99999 - 10000 + 1)) + 10000;
         String orderCode = str + String.valueOf(rannum);
     }
-	
-    public void updateOrderInfo(JsonObject jsonObject){
+
+    public void updateOrderInfo(JsonObject jsonObject) {
         //保存地址
         String payType = jsonObject.get("payType").toString();
         String invoice = jsonObject.get("invoice").toString();
         String invoiceType = jsonObject.get("invoiceType").toString();
         String unit = jsonObject.get("unit").toString();
         String fee = jsonObject.get("fee").toString();
-        
+
         String linkMan = jsonObject.get("linkMan").toString();
         String email = jsonObject.get("email").toString();
         String phone = jsonObject.get("phone").toString();
         String type = jsonObject.get("type").toString();
         String typeCode = jsonObject.get("typeCode").toString();
-        
+
         String entityId = jsonObject.get("entityId").toString();
         SkOrderInfo orderInfo = this.selectByPrimaryKey(Integer.parseInt(entityId));
         //维护订单信息
@@ -235,7 +244,7 @@ public class SkOrderInfoServiceImpl implements ISkOrderInfoService {
         orderInfo.setMobile(phone);
         orderInfo.setCardType(Integer.parseInt(type));
         orderInfo.setCardNum(typeCode);
-        
+
         this.updateByPrimaryKey(orderInfo);
     }
 }

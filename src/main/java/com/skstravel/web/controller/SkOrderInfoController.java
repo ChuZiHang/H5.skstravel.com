@@ -44,6 +44,7 @@ import com.skstravel.common.service.ISkOrderHotelService;
 import com.skstravel.common.service.ISkOrderInfoService;
 import com.skstravel.common.service.ISkUserAddressService;
 import com.skstravel.common.utils.ParamUtils;
+
 import java.io.IOException;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
@@ -70,13 +71,13 @@ public class SkOrderInfoController {
     @Autowired
     private ISkHotelService skHotelService;
     @Autowired
-    private ISkUserAddressService skUserAddressService; 
+    private ISkUserAddressService skUserAddressService;
     @Autowired
     private ISkBearerInfoService skBearerInfoService;
     @Autowired
     private SkGoodsMapper skGoodsMapper;
     @Autowired
-    private  JdbcTemplate jdbcTemplateForSksports2;
+    private JdbcTemplate jdbcTemplateForSksports2;
     @Autowired
     private SkHotelMapper skHotelMapper;
     @Autowired
@@ -85,17 +86,17 @@ public class SkOrderInfoController {
     private SkOrderPlaneMapper orderPlaneMapper;
 
     @RequestMapping("/orderinfo/{param}")
-    public String orderList(HttpServletRequest request, Model model,@PathVariable String param ) throws Exception {
-        
-        int pageNo = ParamUtils.getIntParameter(request, "pageNo",1);
-        
+    public String orderList(HttpServletRequest request, Model model, @PathVariable String param) throws Exception {
+
+        int pageNo = ParamUtils.getIntParameter(request, "pageNo", 1);
+
         SkOrderInfoExample skOrderInfoExample = new SkOrderInfoExample();
         SkOrderInfoExample.Criteria criteria = skOrderInfoExample.createCriteria();
-        
+
         //取用户id
         String memberId = CookieUtils.getCookie(request, "memberId");
         skOrderInfoExample.createCriteria().andUserIdEqualTo(Integer.parseInt(memberId));
-        
+
         long total = skOrderInfoService.countByExample(skOrderInfoExample);
         int pageSize = 10;
         Page page = new Page();
@@ -104,29 +105,29 @@ public class SkOrderInfoController {
         page.setNo(pageNo);
         skOrderInfoExample.setPage(page);
         Pager pager = PagerService.getPager(pageNo, total, pageSize, 5);
-        
-        
+
+
         List<SkOrderInfo> list = skOrderInfoService.selectByExample(skOrderInfoExample);
         model.addAttribute("orderList", list);
-        return param ;
+        return param;
     }
-    
+
     @RequestMapping("/getorderinfo")
     public String getorderinfo(HttpServletRequest request, Model model) {
-        
-        int orderId = ParamUtils.getIntParameter(request, "orderId",1);
-        
-        
+
+        int orderId = ParamUtils.getIntParameter(request, "orderId", 1);
+
+
         SkOrderInfoExample skOrderInfoExample = new SkOrderInfoExample();
         skOrderInfoExample.createCriteria().andOrderIdEqualTo(orderId);
-        
+
         SkOrderInfo orderInfo = skOrderInfoService.selectByPrimaryKey(orderId);
         //查票务信息
         SkOrderComboExample skOrderComboExample = new SkOrderComboExample();
         skOrderComboExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
         List<SkOrderCombo> coList = this.skOrderComboService.selectByExample(skOrderComboExample);
         SkOrderCombo skOrderCombo = new SkOrderCombo();
-        if(!coList.isEmpty()){
+        if (!coList.isEmpty()) {
             skOrderCombo = coList.get(0);
         }
         //查酒店
@@ -134,7 +135,7 @@ public class SkOrderInfoController {
         skOrderHotelExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
         SkOrderHotel orderHotel = new SkOrderHotel();
         List<SkOrderHotel> SkOrderHotelList = this.skOrderHotelService.selectByExample(skOrderHotelExample);
-        if(!SkOrderHotelList.isEmpty()){
+        if (!SkOrderHotelList.isEmpty()) {
             orderHotel = SkOrderHotelList.get(0);
         }
         SkHotel hotel = this.skHotelService.selectByPrimaryKey(orderHotel.getHotelId());
@@ -143,7 +144,7 @@ public class SkOrderInfoController {
         addressExample.createCriteria().andUserIdEqualTo(orderInfo.getUserId());
         SkUserAddress userAddress = new SkUserAddress();
         List<SkUserAddress> SkUserAddressList = this.skUserAddressService.selectByExample(addressExample);
-        if(!SkUserAddressList.isEmpty()){
+        if (!SkUserAddressList.isEmpty()) {
             userAddress = SkUserAddressList.get(0);
         }
         //查询护照信息
@@ -151,33 +152,33 @@ public class SkOrderInfoController {
         skBearerInfoExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
         List<SkBearerInfo> skBearerInfos = this.skBearerInfoService.selectByExample(skBearerInfoExample);
         SkBearerInfo skBearerInfo = new SkBearerInfo();
-        if(!skBearerInfos.isEmpty()){
+        if (!skBearerInfos.isEmpty()) {
             skBearerInfo = skBearerInfos.get(0);
         }
-        
+
         model.addAttribute("order", orderInfo);
         model.addAttribute("orderCombo", skOrderCombo);
         model.addAttribute("hotel", hotel);
         model.addAttribute("userAddress", userAddress);
         model.addAttribute("skBearerInfo", skBearerInfo);
-        return "myOrderDetail" ;
+        return "myOrderDetail";
     }
-    
+
     @RequestMapping("/cancelOrder")
     public String cancelOrder(HttpServletRequest request, Model model) {
-        
-        int orderId = ParamUtils.getIntParameter(request, "orderId",1);
-        
+
+        int orderId = ParamUtils.getIntParameter(request, "orderId", 1);
+
         SkOrderInfo orderInfo = skOrderInfoService.selectByPrimaryKey(orderId);
         orderInfo.setOrderStatus(false);
         this.skOrderInfoService.updateByPrimaryKey(orderInfo);
-        
-        
-        int pageNo = ParamUtils.getIntParameter(request, "pageNo",1);
-        
+
+
+        int pageNo = ParamUtils.getIntParameter(request, "pageNo", 1);
+
         SkOrderInfoExample skOrderInfoExample = new SkOrderInfoExample();
         SkOrderInfoExample.Criteria criteria = skOrderInfoExample.createCriteria();
-        
+
         //取用户id
 //        String userId = null;
 //        Cookie[] cookies = request.getCookies();
@@ -187,8 +188,8 @@ public class SkOrderInfoController {
 //            }
 //         }
 //        skOrderInfoExample.createCriteria().andUserIdEqualTo(Integer.parseInt(userId));
-        
-        
+
+
         long total = skOrderInfoService.countByExample(skOrderInfoExample);
         int pageSize = 10;
         Page page = new Page();
@@ -197,38 +198,39 @@ public class SkOrderInfoController {
         page.setNo(pageNo);
         skOrderInfoExample.setPage(page);
         Pager pager = PagerService.getPager(pageNo, total, pageSize, 5);
-        
-        
+
+
         List<SkOrderInfo> list = skOrderInfoService.selectByExample(skOrderInfoExample);
         model.addAttribute("orderList", list);
-        
-        return "myorder" ;
+
+        return "myorder";
     }
-    
+
     /**
      * 创建订单
+     *
      * @param request
      * @param model
      * @return
-     * @throws Exception 
+     * @throws Exception
      */
     @RequestMapping("/orderinfo/createOrder")
-    public void createOrder(HttpServletRequest request, HttpServletResponse response ,Model model) throws Exception {
-        String str1= "";
+    public void createOrder(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+        String str1 = "";
         try {
             String str = getRequestPostStr(request);
             JsonElement parse = new JsonParser().parse(str);
             JsonObject jsonObject = parse.getAsJsonObject();
-            int orderId = this.skOrderInfoService.createOrderInfo(request,jsonObject);
+            int orderId = this.skOrderInfoService.createOrderInfo(request, jsonObject);
             str1 = String.valueOf(orderId);
-            response.getWriter().println(orderId);;
+            response.getWriter().println(orderId);
+            ;
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
-    
+
     /**
-     * 
      * @param request
      * @param model
      * @param entity
@@ -236,7 +238,7 @@ public class SkOrderInfoController {
      */
     @RequestMapping("/queryOrderInfo")
     public String queryOrderInfo(HttpServletRequest request, Model model) {
-        int goodId = ParamUtils.getIntParameter(request, "goodsId",1);
+        int goodId = ParamUtils.getIntParameter(request, "goodsId", 1);
         //查询商品信息
         SkGoods skGoods = this.skGoodsMapper.selectByPrimaryKey(Integer.valueOf(goodId));
         //查询吉祥物信息
@@ -244,64 +246,72 @@ public class SkOrderInfoController {
         skGoodsExample.createCriteria().andGoodsTypeEqualTo(Short.valueOf("14"));//吉祥物类型
         List<SkGoods> jxwList = this.skGoodsMapper.selectByExample(skGoodsExample);
         //机票,暂时查询所有的机票
-        String sql = "select DISTINCT * from (SELECT DISTINCT * from (select DISTINCT * from sk_air_ticket t,(select r.region_id cid,r.region_name cname from sk_air_ticket t LEFT JOIN sk_region r " 
-                    +" ON t.from_city=r.region_id) c where t.from_city=c.cid) zhu,(select r.region_id did,r.region_name dname from sk_air_ticket t LEFT JOIN sk_region r "
-                    +" ON t.to_city=r.region_id) d where zhu.to_city=d.did) zh,sk_air_line line where zh.air_line_id=line.id ";
+        String sql = "select DISTINCT * from (SELECT DISTINCT * from (select DISTINCT * from sk_air_ticket t,(select r.region_id cid,r.region_name cname from sk_air_ticket t LEFT JOIN sk_region r "
+                + " ON t.from_city=r.region_id) c where t.from_city=c.cid) zhu,(select r.region_id did,r.region_name dname from sk_air_ticket t LEFT JOIN sk_region r "
+                + " ON t.to_city=r.region_id) d where zhu.to_city=d.did) zh,sk_air_line line where zh.air_line_id=line.id ";
         List<Map<String, Object>> jpList = this.jdbcTemplateForSksports2.queryForList(sql);
         //酒店,暂时查询所有的酒店
         List<SkHotel> jdList = this.skHotelMapper.selectByExample(null);
-        
+
         model.addAttribute("goods", skGoods);
         model.addAttribute("jxwList", jxwList);
         model.addAttribute("jpList", jpList);
         model.addAttribute("jdList", jdList);
-        return "order" ;
+        return "order";
     }
-    
+
     @RequestMapping("/queryOrderInfoForPay")
-    public String queryOrderInfoForPay(HttpServletRequest request, Model model) throws ParseException {
-        int orderId = ParamUtils.getIntParameter(request, "orderId",1);
-        //查询订单信息
-        SkOrderInfo orderInfo = this.skOrderInfoService.selectByPrimaryKey(orderId);
-        //查询商品信息
-        SkOrderGoodsExample goodsExamle = new SkOrderGoodsExample();
-        goodsExamle.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
-        List<SkOrderGoods> orderGoddsList = this.orderGoodsMapper.selectByExample(goodsExamle);
-        SkOrderGoods goods = new SkOrderGoods();
-        if(!orderGoddsList.isEmpty()){
-            goods = orderGoddsList.get(0);
+    public String queryOrderInfoForPay(HttpServletRequest request, Model model){
+        try {
+            int orderId = ParamUtils.getIntParameter(request, "orderId", 1);
+            LOGGER.debug("queryOrderInfoForPay===========================orderId" + orderId);
+            //查询订单信息
+            SkOrderInfo orderInfo = this.skOrderInfoService.selectByPrimaryKey(orderId);
+            LOGGER.debug("queryOrderInfoForPay===========================orderInfo" + orderInfo);
+            //查询商品信息
+            SkOrderGoodsExample goodsExamle = new SkOrderGoodsExample();
+            goodsExamle.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
+            List<SkOrderGoods> orderGoddsList = this.orderGoodsMapper.selectByExample(goodsExamle);
+            SkOrderGoods goods = new SkOrderGoods();
+            if (!orderGoddsList.isEmpty()) {
+                goods = orderGoddsList.get(0);
+            }
+            LOGGER.debug("queryOrderInfoForPay===========================goods" + goods);
+            //查询机票信息
+            SkOrderPlaneExample planeExample = new SkOrderPlaneExample();
+            planeExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
+            List<SkOrderPlane> planList = this.orderPlaneMapper.selectByExample(planeExample);
+            SkOrderPlane plane = new SkOrderPlane();
+            if (!planList.isEmpty()) {
+                plane = planList.get(0);
+            }
+            LOGGER.debug("queryOrderInfoForPay===========================plane" + plane);
+            //设置标志位
+            SimpleDateFormat sdf = new SimpleDateFormat("yyyyMMdd");
+            if (plane.getFlyDate().getTime() == (sdf.parse("2018-07-08")).getTime()) {
+                plane.setFlag("8");
+            } else {
+                plane.setFlag("9");
+            }
+
+            model.addAttribute("orderInfo", orderInfo);
+            model.addAttribute("goods", goods);
+            model.addAttribute("plane", plane);
+        } catch (ParseException e) {
+            LOGGER.debug("系统错误",e);
         }
-        //查询机票信息
-        SkOrderPlaneExample planeExample = new SkOrderPlaneExample();
-        planeExample.createCriteria().andOrderIdEqualTo(orderInfo.getOrderId());
-        List<SkOrderPlane> planList = this.orderPlaneMapper.selectByExample(planeExample);
-        SkOrderPlane plane = new SkOrderPlane();
-        if(!planList.isEmpty()){
-            plane = planList.get(0);
-        }
-        //设置标志位
-        SimpleDateFormat sdf =   new SimpleDateFormat( "yyyyMMdd");
-        if(plane.getFlyDate().getTime() == (sdf.parse("2018-07-08")).getTime()){
-            plane.setFlag("8");
-        }else{
-            plane.setFlag("9");
-        }
-        
-        model.addAttribute("orderInfo", orderInfo);
-        model.addAttribute("goods", goods);
-        model.addAttribute("plane", plane);
-        return "order-pay" ;
+        return "order-pay";
     }
-    
-    
+
+
     public static byte[] getRequestPostBytes(HttpServletRequest request)
             throws IOException {
         int contentLength = request.getContentLength();
-        if(contentLength<0){
+        if (contentLength < 0) {
             return null;
         }
         byte buffer[] = new byte[contentLength];
-        for (int i = 0; i < contentLength;) {
+        for (int i = 0; i < contentLength; ) {
 
             int readlen = request.getInputStream().read(buffer, i,
                     contentLength - i);
