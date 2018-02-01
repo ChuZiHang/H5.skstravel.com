@@ -12,6 +12,6 @@
 </head>
 <body>
     <h1>网页走丢了...</h1>
-    <h2>${globalExceptionMessage}</h2>
+    <h2>${model.ex}</h2>
 </body>
 </html>
