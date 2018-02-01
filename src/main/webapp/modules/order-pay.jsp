@@ -219,6 +219,8 @@
     	        obj['invoice']=invoiceVal;
     	        var invoiceType = $('#invoiceType option:selected').val();
     	        obj['invoiceType'] = invoiceType;
+    	        obj['unit'] = $('#unit').val();
+    	        obj['fee'] = $('#fee').val();
             }else{
     	        obj['invoice']=invoiceVal;
     	        var invoiceType = $('#invoiceType option:selected').val();
