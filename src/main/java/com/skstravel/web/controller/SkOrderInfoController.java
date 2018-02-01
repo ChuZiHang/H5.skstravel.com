@@ -216,7 +216,7 @@ public class SkOrderInfoController {
      * @throws Exception
      */
     @RequestMapping("/orderinfo/createOrder")
-    public void createOrder(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
+    public void createOrder(HttpServletRequest request, HttpServletResponse response, Model model)  {
         String str1 = "";
         try {
             String str = getRequestPostStr(request);
@@ -225,9 +225,9 @@ public class SkOrderInfoController {
             int orderId = this.skOrderInfoService.createOrderInfo(request, jsonObject);
             str1 = String.valueOf(orderId);
             response.getWriter().println(orderId);
-        } catch (IOException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw e;
+            LOGGER.debug("系统错误",e);
         }
     }
 
@@ -238,7 +238,7 @@ public class SkOrderInfoController {
      * @return
      */
     @RequestMapping("/queryOrderInfo")
-    public String queryOrderInfo(HttpServletRequest request, Model model) throws  Exception {
+    public String queryOrderInfo(HttpServletRequest request, Model model) {
         int goodId = ParamUtils.getIntParameter(request, "goodsId", 1);
         //查询商品信息
         SkGoods skGoods = this.skGoodsMapper.selectByPrimaryKey(Integer.valueOf(goodId));
@@ -253,9 +253,9 @@ public class SkOrderInfoController {
         List<Map<String, Object>> jpList = null;
         try {
             jpList = this.jdbcTemplateForSksports2.queryForList(sql);
-        } catch (DataAccessException e) {
+        } catch (Exception e) {
             e.printStackTrace();
-            throw  e;
+            LOGGER.debug("系统错误",e);
         }
         //酒店,暂时查询所有的酒店
         List<SkHotel> jdList = null;
@@ -263,7 +263,7 @@ public class SkOrderInfoController {
             jdList = this.skHotelMapper.selectByExample(null);
         } catch (Exception e) {
             e.printStackTrace();
-            throw  e;
+            LOGGER.debug("系统错误",e);
         }
 
         model.addAttribute("goods", skGoods);
@@ -310,7 +310,7 @@ public class SkOrderInfoController {
             model.addAttribute("orderInfo", orderInfo);
             model.addAttribute("goods", goods);
             model.addAttribute("plane", plane);
-        } catch (ParseException e) {
+        } catch (Exception e) {
             LOGGER.debug("系统错误",e);
         }
         return "order-pay";
