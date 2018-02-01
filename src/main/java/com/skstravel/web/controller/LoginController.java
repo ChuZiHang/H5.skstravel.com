@@ -172,7 +172,12 @@ public class LoginController {
     @RequestMapping("/registerUI")
     public String registerUI(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
 
-        int i=1/0;
+        try {
+            int i=1/0;
+        } catch (Exception e) {
+            e.printStackTrace();
+            throw e;
+        }
         return "register";
     }
 

@@ -14,7 +14,13 @@ public class DefaultExceptionHandler {
     @ExceptionHandler({Exception.class})
     public ModelAndView processUnauthenticatedException(HttpServletRequest request, Exception exception) {
         ModelAndView modelAndView = new ModelAndView();
-        modelAndView.addObject("exception", exception);
+        String message="造成问题的原因是："+exception.toString()+exception.getLocalizedMessage();
+        Throwable cause = exception.getCause();
+        System.out.println(cause);
+        StackTraceElement[] stackTrace = exception.getStackTrace();
+        System.out.println(stackTrace);
+        modelAndView.addObject("exception", message);
+        //modelAndView.addObject("detail",exception.getCause());
         modelAndView.setViewName("error");
         return modelAndView;
     }
