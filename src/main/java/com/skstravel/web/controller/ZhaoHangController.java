@@ -265,7 +265,9 @@ public class ZhaoHangController {
         // FIXME
         params.put("productName", productName);
 //        params.put("productName", "世界杯门票套餐");
-        params.put("amount", orderInfo.getGoodsAmount().multiply(BigDecimal.valueOf(100)) + ""); // 订单金额（单位为分）
+        BigDecimal one = new BigDecimal("1");
+        BigDecimal amount = orderInfo.getGoodsAmount().multiply(BigDecimal.valueOf(100));
+        params.put("amount",amount.divide(one,0,BigDecimal.ROUND_HALF_UP) + ""); // 订单金额（单位为分）
 //        params.put("amount","100"); // 订单金额（单位为分）
         params.put("bonus", "0"); // 订单积分，无积分则传0
         params.put("returnUrl", "https://cmb-h5.skstravel.com/orderinfo/myorder"); // 掌上生活客户端支付成功重定向页面地址，默认为掌上生活支付成功页；App支付时不需要传入
