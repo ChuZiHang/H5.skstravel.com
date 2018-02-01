@@ -321,7 +321,7 @@
         $('.orderTatalBtns').click(function(){
         	var data = {};
         	//商品信息
-        	data['goodsName'] = $('.order-name').val();
+        	data['goodsName'] = $('.order-name').text();
         	data['goodsId'] = $('#goodsId').val();
         	data['goodsType'] = $('#goodsType').val();
         	data['goodsSn'] = $('#goodsSn').val();

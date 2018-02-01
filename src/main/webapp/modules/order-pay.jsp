@@ -212,12 +212,13 @@
             	alert("请填写联系人信息!")
         		return;
             }
-            
             var invoiceVal = $('input[name="invoice"]:checked').val()
             var obj = {};
             obj['payType']=1;
             if("1"==invoiceVal){
     	        obj['invoice']=invoiceVal;
+    	        var invoiceType = $('#invoiceType option:selected').val();
+    	        obj['invoiceType'] = invoiceType;
             }else{
     	        obj['invoice']=invoiceVal;
     	        var invoiceType = $('#invoiceType option:selected').val();
