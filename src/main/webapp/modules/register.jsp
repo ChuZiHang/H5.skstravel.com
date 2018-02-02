@@ -22,6 +22,18 @@
 
 </head>
 <body>
+<%
+    //获取一个令牌
+    String code = UUIDUtils.getCode();
+
+    //将令牌放入session中一份
+    session.setAttribute("s_code", code);
+
+    //将令牌放入当前页面一份
+    request.setAttribute("p_code", code);
+
+%>
+
 <header>
     <div class="mobile-nav">
         <span></span>
@@ -74,16 +86,7 @@
    <!--  <a href="center.html">注 册</a> --><input  type="submit" value="注册">
 </div>
 </form>
-<%
-    //获取一个令牌
-    String code = UUIDUtils.getCode();
 
-    //将令牌放入session中一份
-    session.setAttribute("s_code", code);
-
-    //将令牌放入当前页面一份
-    pageContext.setAttribute("p_code", code);
-%>
 
 <script  >
     $(function(){
