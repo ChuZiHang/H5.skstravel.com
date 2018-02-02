@@ -1,5 +1,6 @@
+<%@ page import="com.skstravel.common.utils.UUIDUtils" %>
 <%@ page language="java" contentType="text/html; charset=UTF-8"
-    pageEncoding="UTF-8"%>
+         pageEncoding="UTF-8"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@taglib uri="http://java.sun.com/jsp/jstl/functions"  prefix="fn" %>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
@@ -31,6 +32,7 @@
 </header>
 
 <form action="${prc }/login/register"  method="post"     >
+    <input type="hidden" name="r_code" value="${p_code }">
 <div class="loginWrap padt30">
     <div class="loginList">
         <div class="loginInputWrap">
@@ -72,6 +74,16 @@
    <!--  <a href="center.html">注 册</a> --><input  type="submit" value="注册">
 </div>
 </form>
+<%
+    //获取一个令牌
+    String code = UUIDUtils.getCode();
+
+    //将令牌放入session中一份
+    session.setAttribute("s_code", code);
+
+    //将令牌放入当前页面一份
+    pageContext.setAttribute("p_code", code);
+%>
 
 <script  >
     $(function(){
