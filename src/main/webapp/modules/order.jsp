@@ -141,6 +141,7 @@
                         <li><span>出发城市</span><em style="color:#333" >北京</em></li>
                         <li><span>抵达城市</span><em style="color:#333">莫斯科卢日尼基</em></li>
                         <li><span>航程选择</span><select id="hcxz" name="hcxz">
+                        	<option value="-1"> - - - - - - - - - - - 请  选  择  航  程 - - - - - - - - - - - </option>
                         	<option value="2018-07-08">北京-莫斯科 往返 7月8日 -16日 时间:1345</option>
                         	<option value="2018-07-09">北京-莫斯科 往返 7月9日 -17日 时间:1345</option>
                         </select></select></li>
@@ -318,7 +319,20 @@
         	
         });
         //提交订单
-        $('.orderTatalBtns').click(function(){
+        //防止二次提交
+        var flag = false;
+        $('.orderTatalBtns').unbind('click').on('click',function(){
+        	if(flag){
+        		return;
+        	}
+        	flag = true;
+            var sumNum =  $('#jipiaoa').parent().next().text();
+        	var hcxz = $('#hcxz').val();
+        	if(sumNum != 0 && hcxz == -1){
+        		alert("请选择航程信息!");
+        		return;
+        	}
+        	
         	var data = {};
         	//商品信息
         	data['goodsName'] = $('.order-name').text();
@@ -351,6 +365,7 @@
 					alert("错误!","网络异常", "error");
 				},
 				success : function(data) {
+					flag = false;
 				    if(data == "REDIRECT"){
                         window.location.href = "/modules/login.jsp";
                     }else{

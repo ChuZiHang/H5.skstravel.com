@@ -12,6 +12,18 @@
     <link rel="stylesheet" href="${prc }/assets/css/style.css"/>
     <link rel="stylesheet" href="${prc }/assets/css/font-awesome.css"/>
     <script src="${prc }/assets/js/jquery-3.2.1.min.js"></script>
+    <style>
+       	#linkMan,#email,#phone,#type,#typeCode {
+       		padding: 6px 12px;
+       		width: 260px;
+       		border-radius: 5px;
+       		margin-left: 3px;
+       	}
+       	.addItem:nth-child(1) {
+       		display: inline-block;
+       		width:65px;
+       	}            
+    </style>
 </head>
 <body class="gary-bg">
 <div class="wrapper bot60">
@@ -92,11 +104,11 @@
         <div class="orderAccessory airInfo">
             <div class="contactAddress">
                 <ul>
-                    <li><span class="addItem">联系人：</span><input type="text" name="linkMan" id="linkMan"></li>
-                    <li><span class="addItem">常用邮箱：</span><input type="text" name="email" id="email"></li>
-                    <li><span class="addItem">手机号码：</span><input type="text" name="phone" id="phone"></li>
-                    <li><span class="addItem">证件类型：</span><input type="text" name="type" id="type"></li>
-                    <li><span class="addItem">证件号码：</span><input type="text" name="typeCode" id="typeCode"></li>
+                    <li><span class="addItem">联系人：</span><input type="text" name="linkMan" id="linkMan" placeholder="请输入联系人"></li>
+                    <li><span class="addItem">常用邮箱：</span><input type="text" name="email" id="email" placeholder="请输入常用邮箱"></li>
+                    <li><span class="addItem">手机号码：</span><input type="text" name="phone" id="phone" placeholder="请输入手机号码"></li>
+                    <li><span class="addItem">证件类型：</span><input type="text" name="type" id="type" placeholder="请输入证件类型"></li>
+                    <li><span class="addItem">证件号码：</span><input type="text" name="typeCode" id="typeCode" placeholder="请输入证件号码"></li>
                 </ul>
                 <!-- <div class="addContact"><a href="#"> 保存联系人信息</a></div> -->
             </div>
@@ -196,8 +208,13 @@
         
         
         
-        
-        $('.orderTatalBtns').click(function(){
+        //防止二次提交
+        var flag = false;
+        $('.orderTatalBtns').unbind('click').on('click',function(){
+        	if(flag){
+        		return;
+        	}
+        	flag = true;
         	var isAgree = document.getElementById('isagreement').checked;
         	if(!isAgree){
         		alert("请阅读购买协议!")
@@ -250,6 +267,7 @@
                 data: JSON.stringify(obj),
                 dataType: 'json',
                 success: function (res) {
+                	flag = false;
                     console.log(res.str);
 
                     cmblife.executeProtocol(res.str);
