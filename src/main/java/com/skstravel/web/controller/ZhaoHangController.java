@@ -250,7 +250,7 @@ public class ZhaoHangController {
         JsonElement parse = new JsonParser().parse(str);
         JsonObject jsonObject1 = parse.getAsJsonObject();
         this.iSkOrderInfoService.updateOrderInfo(jsonObject1);
-      
+
         LOGGER.debug("拼接支付报文====================");
         String orderId = jsonObject1.get("entityId").toString();
         orderId = orderId.substring(1, orderId.length() - 1);
@@ -267,7 +267,7 @@ public class ZhaoHangController {
 //        if (skOrderCombos != null && skOrderCombos.size() > 0) {
 //            productName = skOrderCombos.get(0).getGoodsName();
 //        }
-        if(skOrderGoods != null && skOrderGoods.size() > 0){
+        if (skOrderGoods != null && skOrderGoods.size() > 0) {
             productName = skOrderGoods.get(0).getGoodsName();
         }
         String funcName = "pay";
@@ -286,7 +286,7 @@ public class ZhaoHangController {
 //        params.put("productName", "世界杯门票套餐");
         BigDecimal one = new BigDecimal("1");
         BigDecimal amount = orderInfo.getGoodsAmount().multiply(BigDecimal.valueOf(100));
-        params.put("amount",(amount.setScale(0, BigDecimal.ROUND_HALF_UP)).toString()); // 订单金额（单位为分）
+        params.put("amount", (amount.setScale(0, BigDecimal.ROUND_HALF_UP)).toString()); // 订单金额（单位为分）
 //        params.put("amount","100"); // 订单金额（单位为分）
         params.put("bonus", "0"); // 订单积分，无积分则传0
         params.put("returnUrl", "https://cmb-h5.skstravel.com/orderinfo/myorder"); // 掌上生活客户端支付成功重定向页面地址，默认为掌上生活支付成功页；App支付时不需要传入
@@ -362,32 +362,48 @@ public class ZhaoHangController {
         // 验签
         boolean flag = CmblifeUtils.verify(map, Constants.CMBLIFE_PUB_KEY);
         LOGGER.debug("支付接收通知====================flag:" + flag);
-        if (flag) {
+//        if (flag) {
 
-            // 修改订单状态 比对金额
-            SkOrderInfo skOrderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(billno));
-            // 订单状态 0 未确认 1 已确认 2 已取消 3 无效 4 退货 5 已分单  6 部分分单
-            // 支付状态 0 未付款 1 付款中 2 已付款
-            // 订单的相应的字段进行修改
+        // 修改订单状态 比对金额
+        SkOrderInfo skOrderInfo = iSkOrderInfoService.selectByPrimaryKey(Integer.parseInt(billno));
+        // 订单状态 0 未确认 1 已确认 2 已取消 3 无效 4 退货 5 已分单  6 部分分单
+        // 支付状态 0 未付款 1 付款中 2 已付款
+        // 订单的相应的字段进行修改
 
-            int payTime = (int) (System.currentTimeMillis()/1000);
-            String sql = "UPDATE sk_order_info SET STATUS = ? , pay_time = ?,pay_name = '招行支付'  WHERE order_id = " + billno;
-            Object[] objects = {};
-            switch (result) {
-                case "2":
-                    jdbcTemplateForSksports2.update(sql, new Object[]{2,payTime});
-                    break;
-                case "3":
-                    break;
-                case "200":
-                    jdbcTemplateForSksports2.update(sql, new Object[]{2,payTime});
-                    break;
-                case "300":
-                    break;
-                default:
-                    break;
+        int payTime = (int) (System.currentTimeMillis() / 1000);
+        String sql = "UPDATE sk_order_info SET STATUS = ? , pay_time = ?,pay_name = '招行支付'  WHERE order_id = " + billno;
+        Object[] objects = {};
+        switch (result) {
+            case "2":
+                jdbcTemplateForSksports2.update(sql, new Object[]{2, payTime});
+                break;
+            case "3":
+
+                break;
+            case "200":
+                jdbcTemplateForSksports2.update(sql, new Object[]{2, payTime});
+                break;
+            case "300":
+
+                break;
+            default:
+                break;
+        }
+
+        SkOrderPayLogExample skOrderPayLogExample = new SkOrderPayLogExample();
+        skOrderPayLogExample.createCriteria().andOrderIdEqualTo(Integer.parseInt(billno));
+        List<SkOrderPayLog> skOrderPayLogs = skOrderPayLogMapper.selectByExample(skOrderPayLogExample);
+        if (skOrderPayLogs != null && skOrderPayLogs.size() > 0) {
+            SkOrderPayLog skOrderPayLog = skOrderPayLogs.get(0);
+            skOrderPayLog.setUpdateTime(new Date());
+            skOrderPayLog.setReturnData(map.toString());
+            if ("2".equals(result) || "200".equals(result)) {
+                skOrderPayLog.setPayStatus(Byte.parseByte("1"));
+            } else {
+                skOrderPayLog.setPayStatus(Byte.parseByte("0"));
             }
-
+            skOrderPayLogMapper.updateByPrimaryKeySelective(skOrderPayLog);
+        } else {
             SkOrderPayLog skOrderPayLog = new SkOrderPayLog();
             skOrderPayLog.setOrderId(Integer.parseInt(billno));
             skOrderPayLog.setTradeNo(refnum);
@@ -395,29 +411,34 @@ public class ZhaoHangController {
             skOrderPayLog.setPayFee(Integer.parseInt(amount));
             skOrderPayLog.setOutTradeNo(bankpayserial);
             skOrderPayLog.setUserId(skOrderInfo.getUserId());
-            skOrderPayLog.setPayStatus(Byte.parseByte("1"));
+            if ("2".equals(result) || "200".equals(result)) {
+                skOrderPayLog.setPayStatus(Byte.parseByte("1"));
+            } else {
+                skOrderPayLog.setPayStatus(Byte.parseByte("0"));
+            }
             skOrderPayLog.setReturnData(map.toString());
             skOrderPayLog.setCreateTime(new Date());
             skOrderPayLog.setUpdateTime(new Date());
-
             skOrderPayLogMapper.insertSelective(skOrderPayLog);
-            params.put("respCode", "1000"); // 应答码，若处理成功则为1000，若失败为1001
-
-        } else {
-            params.put("respCode", "1001"); // 应答码，若处理成功则为1000，若失败为1001
         }
+
+        params.put("respCode", "1000"); // 应答码，若处理成功则为1000，若失败为1001
+
+//        } else {
+//            params.put("respCode", "1001"); // 应答码，若处理成功则为1000，若失败为1001
+//        }
         String respSign = CmblifeUtils.sign(params, Constants.MERCHANT_PRI_KEY);
         params.put("sign", respSign);
         response.getWriter().print(gson.toJson(params));
     }
-    
+
     public static void main(String[] args) {
         BigDecimal a = new BigDecimal(1.12);
         BigDecimal dd = a.multiply(new BigDecimal(100));
         BigDecimal ddd = dd.setScale(0, BigDecimal.ROUND_HALF_UP);
         System.out.println(ddd);
     }
-    
+
     public static byte[] getRequestPostBytes(HttpServletRequest request)
             throws IOException {
         int contentLength = request.getContentLength();

@@ -30,7 +30,7 @@ public class sendMessage {
             password_md5 = MD5Utils.md5(password_md5);
             String mobile = "86" + phoneNum;  //手机号,只发一个号码：13800000001。发多个号码：13800000001,13800000002,...N 。使用半角逗号分隔。
             String apikey = "6656f261eeebc97d1614f0ea3f28d2ac";  //apikey秘钥（请登录 http://m.5c.com.cn 短信平台-->账号管理-->我的信息 中复制apikey）
-            String content = "会员验证码： "+mobileCode.toString()+" ,请您在十分钟内填写完成。【400-885-0132】";  //要发送的短信内容，特别注意：签名必须设置，网页验证码应用需要加添加【图形识别码】。
+            String content = "【盛开国际旅行社】 会员验证码： " + mobileCode.toString() + " ,请您在十分钟内填写完成。";  //要发送的短信内容，特别注意：签名必须设置，网页验证码应用需要加添加【图形识别码】。
 
             String contentUrlEncode = URLEncoder.encode(content, encode);  //对短信内容做Urlencode编码操作。注意：如
             buffer.append("http://m.5c.com.cn/api/send/index.php?username="

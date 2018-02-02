@@ -65,7 +65,7 @@ public class LoginController {
             request.setAttribute("errorMsg", msg);
             return "login";
         }
-        Integer MobileCode1 = (Integer) request.getSession().getAttribute("MobileCode");
+        Object MobileCode1 = request.getSession().getAttribute("MobileCode");
         //销毁session
         if (mobileValidateCode.equals(MobileCode1.toString())) {
             request.getSession().setAttribute("MobileCode", "");
