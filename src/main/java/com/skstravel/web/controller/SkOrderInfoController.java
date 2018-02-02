@@ -95,13 +95,13 @@ public class SkOrderInfoController {
 
             SkOrderInfoExample skOrderInfoExample = new SkOrderInfoExample();
             SkOrderInfoExample.Criteria criteria = skOrderInfoExample.createCriteria();
-
+            skOrderInfoExample.setOrderByClause(" order_id DESC");
             //取用户id
             String memberId = CookieUtils.getCookie(request, "memberId");
             skOrderInfoExample.createCriteria().andUserIdEqualTo(Integer.parseInt(memberId));
 
             long total = skOrderInfoService.countByExample(skOrderInfoExample);
-            int pageSize = 10;
+            int pageSize = 50;
             Page page = new Page();
             page.setTotal(total);
             page.setLimit(pageSize);

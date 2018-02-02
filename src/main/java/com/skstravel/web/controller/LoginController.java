@@ -65,7 +65,7 @@ public class LoginController {
             request.setAttribute("errorMsg", msg);
             return "login";
         }
-        Integer MobileCode1 = (Integer) request.getSession().getAttribute("MobileCode");
+        Object MobileCode1 = request.getSession().getAttribute("MobileCode");
         //销毁session
         if (mobileValidateCode.equals(MobileCode1.toString())) {
             request.getSession().setAttribute("MobileCode", "");
@@ -119,42 +119,62 @@ public class LoginController {
      */
     @RequestMapping("/register")
     public void register(HttpServletRequest request, HttpServletResponse response, Model model) throws Exception {
-        String mobilePhone = request.getParameter("mobilePhone");
-        String password = MD5Utils.md5(request.getParameter("password"));
-        String validateCode = request.getParameter("checkValidateCode");
-        String mobileValidateCode = request.getParameter("mobileValidateCode");
-        if (StringUtils.isNoneBlank(validateCode) && StringUtils.isNotBlank(mobileValidateCode)) {
-            Integer MobileCode1 = (Integer) request.getSession().getAttribute("MobileCode");
-            //销毁session  短信验证码
-            request.getSession().setAttribute("MobileCode", "");
-            String MobileCode = String.valueOf(MobileCode1);
-            //验证码
-            String msg = (String) request.getSession().getAttribute("msg");
-            if (MobileCode.equalsIgnoreCase(mobileValidateCode) && msg.equalsIgnoreCase(validateCode)) {
-                //销毁验证码
-                request.getSession().setAttribute("msg", "");
-                try {
-                    Integer id= userService.register(mobilePhone, password);
-                    if(id!=0){
-                        String userId=id.toString();
-                        CookieUtils2.setCookie(request,response,"memberId",userId,3600);
-                        request.setAttribute("userName", mobilePhone);
-                        request.getRequestDispatcher("/modules/center.jsp").forward(request, response);
-                    }else{
-                        request.setAttribute("errorMsg","对不起，您已经注册过，请直接登录！");
-                        request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
-                    }
+        //0.获取令牌,判断令牌
+        String r_code = request.getParameter("r_code");
+        String s_code = (String) request.getSession().getAttribute("s_code");
 
-                } catch (Exception e) {
-                    e.printStackTrace();
-                    request.getRequestDispatcher("/modules/error.jsp").forward(request, response);
+        //0.1 保证商品只添加一次 需要保证令牌只能使用一次
+        request.getSession().removeAttribute("s_code");
+        //0.2判断code是否一致
+        if(s_code == null || s_code == null || !s_code.equals(r_code)){
+            request.setAttribute("exception", "页面已经提交过了，请去登录!!");
+            request.getRequestDispatcher("/modules/error.jsp").forward(request, response);
+            return;
+        }
+        String mobilePhone = request.getParameter("mobilePhone");
+        String password1 = request.getParameter("password");
+        if(StringUtils.isNotBlank(mobilePhone)&&StringUtils.isNotBlank(password1)){
+            String password = MD5Utils.md5(password1);
+            String validateCode = request.getParameter("checkValidateCode");
+            String mobileValidateCode = request.getParameter("mobileValidateCode");
+            if (StringUtils.isNoneBlank(validateCode) && StringUtils.isNotBlank(mobileValidateCode)) {
+                Integer MobileCode1 = (Integer) request.getSession().getAttribute("MobileCode");
+                //销毁session  短信验证码
+                request.getSession().setAttribute("MobileCode", "");
+                String MobileCode = String.valueOf(MobileCode1);
+                //验证码
+                String msg = (String) request.getSession().getAttribute("msg");
+                if (MobileCode.equalsIgnoreCase(mobileValidateCode) && msg.equalsIgnoreCase(validateCode)) {
+                    //销毁验证码
+                    request.getSession().setAttribute("msg", "");
+                    try {
+                        Integer id= userService.register(mobilePhone, password);
+                        if(id!=0){
+                            String userId=id.toString();
+                            CookieUtils2.setCookie(request,response,"memberId",userId,3600);
+                            request.setAttribute("userName", mobilePhone);
+                            request.getRequestDispatcher("/modules/center.jsp").forward(request, response);
+                        }else{
+                            request.setAttribute("errorMsg","对不起，您已经注册过，请直接登录！");
+                            request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
+                        }
+
+                    } catch (Exception e) {
+                        e.printStackTrace();
+                        request.getRequestDispatcher("/modules/error.jsp").forward(request, response);
+                    }
+                } else {
+                    request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
                 }
             } else {
                 request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
             }
-        } else {
-            request.getRequestDispatcher("/modules/login.jsp").forward(request, response);
+
+        }else{
+            request.getRequestDispatcher("/modules/error.jsp").forward(request,response);
         }
+
+
 
 
     }
