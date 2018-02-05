@@ -18,8 +18,75 @@
     <link rel="stylesheet" href="${prc }/assets/css/n-date.css"/>
     <script src="${prc }/assets/js/n-date.js"></script>
     <script src="${prc }/assets/js/iscroll.js"></script>
-     <script src="${prc }/assets/js/jquery.cookie.js"></script>
+    <script src="${prc }/assets/js/jquery.cookie.js"></script>
+    <script src="../assets/js/validate/jquery-1.11.1.js"   ></script>
+    <script src="${prc }/assets/js/validate/jquery.validate.js"></script>
+    <script src="${prc }/assets/js/validate/messages_zh.js"></script>
+    <script src="${prc }/assets/js/n-date.js"></script>
+    <script src="${prc }/assets/js/iscroll.js"></script>
+    <script src="${prc }/assets/js/jquery.cookie.js"></script>
+    <script>
+        $.validator.setDefaults({
+            submitHandler: function() {
+                //alert("提交事件!");
+                $("#signupform").submit();
+            }
+        });
 
+        jQuery.validator.addMethod("isMobile", function(value, element) {
+            var length = value.length;
+            var mobile = /^(13[0-9]{9})|(18[0-9]{9})|(14[0-9]{9})|(17[0-9]{9})|(15[0-9]{9})$/;
+            return this.optional(element) || (length == 11 && mobile.test(value));
+        }, "请正确填写您的手机号码");
+
+        $(document).ready(function() {
+            // 在键盘按下并释放及提交后验证提交表单
+            $("#signupform").validate({
+                rules: {
+                    mobilePhone: {
+                        required : true,
+                        minlength : 11,
+                        // 自定义方法：校验手机号在数据库中是否存在
+                        // checkPhoneExist : true,
+                        isMobile : true
+                    },
+                    password: {
+                        required: true,
+                        minlength: 5
+                    },
+                    checkValidateCode: {
+                        required: true,
+                        minlength: 4
+                    },
+                    mobileValidateCode: {
+                        required: true,
+                        minlength: 5
+                    },
+                    agree: "required"
+                },
+                messages: {
+                    mobilePhone: {
+                        required : "请输入手机号",
+                        minlength : "确认手机不能小于11个字符",
+                        isMobile : "请正确填写您的手机号码"
+
+                    },
+                    password: {
+                        required: "请输入密码",
+                        minlength: "密码长度不能小于 5 个字母"
+                    },
+                    checkValidateCode: "请输入验证码",
+                    mobileValidateCode: "请输入手机验证码",
+                    agree: "请接受我们的声明"
+                }
+            });
+        });
+    </script>
+    <style>
+        .error{
+            color:red;
+        }
+    </style>
 </head>
 <body>
 <%
@@ -43,50 +110,57 @@
     <img src="${prc }/assets/images/logo.png"   alt="" width="80"/>
 </header>
 
-<form action="${prc }/login/register"  method="post"     >
+<form action="${prc }/login/register"  method="post"    id="signupform"    >
     <input type="hidden" name="r_code" value="${p_code }">
-<div class="loginWrap padt30">
-    <div class="loginList">
-        <div class="loginInputWrap">
-            <input type="text"   name="mobilePhone"  id="mobilePhone"   placeholder="在这里输入手机号"/>
-        </div>
-    </div>
-    <div class="loginList">
-        <div class="loginInputWrap"><input type="password"  name="password" placeholder="请输入密码"/></div>
-    </div>
-    <div class="loginList">
-        <div class="loginInputWrap">
-            <input type="text"  name="checkValidateCode"   placeholder="图形验证码"/>
-            <div class="checkImg">
-                <img src="${prc }/login/validateCode"     id="vc"   alt=""/>
+    <div class="loginWrap padt30">
+        <div class="loginList">
+            <div class="loginInputWrap">
+                <input type="text"   name="mobilePhone"  id="mobilePhone"   placeholder="在这里输入手机号"/>
             </div>
+            <td class="status"></td>
         </div>
-        <script type="text/javascript">
-        $(function(){
-        	
-     		$("#vc").click(function(){
-     			$(this).prop("src","${prc}/login/validateCode?ttt="+new Date().getTime());
-     		});
-     	});
-        
-        	
-        </script>
-    </div>
-    <div class="loginList">
-        <div class="loginInputWrap"><input type="text"  name="mobileValidateCode"    placeholder="手机验证码"/>
-        <input type="button"   value="获取验证码"  class="getCheckCode"    id="getting"   /></div>
-    </div>
-    <div class="min-login-a">
-        <!--<a></a>-->
-        <input type="checkbox" name="remember">我同意本网站 <a href="agreement.html">《免责声明》</a>，下载 <a href="#">《免责声明》</a>
-        <!--<span>自动登录</span>-->
-    </div>
-</div>
-<div class="addLinkbtns">
-   <!--  <a href="center.html">注 册</a> --><input  type="submit" value="注册">
-</div>
-</form>
+        <div class="loginList">
+            <div class="loginInputWrap"><input type="password"  id="password"  name="password" placeholder="请输入密码"/></div>
+        </div>
+        <td class="status"></td>
+        <div class="loginList">
+            <div class="loginInputWrap">
+                <input type="text"  name="checkValidateCode"  id="checkValidateCode"   placeholder="图形验证码"/>
+                <div class="checkImg">
+                    <img src="${prc }/login/validateCode"     id="vc"   alt=""/>
+                </div>
+            </div>
+            <script type="text/javascript">
+                $(function(){
 
+                    $("#vc").click(function(){
+                        $(this).prop("src","${prc}/login/validateCode?ttt="+new Date().getTime());
+                    });
+                });
+
+
+            </script>
+        </div>
+        <div class="loginList">
+            <div class="loginInputWrap"><input type="text"  name="mobileValidateCode"   id="mobileValidateCode"   placeholder="手机验证码"/>
+                <input type="button"   value="获取验证码"  class="getCheckCode"    id="getting"   /></div>
+        </div>
+        <div class="min-login-a">
+            <!--<a></a>-->
+            <input type="checkbox"     id="agree" name="agree">我同意本网站 <a href="agreement.html">《免责声明》</a>，下载 <a href="#">《免责声明》</a>
+            <!--<span>自动登录</span>-->
+        </div>
+    </div>
+    <div class="addLinkbtns">
+        <button type="submit"   value="注册"  >注册</button>
+        <%--<a  type="submit"  class="submit"   href="javascript:void(0)">注册</a>--%>
+        <%--<input2 class="submit" type="submit" value="注册">--%>
+    </div>
+
+    <%--<div class="addLinkbtns">
+        <input class="submit" type="submit" value="提交">
+    </div>--%>
+</form>
 
 <script  >
     $(function(){
@@ -153,8 +227,6 @@
             });
         }
     });
-
-
 </script>
 </body>
 </html>

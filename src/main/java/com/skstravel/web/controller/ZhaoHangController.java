@@ -411,6 +411,11 @@ public class ZhaoHangController {
             skOrderPayLog.setPayFee(Integer.parseInt(amount));
             skOrderPayLog.setOutTradeNo(bankpayserial);
             skOrderPayLog.setUserId(skOrderInfo.getUserId());
+            //设置单号
+            if(skOrderInfo.getOrderSn()!=null &&skOrderInfo.getOrderSn()!=""){
+                skOrderPayLog.setTradeNo(skOrderInfo.getOrderSn());
+            }
+
             if ("2".equals(result) || "200".equals(result)) {
                 skOrderPayLog.setPayStatus(Byte.parseByte("1"));
             } else {

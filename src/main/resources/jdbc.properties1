@@ -1,0 +1,9 @@
+#jdbc.url=jdbc:mysql://60.205.187.255:3306/sksports2?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&transformedBitIsBoolean=true
+#jdbc.driverClassName=com.mysql.jdbc.Driver
+#jdbc.username=root
+#jdbc.password=qiuwei
+
+jdbc.url=jdbc:mysql://rdsrmqld83mnlijgqn4ws.mysql.rds.aliyuncs.com:3306/sksports2?characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull
+jdbc.driverClassName=com.mysql.jdbc.Driver
+jdbc.username=dbuser
+jdbc.password=admin888

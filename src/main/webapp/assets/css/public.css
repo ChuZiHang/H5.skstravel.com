@@ -36,7 +36,7 @@ input {
     -webkit-user-modify: read-write-plaintext-only;
     outline: 0;
 }
-input, select, textarea, button {
+input, select, textarea {
     vertical-align: middle;
     font-size: 100%;
     outline: 0;

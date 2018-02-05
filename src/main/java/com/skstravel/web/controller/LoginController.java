@@ -66,6 +66,12 @@ public class LoginController {
             return "login";
         }
         Object MobileCode1 = request.getSession().getAttribute("MobileCode");
+        if(MobileCode1==null||mobileValidateCode==null){
+            String flag="<font color='red'>请获取手机验证码，进行登录</font>";
+            request.setAttribute("mobilePhone",phone);
+            model.addAttribute("errorMsg",flag);
+            return "login";
+        }
         //销毁session
         if (mobileValidateCode.equals(MobileCode1.toString())) {
             request.getSession().setAttribute("MobileCode", "");
@@ -79,7 +85,6 @@ public class LoginController {
                 LOGGER.debug("userName============="+userName);
                 request.setAttribute("userName", userName);
                 CookieUtils.setCookie("memberId", list.get(0).get("userId").toString(), -1, response, Constants.domain);
-
                 return "center";
             } else if(list1.size() > 0){
                 userName = (String) list1.get(0).get("userName");
@@ -212,7 +217,8 @@ public class LoginController {
         //2.调用发送短信功能
         String flag = "0";
         try {
-            String result = sendMessage.getMobileCode(mobilePhone, mobileCode);
+           // String result = sendMessage.getMobileCode(mobilePhone, mobileCode);
+            String result = "success";
             if("success".equals(result)){
                 flag="1";
             }
